@@ -1,3 +1,11 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 .content-admin { --background: #111; --color: #fff; }
 .admin-header { border-bottom: 2px solid var(--color-primario, #D71920); }
 .admin-toolbar { --background: #181818; --color: #fff; --padding-start: 1.5rem; --padding-end: 1.5rem; }
