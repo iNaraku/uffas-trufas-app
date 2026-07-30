@@ -36,6 +36,73 @@ body {
   background-color: var(--color-fondo, #111111);
   color: var(--color-texto, #FFFFFF);
   -webkit-font-smoothing: antialiased;
+  width: 100%;
+  height: 100%;
+}
+
+/* --- ESTRUCTURA DE SCROLL Y CONTENCIÓN IONIC --- */
+html, body, ion-app {
+  width: 100%;
+  height: 100%;
+}
+
+ion-app {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+ion-router-outlet {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Asegurar layout flex y contención en componentes de páginas de Angular */
+.ion-page,
+app-pagina-inicio,
+app-pagina-catalogo,
+app-pagina-detalle-producto,
+app-pagina-desbloqueo,
+app-pagina-admin-login,
+app-pagina-admin-dashboard,
+app-pagina-admin-productos,
+app-pagina-admin-usuarios,
+app-pagina-admin-banners,
+app-pagina-admin-categorias,
+app-pagina-admin-tema,
+app-pagina-admin-configuracion {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* El encabezado no debe encogerse para no desfasar ion-content */
+app-encabezado,
+ion-header {
+  flex: 0 0 auto !important;
+  width: 100%;
+  z-index: 100;
+}
+
+/* Garantizar que ion-content tome exactamente el espacio restante y habilite el scroll */
+ion-content {
+  flex: 1 1 0% !important;
+  height: 100% !important;
+  --overflow: auto;
+  display: block;
+}
+
+/* Exponer y forzar overflow-y en el Shadow DOM scroll container de Ionic */
+ion-content::part(scroll) {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior-y: contain;
 }
 
 /* Custom Scrollbar */
@@ -53,3 +120,4 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-secundario, #F5B400);
 }
+
