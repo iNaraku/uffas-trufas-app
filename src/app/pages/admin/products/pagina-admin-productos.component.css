@@ -1,0 +1,363 @@
+.content-admin {
+  --background: #111;
+  --color: #fff;
+}
+
+.admin-header {
+  border-bottom: 2px solid var(--color-primario, #D71920);
+}
+
+.admin-toolbar {
+  --background: #181818;
+  --color: #fff;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+}
+
+.admin-nav-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.brand-admin {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-family: 'Impact', sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.gold-icon {
+  color: var(--color-secundario, #F5B400);
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.btn-logout {
+  background: rgba(215, 25, 32, 0.2);
+  border: 1px solid var(--color-primario, #D71920);
+  color: #ff6b6b;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 700;
+}
+
+.admin-wrapper {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-menu {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  background: #1c1c1c;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #ccc;
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.menu-item:hover, .menu-item.active {
+  background: var(--color-primario, #D71920);
+  color: #fff;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.page-header h2 {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 0.3rem 0;
+}
+
+.page-header p {
+  color: #aaa;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.btn-add-prod {
+  background: linear-gradient(135deg, var(--color-primario, #D71920), #9e0e14);
+  color: #fff;
+  border: 1px solid var(--color-secundario, #F5B400);
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.form-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.form-modal-card {
+  background: #1c1c1c;
+  border: 2px solid var(--color-primario, #D71920);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 720px;
+  padding: 2rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.75rem;
+}
+
+.modal-head h3 {
+  color: var(--color-secundario, #F5B400);
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  font-size: 1.75rem;
+  cursor: pointer;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.col-4 { flex: 4; }
+.col-6 { flex: 6; }
+.col-8 { flex: 8; }
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.field label {
+  color: #ccc;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.field input, .field select, .field textarea {
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 0.7rem;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--color-secundario, #F5B400);
+}
+
+.file-input {
+  padding: 0.4rem !important;
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 2rem;
+  padding: 0.5rem 0;
+}
+
+.chk-label {
+  color: #fff;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-cancel {
+  background: #333;
+  color: #ccc;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: var(--color-secundario, #F5B400);
+  color: #000;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.table-card {
+  background: #1c1c1c;
+  border-radius: 12px;
+  border: 1px solid #333;
+  overflow: hidden;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  background: #111;
+  color: var(--color-secundario, #F5B400);
+  padding: 1rem;
+  font-size: 0.85rem;
+  font-weight: 800;
+  border-bottom: 2px solid #333;
+}
+
+.admin-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #282828;
+  color: #ccc;
+  font-size: 0.85rem;
+}
+
+.table-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.prod-title-tbl {
+  color: #fff;
+  display: block;
+}
+
+.tag-feat {
+  font-size: 0.7rem;
+  color: var(--color-primario, #D71920);
+  font-weight: 800;
+}
+
+.btn-toggle-vis, .btn-toggle-status {
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  border: 1px solid #444;
+  background: #252525;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.btn-toggle-vis.is-priv {
+  background: rgba(245, 180, 0, 0.2);
+  color: var(--color-secundario, #F5B400);
+  border-color: var(--color-secundario, #F5B400);
+}
+
+.btn-toggle-status.is-active {
+  background: rgba(46, 125, 50, 0.2);
+  color: #81c784;
+  border-color: #2e7d32;
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.btn-icon-act {
+  background: #333;
+  color: #fff;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-icon-act.gold {
+  color: var(--color-secundario, #F5B400);
+}
+
+.btn-icon-act.red {
+  color: #ff5252;
+}

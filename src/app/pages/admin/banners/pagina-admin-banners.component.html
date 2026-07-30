@@ -1,0 +1,115 @@
+<ion-header class="admin-header">
+  <ion-toolbar class="admin-toolbar">
+    <div class="admin-nav-box">
+      <div class="brand-admin" routerLink="/admin/dashboard">
+        <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
+        <span>REBEL ADMIN PANEL</span>
+      </div>
+      <div class="user-badge">
+        <span>👤 {{ servicioAuth.administradorActual()?.nombre }}</span>
+        <button (click)="salirAdmin()" class="btn-logout"><ion-icon name="log-out-outline"></ion-icon> Salir</button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-admin">
+  <div class="admin-wrapper">
+    <nav class="admin-menu">
+      <a routerLink="/admin/dashboard" class="menu-item"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
+      <a routerLink="/admin/products" class="menu-item"><ion-icon name="cube-outline"></ion-icon> Productos</a>
+      <a routerLink="/admin/users" class="menu-item"><ion-icon name="people-outline"></ion-icon> Usuarios PIN</a>
+      <a routerLink="/admin/banners" class="menu-item active"><ion-icon name="images-outline"></ion-icon> Banners</a>
+      <a routerLink="/admin/categories" class="menu-item"><ion-icon name="pricetags-outline"></ion-icon> Categorías</a>
+      <a routerLink="/admin/theme" class="menu-item"><ion-icon name="color-palette-outline"></ion-icon> Tema Dinámico</a>
+      <a routerLink="/admin/settings" class="menu-item"><ion-icon name="settings-outline"></ion-icon> Configuración</a>
+    </nav>
+
+    <div class="page-header">
+      <div>
+        <h2>Gestión de Banners e Inicio</h2>
+        <p>Configura las imágenes principales, títulos y enlaces del carrusel de portada.</p>
+      </div>
+      <button class="btn-add-banner" (click)="abrirCrear()">
+        <ion-icon name="image-outline"></ion-icon> Nuevo Banner
+      </button>
+    </div>
+
+    <!-- MODAL EDITAR / CREAR -->
+    @if (mostrandoModal) {
+      <div class="modal-backdrop">
+        <div class="modal-card">
+          <div class="modal-head">
+            <h3>{{ bannerEdicion ? 'Editar Banner' : 'Nuevo Banner' }}</h3>
+            <button class="btn-close" (click)="cerrarModal()">&times;</button>
+          </div>
+
+          <form (ngSubmit)="guardar()" class="banner-form">
+            <div class="field">
+              <label>Título del Banner *</label>
+              <input type="text" [(ngModel)]="titulo" name="titulo" required />
+            </div>
+
+            <div class="field">
+              <label>Subtítulo</label>
+              <textarea [(ngModel)]="subtitulo" name="subtitulo" rows="2"></textarea>
+            </div>
+
+            <div class="field">
+              <label>URL de Imagen *</label>
+              <input type="text" [(ngModel)]="imagenUrl" name="imagenUrl" required />
+            </div>
+
+            <div class="form-row">
+              <div class="field col-6">
+                <label>Texto del Botón CTA</label>
+                <input type="text" [(ngModel)]="textoBoton" name="textoBoton" placeholder="Ej: Ver Catálogo" />
+              </div>
+              <div class="field col-6">
+                <label>Enlace del Botón</label>
+                <input type="text" [(ngModel)]="enlaceBoton" name="enlaceBoton" placeholder="/catalogo" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field col-6">
+                <label>Orden</label>
+                <input type="number" [(ngModel)]="orden" name="orden" />
+              </div>
+              <div class="field col-6 chk-center">
+                <label><input type="checkbox" [(ngModel)]="activo" name="activo" /> Banner Activo</label>
+              </div>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
+              <button type="submit" class="btn-save">Guardar Banner</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    <!-- GRID BANNERS -->
+    <div class="banners-grid">
+      @for (b of servicioBanners.banners(); track b.id) {
+        <div class="banner-preview-card" [style.background-image]="'linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), url(' + b.imagenUrl + ')'">
+          <div class="banner-card-header">
+            <span class="badge-order">#{{ b.orden }}</span>
+            <span class="badge-status" [class.inactive]="!b.activo">{{ b.activo ? 'ACTIVO' : 'INACTIVO' }}</span>
+          </div>
+
+          <div class="banner-card-body">
+            <h4>{{ b.titulo }}</h4>
+            <p>{{ b.subtitulo }}</p>
+          </div>
+
+          <div class="banner-card-footer">
+            <button class="btn-act" (click)="abrirEditar(b)"><ion-icon name="create-outline"></ion-icon> Editar</button>
+            <button class="btn-act red" (click)="eliminar(b.id)"><ion-icon name="trash-outline"></ion-icon> Eliminar</button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</ion-content>

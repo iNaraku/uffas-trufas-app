@@ -1,0 +1,108 @@
+<ion-header class="admin-header">
+  <ion-toolbar class="admin-toolbar">
+    <div class="admin-nav-box">
+      <div class="brand-admin" routerLink="/admin/dashboard">
+        <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
+        <span>REBEL ADMIN PANEL</span>
+      </div>
+      <div class="user-badge">
+        <span>👤 {{ servicioAuth.administradorActual()?.nombre }}</span>
+        <button (click)="salirAdmin()" class="btn-logout"><ion-icon name="log-out-outline"></ion-icon> Salir</button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-admin">
+  <div class="admin-wrapper">
+    <nav class="admin-menu">
+      <a routerLink="/admin/dashboard" class="menu-item"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
+      <a routerLink="/admin/products" class="menu-item"><ion-icon name="cube-outline"></ion-icon> Productos</a>
+      <a routerLink="/admin/users" class="menu-item"><ion-icon name="people-outline"></ion-icon> Usuarios PIN</a>
+      <a routerLink="/admin/banners" class="menu-item"><ion-icon name="images-outline"></ion-icon> Banners</a>
+      <a routerLink="/admin/categories" class="menu-item active"><ion-icon name="pricetags-outline"></ion-icon> Categorías</a>
+      <a routerLink="/admin/theme" class="menu-item"><ion-icon name="color-palette-outline"></ion-icon> Tema Dinámico</a>
+      <a routerLink="/admin/settings" class="menu-item"><ion-icon name="settings-outline"></ion-icon> Configuración</a>
+    </nav>
+
+    <div class="page-header">
+      <div>
+        <h2>Administrar Categorías</h2>
+        <p>Organiza tus productos por secciones temáticas del catálogo.</p>
+      </div>
+      <button class="btn-add-cat" (click)="abrirCrear()">
+        <ion-icon name="add-circle-outline"></ion-icon> Nueva Categoría
+      </button>
+    </div>
+
+    <!-- MODAL -->
+    @if (mostrandoModal) {
+      <div class="modal-backdrop">
+        <div class="modal-card">
+          <div class="modal-head">
+            <h3>{{ categoriaEdicion ? 'Editar Categoría' : 'Nueva Categoría' }}</h3>
+            <button class="btn-close" (click)="cerrarModal()">&times;</button>
+          </div>
+
+          <form (ngSubmit)="guardar()" class="cat-form">
+            <div class="field">
+              <label>Nombre de Categoría *</label>
+              <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Ej: Bongs Premium 🔒" required />
+            </div>
+
+            <div class="field">
+              <label>Descripción</label>
+              <textarea [(ngModel)]="descripcion" name="descripcion" rows="2"></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="field col-6">
+                <label>Orden</label>
+                <input type="number" [(ngModel)]="orden" name="orden" />
+              </div>
+              <div class="field col-6 chk-center">
+                <label><input type="checkbox" [(ngModel)]="activa" name="activa" /> Categoría Activa</label>
+              </div>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
+              <button type="submit" class="btn-save">Guardar Categoría</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    <!-- TABLA CATEGORÍAS -->
+    <div class="table-card">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Orden</th>
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of servicioProductos.categorias(); track c.id) {
+            <tr>
+              <td><strong>#{{ c.orden }}</strong></td>
+              <td><strong class="cat-title">{{ c.nombre }}</strong></td>
+              <td>{{ c.descripcion || 'Sin descripción' }}</td>
+              <td>
+                <span class="badge-status" [class.inactive]="!c.activa">{{ c.activa ? 'Activa' : 'Inactiva' }}</span>
+              </td>
+              <td class="actions-cell">
+                <button class="btn-act" (click)="abrirEditar(c)"><ion-icon name="create-outline"></ion-icon></button>
+                <button class="btn-act red" (click)="eliminar(c.id)"><ion-icon name="trash-outline"></ion-icon></button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ion-content>

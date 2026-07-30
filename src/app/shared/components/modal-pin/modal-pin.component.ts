@@ -1,0 +1,36 @@
+import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { ServicioPin } from '../../../services/pin/servicio-pin.service';
+
+@Component({
+  selector: 'app-modal-pin',
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonicModule],
+  templateUrl: './modal-pin.component.html',
+  styleUrls: ['./modal-pin.component.css']
+})
+export class ModalPinComponent {
+  @Output() cerrarModal = new EventEmitter<void>();
+
+  public servicioPin = inject(ServicioPin);
+  public pinIngresado: string = '';
+  public cargando: boolean = false;
+
+  async validar(): Promise<void> {
+    if (!this.pinIngresado || this.pinIngresado.trim().length === 0) return;
+
+    this.cargando = true;
+    const exito = await this.servicioPin.validarPin(this.pinIngresado);
+    this.cargando = false;
+
+    if (exito) {
+      this.cerrar();
+    }
+  }
+
+  cerrar(): void {
+    this.cerrarModal.emit();
+  }
+}

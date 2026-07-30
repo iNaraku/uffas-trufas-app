@@ -1,0 +1,191 @@
+<ion-header class="admin-header">
+  <ion-toolbar class="admin-toolbar">
+    <div class="admin-nav-box">
+      <div class="brand-admin" routerLink="/admin/dashboard">
+        <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
+        <span>REBEL ADMIN PANEL</span>
+      </div>
+      <div class="user-badge">
+        <span>👤 {{ servicioAuth.administradorActual()?.nombre }}</span>
+        <button (click)="salirAdmin()" class="btn-logout">
+          <ion-icon name="log-out-outline"></ion-icon> Salir
+        </button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-admin">
+  <div class="admin-wrapper">
+    <nav class="admin-menu">
+      <a routerLink="/admin/dashboard" class="menu-item"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
+      <a routerLink="/admin/products" class="menu-item active"><ion-icon name="cube-outline"></ion-icon> Productos</a>
+      <a routerLink="/admin/users" class="menu-item"><ion-icon name="people-outline"></ion-icon> Usuarios PIN</a>
+      <a routerLink="/admin/banners" class="menu-item"><ion-icon name="images-outline"></ion-icon> Banners</a>
+      <a routerLink="/admin/categories" class="menu-item"><ion-icon name="pricetags-outline"></ion-icon> Categorías</a>
+      <a routerLink="/admin/theme" class="menu-item"><ion-icon name="color-palette-outline"></ion-icon> Tema Dinámico</a>
+      <a routerLink="/admin/settings" class="menu-item"><ion-icon name="settings-outline"></ion-icon> Configuración</a>
+    </nav>
+
+    <div class="page-header">
+      <div>
+        <h2>Gestión de Productos</h2>
+        <p>Administra catálogo, precios, imágenes y visibilidad público/privado.</p>
+      </div>
+      <button class="btn-add-prod" (click)="abrirFormularioCrear()">
+        <ion-icon name="add-circle"></ion-icon> Nuevo Producto
+      </button>
+    </div>
+
+    <!-- FORMULARIO MODAL / CREAR / EDITAR -->
+    @if (mostrandoFormulario()) {
+      <div class="form-modal-backdrop">
+        <div class="form-modal-card">
+          <div class="modal-head">
+            <h3>{{ productoEdicion() ? 'Editar Producto' : 'Crear Nuevo Producto' }}</h3>
+            <button class="btn-close" (click)="cancelarFormulario()">&times;</button>
+          </div>
+
+          <form [formGroup]="productoForm" (ngSubmit)="guardarProducto()" class="admin-form">
+            <div class="form-row">
+              <div class="field col-8">
+                <label>Nombre del Producto *</label>
+                <input type="text" formControlName="nombre" placeholder="Ej: Bong Borosilicato Matrix" />
+              </div>
+              <div class="field col-4">
+                <label>Precio (MXN) *</label>
+                <input type="number" formControlName="precio" min="0" />
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Descripción *</label>
+              <textarea formControlName="descripcion" rows="3" placeholder="Detalles, material, dimensiones..."></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="field col-6">
+                <label>Categoría *</label>
+                <select formControlName="categoriaId">
+                  @for (cat of servicioProductos.categorias(); track cat.id) {
+                    <option [value]="cat.id">{{ cat.nombre }}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="field col-6">
+                <label>Visibilidad Catálogo *</label>
+                <select formControlName="visibilidad">
+                  <option value="PUBLIC">PUBLIC (Abierto a todos)</option>
+                  <option value="PRIVATE">PRIVATE 🔒 (Requiere PIN)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field col-8">
+                <label>URL de Imagen</label>
+                <input type="text" formControlName="imagenUrl" placeholder="https://..." />
+              </div>
+              <div class="field col-4">
+                <label>Subir Imagen Local</label>
+                <input type="file" (change)="subirImagenLocal($event)" accept="image/*" class="file-input" />
+              </div>
+            </div>
+
+            <div class="form-row checkbox-row">
+              <label class="chk-label">
+                <input type="checkbox" formControlName="disponible" /> Disponible en Stock
+              </label>
+
+              <label class="chk-label">
+                <input type="checkbox" formControlName="destacado" /> Producto Destacado (Portada)
+              </label>
+            </div>
+
+            <div class="form-row">
+              <div class="field col-6">
+                <label>Orden de Despliegue</label>
+                <input type="number" formControlName="orden" />
+              </div>
+
+              <div class="field col-6">
+                <label>Estado</label>
+                <select formControlName="estado">
+                  <option value="ACTIVE">ACTIVE (Activo)</option>
+                  <option value="INACTIVE">INACTIVE (Oculto)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn-cancel" (click)="cancelarFormulario()">Cancelar</button>
+              <button type="submit" class="btn-save">Guardar Producto</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    <!-- TABLA DE PRODUCTOS -->
+    <div class="table-card">
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Img</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Visibilidad</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (prod of servicioProductos.productos(); track prod.id) {
+              <tr>
+                <td><img [src]="prod.imagenUrl" class="table-img" /></td>
+                <td>
+                  <strong class="prod-title-tbl">{{ prod.nombre }}</strong>
+                  @if (prod.destacado) { <span class="tag-feat">🔥 Destacado</span> }
+                </td>
+                <td>{{ prod.categoriaNombre }}</td>
+                <td>{{ prod.precio | precio }}</td>
+                <td>
+                  <button
+                    class="btn-toggle-vis"
+                    [class.is-priv]="prod.visibilidad === 'PRIVATE'"
+                    (click)="cambiarVisibilidad(prod.id, prod.visibilidad)"
+                  >
+                    {{ prod.visibilidad === 'PRIVATE' ? '🔒 PRIVADO' : '🌐 PÚBLICO' }}
+                  </button>
+                </td>
+                <td>
+                  <button
+                    class="btn-toggle-status"
+                    [class.is-active]="prod.estado === 'ACTIVE'"
+                    (click)="cambiarEstado(prod.id, prod.estado)"
+                  >
+                    {{ prod.estado === 'ACTIVE' ? 'Activo' : 'Inactivo' }}
+                  </button>
+                </td>
+                <td class="actions-cell">
+                  <button class="btn-icon-act" (click)="abrirFormularioEditar(prod)" title="Editar">
+                    <ion-icon name="create-outline"></ion-icon>
+                  </button>
+                  <button class="btn-icon-act gold" (click)="duplicar(prod.id)" title="Duplicar">
+                    <ion-icon name="copy-outline"></ion-icon>
+                  </button>
+                  <button class="btn-icon-act red" (click)="eliminar(prod.id)" title="Eliminar">
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</ion-content>

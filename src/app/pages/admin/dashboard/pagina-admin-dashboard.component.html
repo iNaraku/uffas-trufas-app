@@ -1,0 +1,158 @@
+<ion-header class="admin-header">
+  <ion-toolbar class="admin-toolbar">
+    <div class="admin-nav-box">
+      <div class="brand-admin" routerLink="/admin/dashboard">
+        <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
+        <span>REBEL ADMIN PANEL</span>
+      </div>
+
+      <div class="user-badge">
+        <span>👤 {{ servicioAuth.administradorActual()?.nombre }}</span>
+        <button (click)="salirAdmin()" class="btn-logout" title="Cerrar Sesión Admin">
+          <ion-icon name="log-out-outline"></ion-icon> Salir
+        </button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-admin">
+  <div class="admin-wrapper">
+    <!-- SUBNAVBAR ADMIN -->
+    <nav class="admin-menu">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="menu-item">
+        <ion-icon name="grid-outline"></ion-icon> Dashboard
+      </a>
+      <a routerLink="/admin/products" routerLinkActive="active" class="menu-item">
+        <ion-icon name="cube-outline"></ion-icon> Productos
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active" class="menu-item">
+        <ion-icon name="people-outline"></ion-icon> Usuarios PIN
+      </a>
+      <a routerLink="/admin/banners" routerLinkActive="active" class="menu-item">
+        <ion-icon name="images-outline"></ion-icon> Banners & Inicio
+      </a>
+      <a routerLink="/admin/categories" routerLinkActive="active" class="menu-item">
+        <ion-icon name="pricetags-outline"></ion-icon> Categorías
+      </a>
+      <a routerLink="/admin/theme" routerLinkActive="active" class="menu-item">
+        <ion-icon name="color-palette-outline"></ion-icon> Tema Dinámico
+      </a>
+      <a routerLink="/admin/settings" routerLinkActive="active" class="menu-item">
+        <ion-icon name="settings-outline"></ion-icon> Configuración
+      </a>
+      <a routerLink="/home" class="menu-item btn-view-site">
+        <ion-icon name="open-outline"></ion-icon> Ver Sitio Público
+      </a>
+    </nav>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="main-content">
+      <div class="welcome-banner">
+        <h2>Panel de Control General</h2>
+        <p>Gestiona productos, accesos PIN de catálogo privado, colores del tema y banners promocionales.</p>
+      </div>
+
+      <!-- METRICS GRID -->
+      <div class="metrics-grid">
+        <div class="metric-card red-card">
+          <div class="metric-header">
+            <span>Total Productos</span>
+            <ion-icon name="cube-outline"></ion-icon>
+          </div>
+          <div class="metric-value">{{ totalProductos }}</div>
+          <div class="metric-sub">{{ productosPublicos }} públicos | {{ productosPrivados }} privados 🔒</div>
+        </div>
+
+        <div class="metric-card gold-card">
+          <div class="metric-header">
+            <span>Usuarios Catálogo PIN</span>
+            <ion-icon name="key-outline"></ion-icon>
+          </div>
+          <div class="metric-value">{{ servicioUsuarios.listaUsuarios().length }}</div>
+          <div class="metric-sub">{{ usuariosActivos }} usuarios activos autorizados</div>
+        </div>
+
+        <div class="metric-card dark-card">
+          <div class="metric-header">
+            <span>Categorías Activas</span>
+            <ion-icon name="pricetags-outline"></ion-icon>
+          </div>
+          <div class="metric-value">{{ servicioProductos.categorias().length }}</div>
+          <div class="metric-sub">Secciones de catálogo</div>
+        </div>
+
+        <div class="metric-card green-card">
+          <div class="metric-header">
+            <span>Banners Promocionales</span>
+            <ion-icon name="images-outline"></ion-icon>
+          </div>
+          <div class="metric-value">{{ totalBanners }}</div>
+          <div class="metric-sub">Carrusel de portada</div>
+        </div>
+      </div>
+
+      <!-- ACCIONES RÁPIDAS -->
+      <section class="quick-actions-section">
+        <h3>Acciones Rápidas</h3>
+        <div class="actions-grid">
+          <a routerLink="/admin/products" class="action-btn">
+            <ion-icon name="add-circle-outline"></ion-icon>
+            <span>Gestión de Productos</span>
+          </a>
+          <a routerLink="/admin/users" class="action-btn">
+            <ion-icon name="person-add-outline"></ion-icon>
+            <span>Crear Usuario PIN</span>
+          </a>
+          <a routerLink="/admin/theme" class="action-btn">
+            <ion-icon name="color-palette-outline"></ion-icon>
+            <span>Personalizar Tema</span>
+          </a>
+          <a routerLink="/admin/banners" class="action-btn">
+            <ion-icon name="image-outline"></ion-icon>
+            <span>Editar Banners</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- RESUMEN ÚLTIMOS PRODUCTOS -->
+      <section class="recent-products-section">
+        <h3>Últimos Productos Agregados</h3>
+        <div class="table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Visibilidad</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (prod of servicioProductos.productos().slice(0, 5); track prod.id) {
+                <tr>
+                  <td><img [src]="prod.imagenUrl" class="table-img" /></td>
+                  <td class="font-bold">{{ prod.nombre }}</td>
+                  <td>{{ prod.categoriaNombre }}</td>
+                  <td>${{ prod.precio }} MXN</td>
+                  <td>
+                    <span class="badge" [class.badge-priv]="prod.visibilidad === 'PRIVATE'">
+                      {{ prod.visibilidad === 'PRIVATE' ? '🔒 PRIVADO' : '🌐 PÚBLICO' }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="status-dot" [class.active]="prod.estado === 'ACTIVE'">
+                      {{ prod.estado === 'ACTIVE' ? 'Activo' : 'Inactivo' }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</ion-content>

@@ -1,0 +1,33 @@
+<div class="product-card" [class.is-private]="producto.visibilidad === 'PRIVATE'" [routerLink]="['/product', producto.id]">
+  <!-- BADGE VISIBILIDAD -->
+  <div class="card-badge" [class.badge-private]="producto.visibilidad === 'PRIVATE'">
+    @if (producto.visibilidad === 'PRIVATE') {
+      <ion-icon name="lock-closed"></ion-icon> PRIVADO 🔒
+    } @else {
+      <ion-icon name="globe-outline"></ion-icon> PÚBLICO
+    }
+  </div>
+
+  <!-- IMAGEN PRODUCTO -->
+  <div class="card-image-box">
+    <img [src]="producto.imagenUrl" [alt]="producto.nombre" class="card-img" loading="lazy" />
+    @if (producto.destacado) {
+      <span class="badge-featured">🔥 DESTACADO</span>
+    }
+  </div>
+
+  <!-- CONTENIDO DE TARJETA -->
+  <div class="card-body">
+    <span class="category-name">{{ producto.categoriaNombre || 'Parafernalia' }}</span>
+    <h3 class="product-title">{{ producto.nombre }}</h3>
+    <p class="product-desc">{{ producto.descripcion }}</p>
+
+    <div class="card-footer">
+      <div class="price-tag">{{ producto.precio | precio }}</div>
+      
+      <button class="btn-whatsapp" (click)="consultarWhatsapp($event)" title="Consultar disponibilidad por WhatsApp">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </button>
+    </div>
+  </div>
+</div>

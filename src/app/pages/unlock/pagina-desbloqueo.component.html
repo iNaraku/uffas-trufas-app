@@ -1,0 +1,64 @@
+<app-encabezado></app-encabezado>
+
+<ion-content class="content-rebel">
+  <div class="unlock-container">
+    <div class="unlock-card">
+      <div class="lock-header">
+        <div class="shield-badge">
+          <ion-icon name="key-outline"></ion-icon>
+        </div>
+        <h1>DESBLOQUEO DE CATÁLOGO PRIVADO 🔒</h1>
+        <p>Introduce tu PIN asignado por el administrador para acceder a productos y piezas exclusivas.</p>
+      </div>
+
+      @if (servicioPin.estaDesbloqueado()) {
+        <div class="active-session-box">
+          <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+          <h3>¡Catálogo Privado Desbloqueado!</h3>
+          <p>Actualmente tienes sesión activa como <strong>{{ servicioPin.usuarioCatalogoActual()?.nombre }}</strong>.</p>
+
+          <div class="action-row">
+            <a routerLink="/catalog" class="btn-goto-catalog">Ir al Catálogo</a>
+            <button class="btn-lock-session" (click)="servicioPin.bloquearCatalogo()">Cerrar Sesión PIN</button>
+          </div>
+        </div>
+      } @else {
+        <form (ngSubmit)="validarPin()" class="unlock-form">
+          <div class="input-field">
+            <label for="pinKey">PIN de Acceso</label>
+            <input
+              id="pinKey"
+              type="password"
+              [(ngModel)]="pinIngresado"
+              name="pinKey"
+              placeholder="••••"
+              maxlength="10"
+              required
+            />
+          </div>
+
+          @if (servicioPin.mensajeError()) {
+            <div class="error-alert">
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              <span>{{ servicioPin.mensajeError() }}</span>
+            </div>
+          }
+
+          <div class="demo-hints">
+            <span>💡 <em>PIN de prueba: <strong>1234</strong> o <strong>7777</strong></em></span>
+          </div>
+
+          <button type="submit" class="btn-submit-unlock" [disabled]="cargando || !pinIngresado">
+            @if (cargando) {
+              <ion-spinner name="crescent"></ion-spinner>
+            } @else {
+              <span>Desbloquear Ahora</span>
+            }
+          </button>
+        </form>
+      }
+    </div>
+  </div>
+
+  <app-pie-pagina></app-pie-pagina>
+</ion-content>

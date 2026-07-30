@@ -1,0 +1,95 @@
+<ion-header class="admin-header">
+  <ion-toolbar class="admin-toolbar">
+    <div class="admin-nav-box">
+      <div class="brand-admin" routerLink="/admin/dashboard">
+        <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
+        <span>REBEL ADMIN PANEL</span>
+      </div>
+      <div class="user-badge">
+        <span>👤 {{ servicioAuth.administradorActual()?.nombre }}</span>
+        <button (click)="salirAdmin()" class="btn-logout"><ion-icon name="log-out-outline"></ion-icon> Salir</button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-admin">
+  <div class="admin-wrapper">
+    <nav class="admin-menu">
+      <a routerLink="/admin/dashboard" class="menu-item"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
+      <a routerLink="/admin/products" class="menu-item"><ion-icon name="cube-outline"></ion-icon> Productos</a>
+      <a routerLink="/admin/users" class="menu-item"><ion-icon name="people-outline"></ion-icon> Usuarios PIN</a>
+      <a routerLink="/admin/banners" class="menu-item"><ion-icon name="images-outline"></ion-icon> Banners</a>
+      <a routerLink="/admin/categories" class="menu-item"><ion-icon name="pricetags-outline"></ion-icon> Categorías</a>
+      <a routerLink="/admin/theme" class="menu-item"><ion-icon name="color-palette-outline"></ion-icon> Tema Dinámico</a>
+      <a routerLink="/admin/settings" class="menu-item active"><ion-icon name="settings-outline"></ion-icon> Configuración</a>
+    </nav>
+
+    <div class="page-header">
+      <div>
+        <h2>Configuración General de la Tienda</h2>
+        <p>Ajusta el nombre, números de contacto para WhatsApp, dirección y enlaces a redes sociales.</p>
+      </div>
+    </div>
+
+    @if (guardadoExitoso) {
+      <div class="success-alert">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <span>¡Información del sitio actualizada exitosamente!</span>
+      </div>
+    }
+
+    <div class="settings-card">
+      <form (ngSubmit)="guardar()" class="config-form">
+        <div class="form-row">
+          <div class="field col-6">
+            <label>Nombre Comercial *</label>
+            <input type="text" [(ngModel)]="formConfig.nombreTienda" name="nombreTienda" required />
+          </div>
+          <div class="field col-6">
+            <label>Eslogan / Subtítulo *</label>
+            <input type="text" [(ngModel)]="formConfig.eslogan" name="eslogan" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field col-6">
+            <label>Teléfono de Atención WhatsApp *</label>
+            <input type="text" [(ngModel)]="formConfig.telefonoWhatsapp" name="telefonoWhatsapp" required />
+          </div>
+          <div class="field col-6">
+            <label>Horarios de Atención</label>
+            <input type="text" [(ngModel)]="formConfig.horarios" name="horarios" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Dirección Física de la Tienda</label>
+          <input type="text" [(ngModel)]="formConfig.direccion" name="direccion" />
+        </div>
+
+        <div class="form-row">
+          <div class="field col-6">
+            <label>Usuario Instagram (ej. @rebelsmokeshop)</label>
+            <input type="text" [(ngModel)]="formConfig.instagram" name="instagram" />
+          </div>
+          <div class="field col-6">
+            <label>Página Facebook (ej. /rebelsmokeshop)</label>
+            <input type="text" [(ngModel)]="formConfig.facebook" name="facebook" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Mensaje de Bienvenida en Footer</label>
+          <textarea [(ngModel)]="formConfig.mensajeBienvenida" name="mensajeBienvenida" rows="2"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-save">
+            <ion-icon name="save-outline"></ion-icon> Guardar Configuración
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

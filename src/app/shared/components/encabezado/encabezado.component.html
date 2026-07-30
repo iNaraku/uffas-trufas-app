@@ -1,0 +1,49 @@
+<ion-header class="header-rebel ion-no-border">
+  <ion-toolbar class="toolbar-rebel">
+    <div class="header-container">
+      <div class="brand-box" routerLink="/home">
+        <div class="logo-circle">
+          <ion-icon name="flame" class="flame-icon"></ion-icon>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">{{ servicioConfig.configuracion().nombreTienda }}</span>
+          <span class="brand-sub">{{ servicioConfig.configuracion().eslogan }}</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a routerLink="/home" routerLinkActive="active-link" class="nav-item">Inicio</a>
+        <a routerLink="/catalog" routerLinkActive="active-link" class="nav-item">Catálogo</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- BOTÓN PIN / CATÁLOGO PRIVADO -->
+        @if (servicioPin.estaDesbloqueado()) {
+          <div class="unlocked-badge">
+            <ion-icon name="lock-open-outline" class="badge-icon"></ion-icon>
+            <span class="user-name">{{ servicioPin.usuarioCatalogoActual()?.nombre }}</span>
+            <button class="btn-lock" (click)="bloquear()" title="Cerrar Catálogo Privado">
+              <ion-icon name="power-outline"></ion-icon>
+            </button>
+          </div>
+        } @else {
+          <button class="btn-pin-unlock" (click)="abrirModalPin()">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+            <span>Desbloquear PIN 🔒</span>
+          </button>
+        }
+
+        <!-- BOTÓN ADMIN LOGIN -->
+        <a routerLink="/admin/login" class="btn-admin-access" title="Acceso Administrativo">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          <span class="admin-text">Admin</span>
+        </a>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<!-- MODAL PIN -->
+@if (mostrarModalPin) {
+  <app-modal-pin (cerrarModal)="cerrarModalPin()"></app-modal-pin>
+}

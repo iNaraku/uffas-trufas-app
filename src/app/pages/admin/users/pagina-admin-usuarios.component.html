@@ -1,0 +1,138 @@
+<ion-header class="admin-header">
+  <ion-toolbar class="admin-toolbar">
+    <div class="admin-nav-box">
+      <div class="brand-admin" routerLink="/admin/dashboard">
+        <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
+        <span>REBEL ADMIN PANEL</span>
+      </div>
+      <div class="user-badge">
+        <span>👤 {{ servicioAuth.administradorActual()?.nombre }}</span>
+        <button (click)="salirAdmin()" class="btn-logout">
+          <ion-icon name="log-out-outline"></ion-icon> Salir
+        </button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-admin">
+  <div class="admin-wrapper">
+    <nav class="admin-menu">
+      <a routerLink="/admin/dashboard" class="menu-item"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
+      <a routerLink="/admin/products" class="menu-item"><ion-icon name="cube-outline"></ion-icon> Productos</a>
+      <a routerLink="/admin/users" class="menu-item active"><ion-icon name="people-outline"></ion-icon> Usuarios PIN</a>
+      <a routerLink="/admin/banners" class="menu-item"><ion-icon name="images-outline"></ion-icon> Banners</a>
+      <a routerLink="/admin/categories" class="menu-item"><ion-icon name="pricetags-outline"></ion-icon> Categorías</a>
+      <a routerLink="/admin/theme" class="menu-item"><ion-icon name="color-palette-outline"></ion-icon> Tema Dinámico</a>
+      <a routerLink="/admin/settings" class="menu-item"><ion-icon name="settings-outline"></ion-icon> Configuración</a>
+    </nav>
+
+    <div class="page-header">
+      <div>
+        <h2>Usuarios de Catálogo (Acceso PIN)</h2>
+        <p>Estos usuarios no usan correo ni contraseña. Ingresan únicamente mediante su PIN asignado.</p>
+      </div>
+      <button class="btn-add-user" (click)="abrirCrear()">
+        <ion-icon name="person-add-outline"></ion-icon> Crear Usuario PIN
+      </button>
+    </div>
+
+    <!-- BUSCADOR -->
+    <div class="search-bar">
+      <ion-icon name="search-outline"></ion-icon>
+      <input
+        type="text"
+        [ngModel]="terminoBusqueda()"
+        (ngModelChange)="terminoBusqueda.set($event)"
+        placeholder="Buscar por nombre de usuario, PIN u observaciones..."
+      />
+    </div>
+
+    <!-- MODAL EDITAR / CREAR -->
+    @if (mostrandoModal()) {
+      <div class="modal-backdrop">
+        <div class="modal-card">
+          <div class="modal-head">
+            <h3>{{ usuarioEdicion() ? 'Editar Usuario PIN' : 'Nuevo Usuario PIN' }}</h3>
+            <button class="btn-close" (click)="cerrarModal()">&times;</button>
+          </div>
+
+          <form (ngSubmit)="guardar()" class="user-form">
+            <div class="field">
+              <label>Nombre del Usuario / Cliente *</label>
+              <input type="text" [(ngModel)]="nombreForm" name="nombre" placeholder="Ej: Cliente VIP Rebel" required />
+            </div>
+
+            <div class="field">
+              <label>PIN de Acceso (Numérico) *</label>
+              <input type="text" [(ngModel)]="pinForm" name="pin" placeholder="Ej: 1234" maxlength="10" required />
+            </div>
+
+            <div class="field">
+              <label>Observaciones / Notas Admin</label>
+              <textarea [(ngModel)]="observacionesForm" name="observaciones" rows="2" placeholder="Ej: Cliente VIP autorizado"></textarea>
+            </div>
+
+            <div class="chk-row">
+              <label>
+                <input type="checkbox" [(ngModel)]="activoForm" name="activo" /> Usuario Activo (Permitir acceso)
+              </label>
+            </div>
+
+            <div class="modal-actions">
+              <button type="button" class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
+              <button type="submit" class="btn-save">Guardar Usuario</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+
+    <!-- TABLA DE USUARIOS -->
+    <div class="table-card">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Nombre Usuario</th>
+            <th>PIN Autorizado</th>
+            <th>Estado</th>
+            <th>Fecha Creación</th>
+            <th>Observaciones</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of usuariosFiltrados(); track u.id) {
+            <tr>
+              <td><strong class="user-title">{{ u.nombre }}</strong></td>
+              <td><span class="pin-badge">🔑 {{ u.pin }}</span></td>
+              <td>
+                <button
+                  class="btn-status"
+                  [class.active]="u.activo"
+                  (click)="cambiarEstado(u.id, u.activo)"
+                >
+                  {{ u.activo ? '✔ Activo' : '✖ Inactivo' }}
+                </button>
+              </td>
+              <td>{{ u.fechaCreacion | date:'shortDate' }}</td>
+              <td>{{ u.observaciones || 'Sin notas' }}</td>
+              <td class="actions-cell">
+                <button class="btn-act" (click)="abrirEditar(u)" title="Editar">
+                  <ion-icon name="create-outline"></ion-icon>
+                </button>
+                <button class="btn-act red" (click)="eliminar(u.id)" title="Eliminar">
+                  <ion-icon name="trash-outline"></ion-icon>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="text-center">No se encontraron usuarios de catálogo.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ion-content>

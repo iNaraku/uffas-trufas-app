@@ -1,0 +1,85 @@
+<app-encabezado></app-encabezado>
+
+<ion-content class="content-rebel">
+  <div class="container page-padding">
+    <div class="breadcrumb">
+      <a routerLink="/catalog">← Volver al Catálogo</a>
+    </div>
+
+    @if (producto(); as item) {
+      @if (item.visibilidad === 'PRIVATE' && !servicioPin.estaDesbloqueado()) {
+        <!-- ESTADO BLOQUEADO PIN -->
+        <div class="locked-detail-card">
+          <div class="lock-icon-box">
+            <ion-icon name="lock-closed"></ion-icon>
+          </div>
+          <h2>Producto del Catálogo Privado 🔒</h2>
+          <p>Este artículo pertenece a la sección exclusiva VIP ({{ item.categoriaNombre }}). Ingresa tu PIN de usuario autorizado para ver todos los detalles y especificaciones.</p>
+          <button class="btn-unlock-large" (click)="abrirPinModal()">
+            Ingresar PIN de Usuario
+          </button>
+        </div>
+      } @else {
+        <!-- DETALLE COMPLETO DESBLOQUEADO -->
+        <div class="detail-grid">
+          <div class="image-gallery-box">
+            <img [src]="item.imagenUrl" [alt]="item.nombre" class="main-image" />
+            <div class="image-badge" [class.badge-priv]="item.visibilidad === 'PRIVATE'">
+              {{ item.visibilidad === 'PRIVATE' ? '🔒 CATÁLOGO PRIVADO' : '🌐 PÚBLICO' }}
+            </div>
+          </div>
+
+          <div class="detail-info-box">
+            <span class="category-pill">{{ item.categoriaNombre }}</span>
+            <h1 class="item-title">{{ item.nombre }}</h1>
+            <div class="price-header">{{ item.precio | precio }}</div>
+
+            <div class="availability-tag" [class.in-stock]="item.disponible">
+              <ion-icon [name]="item.disponible ? 'checkmark-circle' : 'close-circle'"></ion-icon>
+              <span>{{ item.disponible ? 'Disponible en tienda' : 'Agotado temporalmente' }}</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="description-section">
+              <h3>Descripción</h3>
+              <p>{{ item.descripcion }}</p>
+            </div>
+
+            <div class="specs-section">
+              <div class="spec-item">
+                <span class="spec-label">Categoría:</span>
+                <span class="spec-val">{{ item.categoriaNombre }}</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Código Producto:</span>
+                <span class="spec-val">{{ item.id }}</span>
+              </div>
+            </div>
+
+            <div class="action-buttons">
+              <button class="btn-whatsapp-large" (click)="consultarWhatsapp()">
+                <ion-icon name="logo-whatsapp"></ion-icon>
+                <span>Consultar por WhatsApp</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="not-found-card">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        <h2>Producto No Encontrado</h2>
+        <p>El producto solicitado no existe o ha sido retirado del catálogo.</p>
+        <a routerLink="/catalog" class="btn-primary-hero">Volver al Catálogo</a>
+      </div>
+    }
+  </div>
+
+  <app-pie-pagina></app-pie-pagina>
+</ion-content>
+
+<!-- MODAL PIN -->
+@if (mostrarModalPin) {
+  <app-modal-pin (cerrarModal)="cerrarPinModal()"></app-modal-pin>
+}

@@ -1,0 +1,115 @@
+.footer-rebel {
+  background-color: #0b0b0b;
+  border-top: 2px solid var(--color-primario, #D71920);
+  color: var(--color-texto-secundario, #C9C9C9);
+  padding-top: 3rem;
+  margin-top: 4rem;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--color-texto, #FFFFFF);
+  font-family: 'Impact', sans-serif;
+  letter-spacing: 1px;
+}
+
+.flame-icon {
+  color: var(--color-secundario, #F5B400);
+}
+
+.footer-desc {
+  font-size: 0.85rem;
+  margin: 0.75rem 0;
+  color: var(--color-secundario, #F5B400);
+}
+
+.footer-warning {
+  font-size: 0.75rem;
+  color: #ff6b6b;
+  margin-top: 0.5rem;
+}
+
+.footer-col h4 {
+  color: var(--color-texto, #FFFFFF);
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--color-secundario, #F5B400);
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-col a {
+  color: var(--color-texto-secundario, #C9C9C9);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: var(--color-secundario, #F5B400);
+}
+
+.footer-col p {
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.social-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--color-tarjetas, #232323);
+  color: var(--color-secundario, #F5B400);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.social-btn:hover {
+  transform: scale(1.1);
+  background: var(--color-primario, #D71920);
+  color: #fff;
+}
+
+.footer-bottom {
+  background: #000;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.75rem;
+  border-top: 1px solid #1a1a1a;
+}

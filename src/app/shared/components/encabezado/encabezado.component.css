@@ -1,0 +1,183 @@
+.header-rebel {
+  background-color: var(--color-fondo, #111111);
+  border-bottom: 2px solid var(--color-primario, #D71920);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.toolbar-rebel {
+  --background: var(--color-fondo, #111111);
+  --color: var(--color-texto, #FFFFFF);
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.75rem 0.5rem;
+}
+
+.brand-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.logo-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primario, #D71920), #800b0f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-secundario, #F5B400);
+  box-shadow: 0 0 12px rgba(215, 25, 32, 0.5);
+}
+
+.flame-icon {
+  font-size: 1.5rem;
+  color: var(--color-secundario, #F5B400);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--color-texto, #FFFFFF);
+  text-transform: uppercase;
+  font-family: 'Impact', 'Roboto', sans-serif;
+}
+
+.brand-sub {
+  font-size: 0.7rem;
+  color: var(--color-secundario, #F5B400);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-item {
+  color: var(--color-texto-secundario, #C9C9C9);
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease-in-out;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+}
+
+.nav-item:hover, .active-link {
+  color: var(--color-secundario, #F5B400);
+  background: rgba(245, 180, 0, 0.1);
+  border-bottom: 2px solid var(--color-secundario, #F5B400);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-pin-unlock {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, var(--color-primario, #D71920), #a31016);
+  color: #fff;
+  border: 1px solid var(--color-secundario, #F5B400);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(215, 25, 32, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-pin-unlock:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(245, 180, 0, 0.5);
+}
+
+.unlocked-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #1a2e1a;
+  border: 1px solid #2e7d32;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  color: #81c784;
+}
+
+.badge-icon {
+  font-size: 1.1rem;
+}
+
+.user-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.btn-lock {
+  background: transparent;
+  border: none;
+  color: #ff5252;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.btn-admin-access {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--color-tarjetas, #232323);
+  color: var(--color-texto-secundario, #C9C9C9);
+  border: 1px solid #333;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.btn-admin-access:hover {
+  background: #333;
+  color: var(--color-secundario, #F5B400);
+}
+
+@media (max-width: 768px) {
+  .brand-sub, .admin-text {
+    display: none;
+  }
+  .nav-links {
+    gap: 0.5rem;
+  }
+  .nav-item {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+  }
+}
