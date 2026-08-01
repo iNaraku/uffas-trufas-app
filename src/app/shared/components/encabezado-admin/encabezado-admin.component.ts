@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
-import { addIcons } from 'ionicons';
 import {
   gridOutline,
   cubeOutline,
@@ -33,20 +32,18 @@ export class EncabezadoAdminComponent {
   private navCtrl = inject(NavController);
   private ngZone = inject(NgZone);
 
-  constructor() {
-    addIcons({
-      'grid-outline': gridOutline,
-      'cube-outline': cubeOutline,
-      'people-outline': peopleOutline,
-      'images-outline': imagesOutline,
-      'pricetags-outline': pricetagsOutline,
-      'color-palette-outline': colorPaletteOutline,
-      'settings-outline': settingsOutline,
-      'open-outline': openOutline,
-      'shield-checkmark': shieldCheckmark,
-      'log-out-outline': logOutOutline
-    });
-  }
+  public icons = {
+    gridOutline,
+    cubeOutline,
+    peopleOutline,
+    imagesOutline,
+    pricetagsOutline,
+    colorPaletteOutline,
+    settingsOutline,
+    openOutline,
+    shieldCheckmark,
+    logOutOutline
+  };
 
   irA(ruta: string, e?: Event): void {
     if (e) e.preventDefault();
