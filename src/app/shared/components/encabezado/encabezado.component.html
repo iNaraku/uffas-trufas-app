@@ -11,7 +11,8 @@
         </div>
       </div>
 
-      <nav class="nav-links">
+      <!-- DESKTOP NAV LINKS -->
+      <nav class="nav-links desktop-only">
         <a (click)="irAHome($event)" [class.active-link]="router.url === '/home' || router.url === '/'" class="nav-item" style="cursor: pointer;">Inicio</a>
         <a (click)="irACatalogo($event)" [class.active-link]="router.url.includes('/catalog')" class="nav-item" style="cursor: pointer;">Catálogo</a>
       </nav>
@@ -41,6 +42,16 @@
       </div>
     </div>
   </ion-toolbar>
+
+  <!-- SUBNAVBAR SECUNDARIO ABAJO PARA MÓVILES Y DISPOSITIVOS -->
+  <div class="subnav-bar">
+    <a (click)="irAHome($event)" [class.active-link]="router.url === '/home' || router.url === '/'" class="subnav-item" style="cursor: pointer;">
+      <ion-icon name="home-outline"></ion-icon> Inicio
+    </a>
+    <a (click)="irACatalogo($event)" [class.active-link]="router.url.includes('/catalog')" class="subnav-item" style="cursor: pointer;">
+      <ion-icon name="cube-outline"></ion-icon> Catálogo
+    </a>
+  </div>
 </ion-header>
 
 <!-- MODAL PIN -->

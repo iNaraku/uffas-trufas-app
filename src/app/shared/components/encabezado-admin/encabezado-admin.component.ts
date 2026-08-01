@@ -1,4 +1,4 @@
-import { Component, inject, NgZone, Input } from '@angular/core';
+import { Component, inject, NgZone, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
@@ -22,7 +22,8 @@ import {
   standalone: true,
   imports: [CommonModule, RouterModule, IonicModule],
   templateUrl: './encabezado-admin.component.html',
-  styleUrls: ['./encabezado-admin.component.css']
+  styleUrls: ['./encabezado-admin.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EncabezadoAdminComponent {
   @Input() rutaActiva: string = '';

@@ -142,3 +142,96 @@ ion-content::part(scroll) {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-secundario, #F5B400) !important;
 }
+
+/* 6. ESTILOS GLOBALES DE NAVEGACIÓN Y HEADER ADMIN (PROD PROOF) */
+.admin-header {
+  border-bottom: 2px solid var(--color-primario, #D71920) !important;
+}
+
+.admin-toolbar {
+  --background: #181818 !important;
+  --color: #ffffff !important;
+  --padding-start: 1.5rem !important;
+  --padding-end: 1.5rem !important;
+}
+
+.admin-nav-box {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.brand-admin {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  font-size: 1.15rem !important;
+  font-weight: 900 !important;
+  font-family: 'Impact', sans-serif !important;
+  letter-spacing: 1px !important;
+  cursor: pointer !important;
+  color: #ffffff !important;
+}
+
+.gold-icon {
+  color: var(--color-secundario, #F5B400) !important;
+}
+
+.user-badge {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1rem !important;
+  font-size: 0.85rem !important;
+  color: #ffffff !important;
+}
+
+.btn-logout {
+  background: rgba(215, 25, 32, 0.2) !important;
+  border: 1px solid var(--color-primario, #D71920) !important;
+  color: #ff6b6b !important;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.3rem !important;
+  font-weight: 700 !important;
+}
+
+.admin-menu {
+  display: flex !important;
+  gap: 0.5rem !important;
+  overflow-x: auto !important;
+  background: #1c1c1c !important;
+  padding: 0.5rem !important;
+  border-radius: 10px !important;
+  border: 1px solid #333333 !important;
+  margin: 1rem 1.5rem 0 1.5rem !important;
+}
+
+.menu-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  color: #cccccc !important;
+  text-decoration: none !important;
+  padding: 0.6rem 1rem !important;
+  border-radius: 6px !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+}
+
+.menu-item:hover, .menu-item.active {
+  background: var(--color-primario, #D71920) !important;
+  color: #ffffff !important;
+}
+
+.btn-view-site {
+  margin-left: auto !important;
+  background: rgba(245, 180, 0, 0.15) !important;
+  color: var(--color-secundario, #F5B400) !important;
+  border: 1px solid var(--color-secundario, #F5B400) !important;
+}
+
