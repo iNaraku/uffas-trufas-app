@@ -9,7 +9,7 @@
         <p>Administra catálogo, precios, imágenes y visibilidad público/privado.</p>
       </div>
       <button class="btn-add-prod" (click)="abrirFormularioCrear()">
-        <ion-icon name="add-circle"></ion-icon> Nuevo Producto
+        <ion-icon [icon]="icons.addCircle"></ion-icon> Nuevo Producto
       </button>
     </div>
 
@@ -148,13 +148,13 @@
                 </td>
                 <td class="actions-cell">
                   <button class="btn-icon-act" (click)="abrirFormularioEditar(prod)" title="Editar">
-                    <ion-icon name="create-outline"></ion-icon>
+                    <ion-icon [icon]="icons.createOutline"></ion-icon>
                   </button>
                   <button class="btn-icon-act gold" (click)="duplicar(prod.id)" title="Duplicar">
-                    <ion-icon name="copy-outline"></ion-icon>
+                    <ion-icon [icon]="icons.copyOutline"></ion-icon>
                   </button>
                   <button class="btn-icon-act red" (click)="eliminar(prod.id)" title="Eliminar">
-                    <ion-icon name="trash-outline"></ion-icon>
+                    <ion-icon [icon]="icons.trashOutline"></ion-icon>
                   </button>
                 </td>
               </tr>

@@ -8,8 +8,15 @@ import { ServicioAlmacenamiento } from '../../../services/storage/servicio-almac
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { Producto, VisibilidadProducto, EstadoProducto } from '../../../models/producto.model';
 import { PrecioPipe } from '../../../shared/pipes/precio.pipe';
-
 import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
+import {
+  addCircle,
+  createOutline,
+  copyOutline,
+  trashOutline,
+  searchOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-pagina-admin-productos',
@@ -37,6 +44,14 @@ export class PaginaAdminProductosComponent {
   public mostrandoFormulario = signal<boolean>(false);
   public productoEdicion = signal<Producto | null>(null);
   public busquedaAdmin = signal<string>('');
+
+  public icons = {
+    addCircle,
+    createOutline,
+    copyOutline,
+    trashOutline,
+    searchOutline
+  };
 
   public productoForm: FormGroup = this.fb.group({
     nombre: ['', [Validators.required]],

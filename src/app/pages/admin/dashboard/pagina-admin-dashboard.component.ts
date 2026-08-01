@@ -6,8 +6,18 @@ import { ServicioAutenticacion } from '../../../services/auth/servicio-autentica
 import { ServicioProductos } from '../../../services/products/servicio-productos.service';
 import { ServicioUsuariosCatalogo } from '../../../services/users/servicio-usuarios-catalogo.service';
 import { ServicioBanners } from '../../../services/banners/servicio-banners.service';
-
 import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
+import {
+  cubeOutline,
+  keyOutline,
+  pricetagsOutline,
+  imagesOutline,
+  addCircleOutline,
+  personAddOutline,
+  colorPaletteOutline,
+  imageOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-pagina-admin-dashboard',
@@ -25,6 +35,17 @@ export class PaginaAdminDashboardComponent {
   private router = inject(Router);
   private navCtrl = inject(NavController);
   private ngZone = inject(NgZone);
+
+  public icons = {
+    cubeOutline,
+    keyOutline,
+    pricetagsOutline,
+    imagesOutline,
+    addCircleOutline,
+    personAddOutline,
+    colorPaletteOutline,
+    imageOutline
+  };
 
   get totalProductos(): number {
     return this.servicioProductos.productos().length;
@@ -53,5 +74,3 @@ export class PaginaAdminDashboardComponent {
     });
   }
 }
-
-

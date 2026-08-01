@@ -95,7 +95,7 @@ app-pagina-admin-configuracion.ion-page-hidden {
   display: none !important;
 }
 
-/* 4. ENCABEZADO FIJO EN LA PARTE SUPERIOR */
+/* 4. ENCABEZADO FIJO Y ZONA SEGURA DE NAVEGACIÓN (MOBILE SAFE AREA) */
 app-encabezado,
 app-encabezado-admin,
 ion-header {
@@ -104,6 +104,15 @@ ion-header {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
+  padding-top: max(0px, env(safe-area-inset-top)) !important;
+  background-color: var(--color-fondo, #111111) !important;
+}
+
+.toolbar-rebel,
+.admin-toolbar {
+  --padding-top: max(0.4rem, env(safe-area-inset-top)) !important;
+  --padding-bottom: 0.4rem !important;
+  min-height: 56px !important;
 }
 
 /* 5. ION-CONTENT EXPANSIBLE CON SCROLL DE NAVEGADOR EN PRODUCCIÓN */
