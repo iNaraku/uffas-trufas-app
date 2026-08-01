@@ -187,10 +187,17 @@ addIcons({
   'powerOutline': powerOutline
 });
 
+import { isDevMode } from '@angular/core';
+import { provideServiceWorker } from '@angular/service-worker';
+
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
 });
