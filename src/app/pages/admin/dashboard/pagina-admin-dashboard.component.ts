@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { ServicioProductos } from '../../../services/products/servicio-productos.service';
 import { ServicioUsuariosCatalogo } from '../../../services/users/servicio-usuarios-catalogo.service';
@@ -12,7 +12,8 @@ import { ServicioBanners } from '../../../services/banners/servicio-banners.serv
   standalone: true,
   imports: [CommonModule, RouterModule, IonicModule],
   templateUrl: './pagina-admin-dashboard.component.html',
-  styleUrls: ['./pagina-admin-dashboard.component.css']
+  styleUrls: ['./pagina-admin-dashboard.component.css'],
+  host: { 'class': 'ion-page' }
 })
 export class PaginaAdminDashboardComponent {
   public servicioAuth = inject(ServicioAutenticacion);
@@ -20,6 +21,8 @@ export class PaginaAdminDashboardComponent {
   public servicioUsuarios = inject(ServicioUsuariosCatalogo);
   public servicioBanners = inject(ServicioBanners);
   private router = inject(Router);
+  private navCtrl = inject(NavController);
+  private ngZone = inject(NgZone);
 
   get totalProductos(): number {
     return this.servicioProductos.productos().length;
@@ -43,6 +46,10 @@ export class PaginaAdminDashboardComponent {
 
   async salirAdmin(): Promise<void> {
     await this.servicioAuth.cerrarSesion();
-    this.router.navigate(['/admin/login']);
+    this.ngZone.run(() => {
+      this.navCtrl.navigateRoot('/admin/login', { animationDirection: 'back' });
+    });
   }
 }
+
+

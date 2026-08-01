@@ -1,5 +1,7 @@
 import { Injectable, signal } from '@angular/core';
+import { doc, setDoc, onSnapshot } from 'firebase/firestore';
 import { TemaConfiguracion } from '../../core/models/tema.model';
+import { db } from '../../config/firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,23 @@ export class ServicioTema {
   }
 
   private cargarTema(): void {
+    try {
+      const refDoc = doc(db, 'configuracion', 'tema');
+      onSnapshot(refDoc, (docSnap) => {
+        if (docSnap.exists()) {
+          const tema = docSnap.data() as TemaConfiguracion;
+          this.temaActual.set(tema);
+          this.aplicarEstilosCss(tema);
+          localStorage.setItem(this.claveStorageTema, JSON.stringify(tema));
+        } else {
+          setDoc(refDoc, this.temaActual());
+        }
+      });
+      return;
+    } catch (e) {
+      console.warn('⚠️ Error al escuchar Firestore configuracion/tema:', e);
+    }
+
     const guardado = localStorage.getItem(this.claveStorageTema);
     if (guardado) {
       try {
@@ -66,7 +85,7 @@ export class ServicioTema {
     }
   }
 
-  public actualizarTema(nuevoTema: Partial<TemaConfiguracion>): void {
+  public async actualizarTema(nuevoTema: Partial<TemaConfiguracion>): Promise<void> {
     const temaActualizado: TemaConfiguracion = {
       ...this.temaActual(),
       ...nuevoTema
@@ -74,6 +93,13 @@ export class ServicioTema {
     this.temaActual.set(temaActualizado);
     this.aplicarEstilosCss(temaActualizado);
     localStorage.setItem(this.claveStorageTema, JSON.stringify(temaActualizado));
+
+    try {
+      const refDoc = doc(db, 'configuracion', 'tema');
+      await setDoc(refDoc, temaActualizado, { merge: true });
+    } catch (e) {
+      console.error('❌ Error actualizando Firestore configuracion/tema:', e);
+    }
   }
 
   public restaurarTemaPorDefecto(): void {
@@ -92,3 +118,5 @@ export class ServicioTema {
     this.actualizarTema(temaDefecto);
   }
 }
+
+

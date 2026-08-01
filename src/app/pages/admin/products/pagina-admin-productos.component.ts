@@ -21,7 +21,8 @@ import { PrecioPipe } from '../../../shared/pipes/precio.pipe';
     PrecioPipe
   ],
   templateUrl: './pagina-admin-productos.component.html',
-  styleUrls: ['./pagina-admin-productos.component.css']
+  styleUrls: ['./pagina-admin-productos.component.css'],
+  host: { 'class': 'ion-page' }
 })
 export class PaginaAdminProductosComponent {
   public servicioProductos = inject(ServicioProductos);

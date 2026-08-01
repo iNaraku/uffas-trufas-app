@@ -12,7 +12,8 @@ import { Categoria } from '../../../core/models/categoria.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, IonicModule],
   templateUrl: './pagina-admin-categorias.component.html',
-  styleUrls: ['./pagina-admin-categorias.component.css']
+  styleUrls: ['./pagina-admin-categorias.component.css'],
+  host: { 'class': 'ion-page' }
 })
 export class PaginaAdminCategoriasComponent {
   public servicioProductos = inject(ServicioProductos);

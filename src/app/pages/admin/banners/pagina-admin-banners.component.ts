@@ -12,7 +12,8 @@ import { Banner } from '../../../core/models/banner.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, IonicModule],
   templateUrl: './pagina-admin-banners.component.html',
-  styleUrls: ['./pagina-admin-banners.component.css']
+  styleUrls: ['./pagina-admin-banners.component.css'],
+  host: { 'class': 'ion-page' }
 })
 export class PaginaAdminBannersComponent {
   public servicioBanners = inject(ServicioBanners);

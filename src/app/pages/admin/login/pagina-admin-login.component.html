@@ -18,7 +18,7 @@
               type="email"
               [(ngModel)]="emailInput"
               name="email"
-              placeholder="admin@smokeshop.com"
+              placeholder="tu-correo@midominio.com"
               required
             />
           </div>
@@ -46,10 +46,6 @@
           </div>
         }
 
-        <div class="admin-hint">
-          <span>💡 <em>Credenciales por defecto: <strong>admin@smokeshop.com</strong> / <strong>admin123</strong></em></span>
-        </div>
-
         <button type="submit" class="btn-login" [disabled]="cargando">
           @if (cargando) {
             <ion-spinner name="crescent"></ion-spinner>
@@ -65,3 +61,5 @@
     </div>
   </div>
 </ion-content>
+
+

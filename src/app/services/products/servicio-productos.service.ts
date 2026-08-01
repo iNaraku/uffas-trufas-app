@@ -1,6 +1,8 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
+import { collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import { Producto, VisibilidadProducto, EstadoProducto } from '../../core/models/producto.model';
 import { Categoria } from '../../core/models/categoria.model';
+import { db } from '../../config/firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -87,7 +89,6 @@ export class ServicioProductos {
       fechaCreacion: new Date().toISOString(),
       fechaActualizacion: new Date().toISOString()
     },
-
     // PRIVADOS 🔒
     {
       id: 'prod-5',
@@ -144,7 +145,7 @@ export class ServicioProductos {
       categoriaId: 'cat-6',
       categoriaNombre: 'Accesorios Exclusivos 🔒',
       precio: 5900,
-      imagenUrl: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=600&q=80',
+      imagenUrl: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80',
       disponible: true,
       destacado: true,
       orden: 8,
@@ -160,7 +161,44 @@ export class ServicioProductos {
   }
 
   private cargarDatos(): void {
-    // Categorías
+    try {
+      // Escuchar Categorías en Firestore
+      const refCats = collection(db, 'categorias');
+      onSnapshot(refCats, (snapshot) => {
+        if (!snapshot.empty) {
+          const listaCats = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Categoria));
+          this.categorias.set(listaCats);
+          this.guardarCategorias(listaCats);
+        } else {
+          this.categoriasIniciales.forEach(c => {
+            const refDoc = doc(db, 'categorias', c.id);
+            setDoc(refDoc, c);
+          });
+          this.categorias.set(this.categoriasIniciales);
+        }
+      });
+
+      // Escuchar Productos en Firestore
+      const refProds = collection(db, 'productos');
+      onSnapshot(refProds, (snapshot) => {
+        if (!snapshot.empty) {
+          const listaProds = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Producto));
+          this.productos.set(listaProds);
+          this.guardarProductos(listaProds);
+        } else {
+          this.productosIniciales.forEach(p => {
+            const refDoc = doc(db, 'productos', p.id);
+            setDoc(refDoc, p);
+          });
+          this.productos.set(this.productosIniciales);
+        }
+      });
+      return;
+    } catch (e) {
+      console.warn('⚠️ Error al escuchar Firestore productos/categorias:', e);
+    }
+
+    // Fallback Local Storage
     const localCat = localStorage.getItem(this.claveStorageCategorias);
     if (localCat) {
       try {
@@ -174,7 +212,6 @@ export class ServicioProductos {
       this.guardarCategorias(this.categoriasIniciales);
     }
 
-    // Productos
     const localProd = localStorage.getItem(this.claveStorageProductos);
     if (localProd) {
       try {
@@ -217,13 +254,22 @@ export class ServicioProductos {
 
   public async crearProducto(nuevo: Omit<Producto, 'id' | 'fechaCreacion' | 'fechaActualizacion'>): Promise<Producto> {
     const cat = this.categorias().find(c => c.id === nuevo.categoriaId);
+    const id = 'prod-' + Date.now();
     const prod: Producto = {
       ...nuevo,
-      id: 'prod-' + Date.now(),
+      id,
       categoriaNombre: cat ? cat.nombre : '',
       fechaCreacion: new Date().toISOString(),
       fechaActualizacion: new Date().toISOString()
     };
+
+    try {
+      const refDoc = doc(db, 'productos', id);
+      await setDoc(refDoc, prod);
+    } catch (e) {
+      console.error('❌ Error al crear producto en Firestore:', e);
+    }
+
     const lista = [...this.productos(), prod];
     this.productos.set(lista);
     this.guardarProductos(lista);
@@ -232,14 +278,22 @@ export class ServicioProductos {
 
   public async actualizarProducto(id: string, datos: Partial<Producto>): Promise<boolean> {
     const cat = datos.categoriaId ? this.categorias().find(c => c.id === datos.categoriaId) : null;
+    const camposActualizar = {
+      ...datos,
+      ...(cat ? { categoriaNombre: cat.nombre } : {}),
+      fechaActualizacion: new Date().toISOString()
+    };
+
+    try {
+      const refDoc = doc(db, 'productos', id);
+      await updateDoc(refDoc, camposActualizar);
+    } catch (e) {
+      console.error('❌ Error al actualizar producto en Firestore:', e);
+    }
+
     const lista = this.productos().map(p => {
       if (p.id === id) {
-        return {
-          ...p,
-          ...datos,
-          categoriaNombre: cat ? cat.nombre : (datos.categoriaNombre || p.categoriaNombre),
-          fechaActualizacion: new Date().toISOString()
-        };
+        return { ...p, ...camposActualizar };
       }
       return p;
     });
@@ -249,6 +303,13 @@ export class ServicioProductos {
   }
 
   public async eliminarProducto(id: string): Promise<boolean> {
+    try {
+      const refDoc = doc(db, 'productos', id);
+      await deleteDoc(refDoc);
+    } catch (e) {
+      console.error('❌ Error al eliminar producto en Firestore:', e);
+    }
+
     const lista = this.productos().filter(p => p.id !== id);
     this.productos.set(lista);
     this.guardarProductos(lista);
@@ -279,10 +340,16 @@ export class ServicioProductos {
   // MÉTODOS DE CATEGORÍA
 
   public async crearCategoria(cat: Omit<Categoria, 'id'>): Promise<Categoria> {
-    const nueva: Categoria = {
-      ...cat,
-      id: 'cat-' + Date.now()
-    };
+    const id = 'cat-' + Date.now();
+    const nueva: Categoria = { ...cat, id };
+
+    try {
+      const refDoc = doc(db, 'categorias', id);
+      await setDoc(refDoc, nueva);
+    } catch (e) {
+      console.error('❌ Error al crear categoría en Firestore:', e);
+    }
+
     const lista = [...this.categorias(), nueva];
     this.categorias.set(lista);
     this.guardarCategorias(lista);
@@ -290,6 +357,13 @@ export class ServicioProductos {
   }
 
   public async actualizarCategoria(id: string, datos: Partial<Categoria>): Promise<boolean> {
+    try {
+      const refDoc = doc(db, 'categorias', id);
+      await updateDoc(refDoc, datos);
+    } catch (e) {
+      console.error('❌ Error al actualizar categoría en Firestore:', e);
+    }
+
     const lista = this.categorias().map(c => c.id === id ? { ...c, ...datos } : c);
     this.categorias.set(lista);
     this.guardarCategorias(lista);
@@ -297,9 +371,18 @@ export class ServicioProductos {
   }
 
   public async eliminarCategoria(id: string): Promise<boolean> {
+    try {
+      const refDoc = doc(db, 'categorias', id);
+      await deleteDoc(refDoc);
+    } catch (e) {
+      console.error('❌ Error al eliminar categoría en Firestore:', e);
+    }
+
     const lista = this.categorias().filter(c => c.id !== id);
     this.categorias.set(lista);
     this.guardarCategorias(lista);
     return true;
   }
 }
+
+

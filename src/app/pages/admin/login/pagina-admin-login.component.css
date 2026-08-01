@@ -122,6 +122,23 @@
   color: #aaa;
 }
 
+.btn-toggle-modo {
+  background: transparent;
+  border: none;
+  color: var(--color-secundario, #F5B400);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.3rem 0;
+  transition: opacity 0.2s;
+}
+
+.btn-toggle-modo:hover {
+  opacity: 0.85;
+}
+
+
 .btn-login {
   background: linear-gradient(135deg, var(--color-primario, #D71920), #9e0e14);
   color: #fff;

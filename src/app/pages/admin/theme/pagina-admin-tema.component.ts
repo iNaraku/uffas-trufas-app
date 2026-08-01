@@ -12,7 +12,8 @@ import { TemaConfiguracion } from '../../../core/models/tema.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, IonicModule],
   templateUrl: './pagina-admin-tema.component.html',
-  styleUrls: ['./pagina-admin-tema.component.css']
+  styleUrls: ['./pagina-admin-tema.component.css'],
+  host: { 'class': 'ion-page' }
 })
 export class PaginaAdminTemaComponent {
   public servicioTema = inject(ServicioTema);

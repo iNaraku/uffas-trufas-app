@@ -12,7 +12,8 @@ import { UsuarioCatalogo } from '../../../core/models/usuario-catalogo.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, IonicModule],
   templateUrl: './pagina-admin-usuarios.component.html',
-  styleUrls: ['./pagina-admin-usuarios.component.css']
+  styleUrls: ['./pagina-admin-usuarios.component.css'],
+  host: { 'class': 'ion-page' }
 })
 export class PaginaAdminUsuariosComponent {
   public servicioUsuarios = inject(ServicioUsuariosCatalogo);

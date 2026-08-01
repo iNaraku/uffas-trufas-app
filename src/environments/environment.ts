@@ -1,11 +1,14 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSy_REPLACE_WITH_YOUR_FIREBASE_API_KEY",
-    authDomain: "smoke-shop-app.firebaseapp.com",
-    projectId: "smoke-shop-app",
-    storageBucket: "smoke-shop-app.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abcdef1234567890"
+    apiKey: "AIzaSyAdtl1qNjdebyik2YaoPuBd2dqvPs66Zw4",
+    authDomain: "ionic-noticias-68ba5.firebaseapp.com",
+    databaseURL: "https://ionic-noticias-68ba5.firebaseio.com",
+    projectId: "ionic-noticias-68ba5",
+    storageBucket: "ionic-noticias-68ba5.firebasestorage.app",
+    messagingSenderId: "959018780791",
+    appId: "1:959018780791:web:05f8018c9485fe5c779e72",
+    measurementId: "G-LPDT7VP692"
   }
 };
+
