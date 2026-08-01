@@ -12,7 +12,8 @@ import { ConfiguracionSitio } from '../../../core/models/configuracion.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, IonicModule],
   templateUrl: './pagina-admin-configuracion.component.html',
-  styleUrls: ['./pagina-admin-configuracion.component.css']
+  styleUrls: ['./pagina-admin-configuracion.component.css'],
+  host: { 'class': 'ion-page' }
 })
 export class PaginaAdminConfiguracionComponent {
   public servicioConfig = inject(ServicioConfiguracion);
