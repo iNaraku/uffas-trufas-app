@@ -155,6 +155,10 @@ export class AppComponent {
     });
   }
 
+  esRutaAdmin(): boolean {
+    return this.router.url.includes('/admin') && !this.router.url.includes('/admin/login');
+  }
+
   irAAdmin(ruta: string): void {
     this.menuCtrl.close('admin-menu');
     this.navCtrl.navigateRoot(ruta, { animated: false });
