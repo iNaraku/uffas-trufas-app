@@ -106,23 +106,27 @@ ion-header {
 .admin-toolbar {
   --background: var(--color-fondo, #111111);
   --color: var(--color-texto, #FFFFFF);
-  min-height: 56px;
+  --min-height: 56px;
+  min-height: 56px !important;
 }
 
 /* 5. ION-CONTENT SCROLL FLUIDO ORIENTADO A APP MÓVIL */
 ion-content {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  --overflow: auto;
+  display: block !important;
+  flex: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  --overflow: auto !important;
   --background: var(--color-fondo, #111111);
 }
 
 ion-content::part(scroll) {
-  position: relative;
-  height: 100%;
-  touch-action: pan-y;
-  -webkit-overflow-scrolling: touch;
+  position: relative !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  touch-action: pan-y !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
 /* Custom Scrollbar a nivel global en la ventana/body */

@@ -1,4 +1,4 @@
-import { Component, inject, NgZone } from '@angular/core';
+import { Component, inject, NgZone, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule, NavController } from '@ionic/angular';
@@ -22,7 +22,8 @@ import {
   standalone: true,
   imports: [CommonModule, RouterModule, IonicModule, ModalPinComponent],
   templateUrl: './encabezado.component.html',
-  styleUrls: ['./encabezado.component.css']
+  styleUrls: ['./encabezado.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EncabezadoComponent {
   public servicioPin = inject(ServicioPin);

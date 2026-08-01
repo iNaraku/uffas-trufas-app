@@ -1,5 +1,13 @@
+:host {
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+}
+
 .admin-header {
   border-bottom: 2px solid var(--color-primario, #D71920);
+  background: #181818;
 }
 
 .admin-toolbar {
@@ -7,6 +15,8 @@
   --color: #fff;
   --padding-start: 1.5rem;
   --padding-end: 1.5rem;
+  --min-height: 56px;
+  min-height: 56px;
 }
 
 .admin-nav-box {

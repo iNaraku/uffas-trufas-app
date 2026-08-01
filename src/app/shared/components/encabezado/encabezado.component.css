@@ -1,3 +1,10 @@
+:host {
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+}
+
 .header-rebel {
   background-color: var(--color-fondo, #111111);
   border-bottom: 2px solid var(--color-primario, #D71920);
@@ -11,6 +18,8 @@
   --color: var(--color-texto, #FFFFFF);
   --padding-start: 1rem;
   --padding-end: 1rem;
+  --min-height: 56px;
+  min-height: 56px;
 }
 
 .header-container {
