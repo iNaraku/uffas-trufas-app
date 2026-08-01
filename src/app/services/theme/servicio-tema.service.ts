@@ -19,7 +19,7 @@ export class ServicioTema {
     colorTextoSecundario: '#C9C9C9',// Texto Secundario
     colorIconos: '#F5B400',         // Iconos Dorados
     logotipoUrl: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=200&q=80',
-    faviconUrl: '/assets/icon/favicon.png'
+    faviconUrl: 'assets/images/icon.png'
   });
 
   constructor() {
@@ -32,6 +32,10 @@ export class ServicioTema {
       onSnapshot(refDoc, (docSnap) => {
         if (docSnap.exists()) {
           const tema = docSnap.data() as TemaConfiguracion;
+          // Si el faviconUrl almacenado en Firestore sigue apuntando al favicon viejo, usar assets/images/icon.png
+          if (!tema.faviconUrl || tema.faviconUrl === '/assets/icon/favicon.png' || tema.faviconUrl === 'assets/icon/favicon.png') {
+            tema.faviconUrl = 'assets/images/icon.png';
+          }
           this.temaActual.set(tema);
           this.aplicarEstilosCss(tema);
           localStorage.setItem(this.claveStorageTema, JSON.stringify(tema));
@@ -99,7 +103,7 @@ export class ServicioTema {
       colorTextoSecundario: '#C9C9C9',
       colorIconos: '#F5B400',
       logotipoUrl: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?auto=format&fit=crop&w=200&q=80',
-      faviconUrl: '/assets/icon/favicon.png'
+      faviconUrl: 'assets/images/icon.png'
     };
     this.actualizarTema(temaDefecto);
   }
