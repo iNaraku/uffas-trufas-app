@@ -1,64 +1,75 @@
-<ion-content class="content-login">
+<ion-content class="content-login ion-padding">
   <div class="login-wrapper">
-    <div class="login-card">
-      <div class="brand-badge">
-        <ion-icon name="shield-checkmark" class="shield-icon"></ion-icon>
-      </div>
-
-      <h1>PANEL ADMINISTRATIVO</h1>
-      <p class="subtitle">Acceso exclusivo para administradores de la plataforma</p>
-
-      <form (ngSubmit)="ingresar()" class="login-form">
-        <div class="field-group">
-          <label for="email">Correo Electrónico</label>
-          <div class="input-wrap">
-            <ion-icon name="mail-outline"></ion-icon>
-            <input
-              id="email"
-              type="email"
-              [(ngModel)]="emailInput"
-              name="email"
-              placeholder="tu-correo@midominio.com"
-              required
-            />
-          </div>
+    <ion-card class="native-login-card">
+      <ion-card-header class="login-card-header ion-text-center">
+        <div class="brand-badge-circle">
+          <ion-icon name="shield-checkmark" class="shield-icon"></ion-icon>
         </div>
+        <ion-card-title class="login-title">PANEL ADMINISTRATIVO</ion-card-title>
+        <ion-card-subtitle class="login-subtitle">Acceso exclusivo para administradores de la plataforma</ion-card-subtitle>
+      </ion-card-header>
 
-        <div class="field-group">
-          <label for="password">Contraseña</label>
-          <div class="input-wrap">
-            <ion-icon name="lock-closed-outline"></ion-icon>
-            <input
-              id="password"
-              type="password"
-              [(ngModel)]="passInput"
-              name="password"
-              placeholder="••••••••"
-              required
-            />
-          </div>
-        </div>
+      <ion-card-content class="login-card-content">
+        <form (ngSubmit)="ingresar()" class="login-form">
+          <ion-list [inset]="true" class="native-input-list ion-no-padding">
+            <ion-item class="native-input-item">
+              <ion-icon name="mail-outline" slot="start" color="danger"></ion-icon>
+              <ion-input
+                type="email"
+                label="Correo Electrónico"
+                labelPlacement="floating"
+                [(ngModel)]="emailInput"
+                name="email"
+                placeholder="admin@midominio.com"
+                required
+              ></ion-input>
+            </ion-item>
 
-        @if (mensajeError) {
-          <div class="error-toast">
-            <ion-icon name="alert-circle-outline"></ion-icon>
-            <span>{{ mensajeError }}</span>
-          </div>
-        }
+            <ion-item class="native-input-item" lines="none">
+              <ion-icon name="lock-closed-outline" slot="start" color="warning"></ion-icon>
+              <ion-input
+                type="password"
+                label="Contraseña"
+                labelPlacement="floating"
+                [(ngModel)]="passInput"
+                name="password"
+                placeholder="••••••••"
+                required
+              ></ion-input>
+            </ion-item>
+          </ion-list>
 
-        <button type="submit" class="btn-login" [disabled]="cargando">
-          @if (cargando) {
-            <ion-spinner name="crescent"></ion-spinner>
-          } @else {
-            <span>Iniciar Sesión Admin</span>
+          @if (mensajeError) {
+            <div class="error-toast-native">
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              <span>{{ mensajeError }}</span>
+            </div>
           }
-        </button>
-      </form>
 
-      <div class="back-link">
-        <a routerLink="/home">← Volver al sitio público</a>
-      </div>
-    </div>
+          <ion-button
+            expand="block"
+            shape="round"
+            type="submit"
+            color="danger"
+            [disabled]="cargando || !emailInput || !passInput"
+            class="btn-login-native"
+          >
+            @if (cargando) {
+              <ion-spinner name="crescent"></ion-spinner>
+            } @else {
+              <span>Iniciar Sesión Admin 🔓</span>
+            }
+          </ion-button>
+        </form>
+
+        <div class="back-link-box">
+          <ion-button fill="clear" color="medium" size="small" routerLink="/home">
+            <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+            Volver al sitio público
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
 

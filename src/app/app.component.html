@@ -1,3 +1,96 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content" [disabled]="!esRutaAdmin()" when="md">
+    <!-- MENÚ LATERAL NATIVO IONIC DE ADMINISTRACIÓN (<ion-menu>) -->
+    <ion-menu side="start" menuId="admin-menu" contentId="main-content" class="native-admin-drawer">
+      <ion-header class="ion-no-border">
+        <ion-toolbar class="drawer-header-toolbar">
+          <div class="drawer-brand-header">
+            <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
+            <span class="drawer-brand-title">REBEL ADMIN PANEL</span>
+          </div>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="drawer-content ion-padding-vertical">
+        <!-- INFO USUARIO ADMIN -->
+        <div class="admin-user-info-box">
+          <div class="user-avatar-circle">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+          <div class="user-details">
+            <span class="user-name">{{ servicioAuth.administradorActual()?.nombre || 'Administrador' }}</span>
+            <span class="user-role">Super Admin</span>
+          </div>
+        </div>
+
+        <!-- LISTADO NATIVO DE OPCIONES -->
+        <ion-list class="drawer-menu-list ion-no-padding">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="irAAdmin('/admin/dashboard')" [class.active-drawer-item]="router.url.includes('/admin/dashboard')">
+              <ion-icon name="grid-outline" slot="start"></ion-icon>
+              <ion-label>Dashboard General</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="irAAdmin('/admin/products')" [class.active-drawer-item]="router.url.includes('/admin/products')">
+              <ion-icon name="cube-outline" slot="start"></ion-icon>
+              <ion-label>Gestión de Productos</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="irAAdmin('/admin/users')" [class.active-drawer-item]="router.url.includes('/admin/users')">
+              <ion-icon name="people-outline" slot="start"></ion-icon>
+              <ion-label>Usuarios PIN de Catálogo</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="irAAdmin('/admin/banners')" [class.active-drawer-item]="router.url.includes('/admin/banners')">
+              <ion-icon name="images-outline" slot="start"></ion-icon>
+              <ion-label>Banners Promocionales</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="irAAdmin('/admin/categories')" [class.active-drawer-item]="router.url.includes('/admin/categories')">
+              <ion-icon name="pricetags-outline" slot="start"></ion-icon>
+              <ion-label>Categorías del Catálogo</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="irAAdmin('/admin/theme')" [class.active-drawer-item]="router.url.includes('/admin/theme')">
+              <ion-icon name="color-palette-outline" slot="start"></ion-icon>
+              <ion-label>Tema Dinámico y Colores</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="irAAdmin('/admin/settings')" [class.active-drawer-item]="router.url.includes('/admin/settings')">
+              <ion-icon name="settings-outline" slot="start"></ion-icon>
+              <ion-label>Configuración de Tienda</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item button (click)="irAAdmin('/home')" class="drawer-public-site-item" lines="none">
+              <ion-icon name="open-outline" slot="start"></ion-icon>
+              <ion-label class="gold-text">Ver Sitio Público</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+        <div class="drawer-footer-actions">
+          <ion-button expand="block" fill="outline" color="danger" (click)="salirAdmin()" class="btn-drawer-logout">
+            <ion-icon name="log-out-outline" slot="start"></ion-icon>
+            <span>Cerrar Sesión Admin</span>
+          </ion-button>
+        </div>
+      </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>

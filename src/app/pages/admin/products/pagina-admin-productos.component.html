@@ -1,167 +1,262 @@
 <app-encabezado-admin rutaActiva="/admin/products"></app-encabezado-admin>
 
-<ion-content class="content-admin">
+<ion-content class="content-admin ion-padding">
   <div class="admin-wrapper">
 
-    <div class="page-header">
-      <div>
-        <h2>Gestión de Productos</h2>
-        <p>Administra catálogo, precios, imágenes y visibilidad público/privado.</p>
+    <!-- PAGE HEADER NATIVO -->
+    <div class="page-header-native">
+      <div class="header-text">
+        <h2>Gestión de Catálogo</h2>
+        <p>Administra inventario, precios, imágenes y la visibilidad pública o privada por PIN.</p>
       </div>
-      <button class="btn-add-prod" (click)="abrirFormularioCrear()">
-        <ion-icon [src]="icons.addCircle"></ion-icon> Nuevo Producto
-      </button>
+      <ion-button color="danger" (click)="abrirFormularioCrear()" class="btn-add-prod-native">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Nuevo Producto
+      </ion-button>
     </div>
 
-    <!-- FORMULARIO MODAL / CREAR / EDITAR -->
-    @if (mostrandoFormulario()) {
-      <div class="form-modal-backdrop">
-        <div class="form-modal-card">
-          <div class="modal-head">
-            <h3>{{ productoEdicion() ? 'Editar Producto' : 'Crear Nuevo Producto' }}</h3>
-            <button class="btn-close" (click)="cancelarFormulario()">&times;</button>
-          </div>
+    <!-- BARRA DE CONTROLES: BUSCADOR Y SEGMENTOS NATIVOS -->
+    <div class="admin-controls-native">
+      <ion-searchbar
+        [ngModel]="busquedaAdmin()"
+        (ngModelChange)="busquedaAdmin.set($event)"
+        placeholder="Buscar por nombre o categoría..."
+        class="native-admin-searchbar"
+      ></ion-searchbar>
 
-          <form [formGroup]="productoForm" (ngSubmit)="guardarProducto()" class="admin-form">
-            <div class="form-row">
-              <div class="field col-8">
-                <label>Nombre del Producto *</label>
-                <input type="text" formControlName="nombre" placeholder="Ej: Bong Borosilicato Matrix" />
-              </div>
-              <div class="field col-4">
-                <label>Precio (MXN) *</label>
-                <input type="number" formControlName="precio" min="0" />
-              </div>
-            </div>
+      <ion-segment
+        [ngModel]="segmentoFiltro()"
+        (ngModelChange)="segmentoFiltro.set($event)"
+        class="native-admin-segment"
+      >
+        <ion-segment-button value="TODOS">
+          <ion-label>Todos ({{ servicioProductos.productos().length }})</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="PUBLIC">
+          <ion-label>🌐 Públicos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="PRIVATE">
+          <ion-label>🔒 Privados</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="INACTIVE">
+          <ion-label>⏸️ Inactivos</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
 
-            <div class="field">
-              <label>Descripción *</label>
-              <textarea formControlName="descripcion" rows="3" placeholder="Detalles, material, dimensiones..."></textarea>
-            </div>
-
-            <div class="form-row">
-              <div class="field col-6">
-                <label>Categoría *</label>
-                <select formControlName="categoriaId">
-                  @for (cat of servicioProductos.categorias(); track cat.id) {
-                    <option [value]="cat.id">{{ cat.nombre }}</option>
-                  }
-                </select>
-              </div>
-
-              <div class="field col-6">
-                <label>Visibilidad Catálogo *</label>
-                <select formControlName="visibilidad">
-                  <option value="PUBLIC">PUBLIC (Abierto a todos)</option>
-                  <option value="PRIVATE">PRIVATE 🔒 (Requiere PIN)</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="field col-8">
-                <label>URL de Imagen</label>
-                <input type="text" formControlName="imagenUrl" placeholder="https://..." />
-              </div>
-              <div class="field col-4">
-                <label>Subir Imagen Local</label>
-                <input type="file" (change)="subirImagenLocal($event)" accept="image/*" class="file-input" />
-              </div>
-            </div>
-
-            <div class="form-row checkbox-row">
-              <label class="chk-label">
-                <input type="checkbox" formControlName="disponible" /> Disponible en Stock
-              </label>
-
-              <label class="chk-label">
-                <input type="checkbox" formControlName="destacado" /> Producto Destacado (Portada)
-              </label>
-            </div>
-
-            <div class="form-row">
-              <div class="field col-6">
-                <label>Orden de Despliegue</label>
-                <input type="number" formControlName="orden" />
-              </div>
-
-              <div class="field col-6">
-                <label>Estado</label>
-                <select formControlName="estado">
-                  <option value="ACTIVE">ACTIVE (Activo)</option>
-                  <option value="INACTIVE">INACTIVE (Oculto)</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-actions">
-              <button type="button" class="btn-cancel" (click)="cancelarFormulario()">Cancelar</button>
-              <button type="submit" class="btn-save">Guardar Producto</button>
-            </div>
-          </form>
+    <!-- GRID DE TARJETAS NATIVAS DE PRODUCTOS (LLENA TODO EL ANCHO) -->
+    <section class="products-list-section">
+      @if (productosFiltrados().length === 0) {
+        <div class="empty-products-state">
+          <ion-icon name="cube-outline" class="empty-icon"></ion-icon>
+          <h3>Sin productos encontrados</h3>
+          <p>No hay coincidencias con la búsqueda o filtro seleccionado.</p>
         </div>
-      </div>
-    }
+      } @else {
+        <ion-grid class="products-grid-native">
+          <ion-row>
+            @for (prod of productosFiltrados(); track prod.id) {
+              <ion-col size="12" size-sm="6" size-md="4" size-xl="3">
+                <ion-card class="native-app-prod-card">
+                  <div class="prod-card-img-wrapper">
+                    <img [src]="prod.imagenUrl" [alt]="prod.nombre" class="prod-card-img" />
+                    
+                    <div class="prod-card-badges-top">
+                      <ion-badge
+                        [color]="prod.visibilidad === 'PRIVATE' ? 'warning' : 'tertiary'"
+                        class="clickable-badge"
+                        (click)="cambiarVisibilidad(prod.id, prod.visibilidad)"
+                      >
+                        {{ prod.visibilidad === 'PRIVATE' ? '🔒 PRIVADO' : '🌐 PÚBLICO' }}
+                      </ion-badge>
 
-    <!-- TABLA DE PRODUCTOS -->
-    <div class="table-card">
-      <div class="table-responsive">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Img</th>
-              <th>Nombre</th>
-              <th>Categoría</th>
-              <th>Precio</th>
-              <th>Visibilidad</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (prod of servicioProductos.productos(); track prod.id) {
-              <tr>
-                <td><img [src]="prod.imagenUrl" class="table-img" /></td>
-                <td>
-                  <strong class="prod-title-tbl">{{ prod.nombre }}</strong>
-                  @if (prod.destacado) { <span class="tag-feat">🔥 Destacado</span> }
-                </td>
-                <td>{{ prod.categoriaNombre }}</td>
-                <td>{{ prod.precio | precio }}</td>
-                <td>
-                  <button
-                    class="btn-toggle-vis"
-                    [class.is-priv]="prod.visibilidad === 'PRIVATE'"
-                    (click)="cambiarVisibilidad(prod.id, prod.visibilidad)"
-                  >
-                    {{ prod.visibilidad === 'PRIVATE' ? '🔒 PRIVADO' : '🌐 PÚBLICO' }}
-                  </button>
-                </td>
-                <td>
-                  <button
-                    class="btn-toggle-status"
-                    [class.is-active]="prod.estado === 'ACTIVE'"
-                    (click)="cambiarEstado(prod.id, prod.estado)"
-                  >
-                    {{ prod.estado === 'ACTIVE' ? 'Activo' : 'Inactivo' }}
-                  </button>
-                </td>
-                <td class="actions-cell">
-                  <button class="btn-icon-act" (click)="abrirFormularioEditar(prod)" title="Editar">
-                    <ion-icon [src]="icons.createOutline"></ion-icon>
-                  </button>
-                  <button class="btn-icon-act gold" (click)="duplicar(prod.id)" title="Duplicar">
-                    <ion-icon [src]="icons.copyOutline"></ion-icon>
-                  </button>
-                  <button class="btn-icon-act red" (click)="eliminar(prod.id)" title="Eliminar">
-                    <ion-icon [src]="icons.trashOutline"></ion-icon>
-                  </button>
-                </td>
-              </tr>
+                      <ion-badge
+                        [color]="prod.estado === 'ACTIVE' ? 'success' : 'medium'"
+                        class="clickable-badge"
+                        (click)="cambiarEstado(prod.id, prod.estado)"
+                      >
+                        {{ prod.estado === 'ACTIVE' ? 'Activo' : 'Inactivo' }}
+                      </ion-badge>
+                    </div>
+
+                    @if (prod.destacado) {
+                      <ion-badge color="danger" class="badge-featured-floating">🔥 Destacado</ion-badge>
+                    }
+                  </div>
+
+                  <ion-card-content class="prod-card-body">
+                    <div class="prod-card-header-info">
+                      <h3 class="prod-card-title">{{ prod.nombre }}</h3>
+                      <p class="prod-card-category">{{ prod.categoriaNombre || 'Sin categoría' }}</p>
+                    </div>
+
+                    <div class="prod-card-price-row">
+                      <span class="prod-card-price">{{ prod.precio | precio }}</span>
+                    </div>
+
+                    <div class="prod-card-actions">
+                      <ion-button fill="outline" color="primary" size="small" (click)="abrirFormularioEditar(prod)" class="btn-card-edit">
+                        <ion-icon name="create-outline" slot="start"></ion-icon>
+                        Editar
+                      </ion-button>
+                      
+                      <ion-button fill="clear" color="danger" size="small" (click)="eliminar(prod.id)" class="btn-card-delete" title="Eliminar">
+                        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
             }
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </ion-row>
+        </ion-grid>
+      }
+    </section>
+
   </div>
 </ion-content>
+
+<!-- FORMULARIO MODAL NATIVO IONIC DE ALTA / EDICIÓN -->
+<ion-modal [isOpen]="mostrandoFormulario()" (didDismiss)="cancelarFormulario()" class="modal-admin-form">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar class="modal-toolbar-admin">
+        <ion-title>{{ productoEdicion() ? 'Editar Producto' : 'Crear Nuevo Producto' }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cancelarFormulario()" color="medium">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content-admin ion-padding">
+      <form [formGroup]="productoForm" (ngSubmit)="guardarProducto()" id="form-producto-admin" class="admin-form-native">
+        
+        <!-- SECCIÓN 1: INFORMACIÓN DEL PRODUCTO -->
+        <div class="form-group-card">
+          <h4 class="form-group-title">INFORMACIÓN DEL PRODUCTO</h4>
+          <ion-list [inset]="true" class="form-list-native ion-no-padding">
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Nombre del Producto *"
+                labelPlacement="stacked"
+                formControlName="nombre"
+                placeholder="Ej: Bong Borosilicato Matrix"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-input
+                type="number"
+                label="Precio (MXN) *"
+                labelPlacement="stacked"
+                formControlName="precio"
+                min="0"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-select
+                label="Categoría *"
+                labelPlacement="stacked"
+                formControlName="categoriaId"
+                interface="popover"
+              >
+                @for (cat of servicioProductos.categorias(); track cat.id) {
+                  <ion-select-option [value]="cat.id">{{ cat.nombre }}</ion-select-option>
+                }
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <!-- SECCIÓN 2: VISIBILIDAD Y ESTADO -->
+        <div class="form-group-card">
+          <h4 class="form-group-title">VISIBILIDAD Y ESTADO</h4>
+          <ion-list [inset]="true" class="form-list-native ion-no-padding">
+            <ion-item class="form-item-native">
+              <ion-select
+                label="Visibilidad Catálogo *"
+                labelPlacement="stacked"
+                formControlName="visibilidad"
+                interface="popover"
+              >
+                <ion-select-option value="PUBLIC">PUBLIC (Abierto a todos los clientes)</ion-select-option>
+                <ion-select-option value="PRIVATE">PRIVATE 🔒 (Requiere clave PIN)</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-select
+                label="Estado *"
+                labelPlacement="stacked"
+                formControlName="estado"
+                interface="popover"
+              >
+                <ion-select-option value="ACTIVE">ACTIVE (Visible en tienda)</ion-select-option>
+                <ion-select-option value="INACTIVE">INACTIVE (Oculto)</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-toggle formControlName="disponible" justify="space-between">
+                Disponible en Stock
+              </ion-toggle>
+            </ion-item>
+
+            <ion-item class="form-item-native" lines="none">
+              <ion-toggle formControlName="destacado" justify="space-between">
+                Producto Destacado (Portada 🔥)
+              </ion-toggle>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <!-- SECCIÓN 3: IMAGEN Y DESCRIPCIÓN -->
+        <div class="form-group-card">
+          <h4 class="form-group-title">IMAGEN Y DETALLES</h4>
+          <ion-list [inset]="true" class="form-list-native ion-no-padding">
+            <ion-item class="form-item-native">
+              <ion-input
+                label="URL de Imagen *"
+                labelPlacement="stacked"
+                formControlName="imagenUrl"
+                placeholder="https://..."
+              ></ion-input>
+            </ion-item>
+
+            @if (productoForm.get('imagenUrl')?.value) {
+              <div class="image-preview-box">
+                <span class="preview-label">Vista Previa de Imagen:</span>
+                <img [src]="productoForm.get('imagenUrl')?.value" alt="Preview" class="img-preview" />
+              </div>
+            }
+
+            <ion-item class="form-item-native" lines="none">
+              <ion-textarea
+                label="Descripción *"
+                labelPlacement="stacked"
+                formControlName="descripcion"
+                rows="3"
+                placeholder="Escribe dimensiones, material y especificaciones..."
+              ></ion-textarea>
+            </ion-item>
+          </ion-list>
+        </div>
+
+      </form>
+    </ion-content>
+
+    <ion-footer class="modal-footer-admin ion-no-border ion-padding">
+      <div class="modal-form-actions-footer">
+        <ion-button fill="clear" color="medium" (click)="cancelarFormulario()" class="btn-cancel-native">
+          Cancelar
+        </ion-button>
+        <ion-button type="submit" form="form-producto-admin" color="danger" class="btn-save-native">
+          Guardar Producto
+        </ion-button>
+      </div>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

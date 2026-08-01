@@ -1,86 +1,141 @@
 <app-encabezado-admin rutaActiva="/admin/categories"></app-encabezado-admin>
 
-<ion-content class="content-admin">
+<ion-content class="content-admin ion-padding">
   <div class="admin-wrapper">
 
-    <div class="page-header">
-      <div>
+    <!-- PAGE HEADER -->
+    <div class="page-header-native">
+      <div class="header-text">
         <h2>Administrar Categorías</h2>
         <p>Organiza tus productos por secciones temáticas del catálogo.</p>
       </div>
-      <button class="btn-add-cat" (click)="abrirCrear()">
-        <ion-icon name="add-circle-outline"></ion-icon> Nueva Categoría
-      </button>
+      <ion-button color="danger" (click)="abrirCrear()" class="btn-add-cat-native">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Nueva Categoría
+      </ion-button>
     </div>
 
-    <!-- MODAL -->
-    @if (mostrandoModal) {
-      <div class="modal-backdrop">
-        <div class="modal-card">
-          <div class="modal-head">
-            <h3>{{ categoriaEdicion ? 'Editar Categoría' : 'Nueva Categoría' }}</h3>
-            <button class="btn-close" (click)="cerrarModal()">&times;</button>
-          </div>
-
-          <form (ngSubmit)="guardar()" class="cat-form">
-            <div class="field">
-              <label>Nombre de Categoría *</label>
-              <input type="text" [(ngModel)]="nombre" name="nombre" placeholder="Ej: Bongs Premium 🔒" required />
-            </div>
-
-            <div class="field">
-              <label>Descripción</label>
-              <textarea [(ngModel)]="descripcion" name="descripcion" rows="2"></textarea>
-            </div>
-
-            <div class="form-row">
-              <div class="field col-6">
-                <label>Orden</label>
-                <input type="number" [(ngModel)]="orden" name="orden" />
-              </div>
-              <div class="field col-6 chk-center">
-                <label><input type="checkbox" [(ngModel)]="activa" name="activa" /> Categoría Activa</label>
-              </div>
-            </div>
-
-            <div class="modal-actions">
-              <button type="button" class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
-              <button type="submit" class="btn-save">Guardar Categoría</button>
-            </div>
-          </form>
+    <!-- GRID NATIVA DE TARJETAS DE CATEGORÍAS -->
+    <section class="categories-list-section">
+      @if (servicioProductos.categorias().length === 0) {
+        <div class="empty-cats-state">
+          <ion-icon name="folder-open-outline" class="empty-icon"></ion-icon>
+          <h3>Sin categorías registradas</h3>
+          <p>Crea tu primera categoría para organizar el catálogo.</p>
         </div>
-      </div>
-    }
+      } @else {
+        <ion-grid class="cats-grid-native">
+          <ion-row>
+            @for (c of servicioProductos.categorias(); track c.id) {
+              <ion-col size="12" size-sm="6" size-md="4" size-xl="3">
+                <ion-card class="native-cat-card">
+                  <div class="cat-card-header">
+                    <div class="cat-order-avatar">
+                      <span class="cat-order-num">#{{ c.orden }}</span>
+                    </div>
+                    <ion-badge
+                      [color]="c.activa ? 'success' : 'medium'"
+                      class="cat-status-badge"
+                    >
+                      {{ c.activa ? 'Activa' : 'Inactiva' }}
+                    </ion-badge>
+                  </div>
 
-    <!-- TABLA CATEGORÍAS -->
-    <div class="table-card">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Orden</th>
-            <th>Categoría</th>
-            <th>Descripción</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (c of servicioProductos.categorias(); track c.id) {
-            <tr>
-              <td><strong>#{{ c.orden }}</strong></td>
-              <td><strong class="cat-title">{{ c.nombre }}</strong></td>
-              <td>{{ c.descripcion || 'Sin descripción' }}</td>
-              <td>
-                <span class="badge-status" [class.inactive]="!c.activa">{{ c.activa ? 'Activa' : 'Inactiva' }}</span>
-              </td>
-              <td class="actions-cell">
-                <button class="btn-act" (click)="abrirEditar(c)"><ion-icon name="create-outline"></ion-icon></button>
-                <button class="btn-act red" (click)="eliminar(c.id)"><ion-icon name="trash-outline"></ion-icon></button>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+                  <ion-card-content class="cat-card-body">
+                    <h3 class="cat-name-title">{{ c.nombre }}</h3>
+                    <p class="cat-desc-text">{{ c.descripcion || 'Sin descripción registrada' }}</p>
+
+                    <div class="cat-card-actions">
+                      <ion-button fill="outline" color="primary" size="small" (click)="abrirEditar(c)" class="btn-card-edit">
+                        <ion-icon name="create-outline" slot="start"></ion-icon>
+                        Editar
+                      </ion-button>
+                      <ion-button fill="clear" color="danger" size="small" (click)="eliminar(c.id)" class="btn-card-delete" title="Eliminar">
+                        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            }
+          </ion-row>
+        </ion-grid>
+      }
+    </section>
+
   </div>
 </ion-content>
+
+<!-- MODAL NATIVO IONIC (<ion-modal>) -->
+<ion-modal [isOpen]="mostrandoModal" (didDismiss)="cerrarModal()" class="modal-admin-form">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar class="modal-toolbar-admin">
+        <ion-title>{{ categoriaEdicion ? 'Editar Categoría' : 'Nueva Categoría' }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModal()" color="medium">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content-admin ion-padding">
+      <form (ngSubmit)="guardar()" id="form-categoria-admin" class="admin-form-native">
+        <div class="form-group-card">
+          <h4 class="form-group-title">INFORMACIÓN DE CATEGORÍA</h4>
+          <ion-list [inset]="true" class="form-list-native ion-no-padding">
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Nombre de Categoría *"
+                labelPlacement="stacked"
+                [(ngModel)]="nombre"
+                name="nombre"
+                placeholder="Ej: Bongs Premium 🔒"
+                required
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-textarea
+                label="Descripción"
+                labelPlacement="stacked"
+                [(ngModel)]="descripcion"
+                name="descripcion"
+                rows="2"
+                placeholder="Ej: Sección de accesorios exclusivos"
+              ></ion-textarea>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-input
+                type="number"
+                label="Orden de Despliegue"
+                labelPlacement="stacked"
+                [(ngModel)]="orden"
+                name="orden"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native" lines="none">
+              <ion-toggle [(ngModel)]="activa" name="activa" justify="space-between">
+                Categoría Activa en Catálogo
+              </ion-toggle>
+            </ion-item>
+          </ion-list>
+        </div>
+      </form>
+    </ion-content>
+
+    <ion-footer class="modal-footer-admin ion-no-border ion-padding">
+      <div class="modal-form-actions-footer">
+        <ion-button fill="clear" color="medium" (click)="cerrarModal()" class="btn-cancel-native">
+          Cancelar
+        </ion-button>
+        <ion-button type="submit" form="form-categoria-admin" color="danger" class="btn-save-native">
+          Guardar Categoría
+        </ion-button>
+      </div>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

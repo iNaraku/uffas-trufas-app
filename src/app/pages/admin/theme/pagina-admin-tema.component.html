@@ -1,106 +1,112 @@
 <app-encabezado-admin rutaActiva="/admin/theme"></app-encabezado-admin>
 
-<ion-content class="content-admin">
+<ion-content class="content-admin ion-padding">
   <div class="admin-wrapper">
 
-    <div class="page-header">
-      <div>
+    <!-- PAGE HEADER -->
+    <div class="page-header-native">
+      <div class="header-text">
         <h2>Personalización de Tema & Marca</h2>
         <p>Ajusta la paleta de colores en tiempo real sin necesidad de recompilar la aplicación.</p>
       </div>
-      <button class="btn-restore" (click)="restaurar()">
-        <ion-icon name="refresh-outline"></ion-icon> Colores Rebel por Defecto
-      </button>
+      <ion-button fill="outline" color="danger" (click)="restaurar()" class="btn-restore-native">
+        <ion-icon name="refresh-outline" slot="start"></ion-icon>
+        Colores Rebel por Defecto
+      </ion-button>
     </div>
 
     @if (guardadoExitoso) {
-      <div class="success-alert">
+      <div class="success-alert-native">
         <ion-icon name="checkmark-circle-outline"></ion-icon>
         <span>¡Configuración de tema guardada correctamente en Firestore y almacenada localmente!</span>
       </div>
     }
 
-    <div class="theme-editor-grid">
-      <!-- SELECTORES DE COLOR -->
-      <div class="editor-card">
-        <h3>Paleta de Colores</h3>
+    <ion-grid class="theme-editor-grid-ionic ion-no-padding">
+      <ion-row>
+        <!-- SELECTORES DE COLOR -->
+        <ion-col size="12" size-lg="7">
+          <ion-card class="native-theme-card">
+            <ion-card-header>
+              <ion-card-title class="card-title-native">Paleta de Colores</ion-card-title>
+            </ion-card-header>
 
-        <div class="color-picker-group">
-          <label>Color Principal (Rojo / Destacados)</label>
-          <div class="picker-row">
-            <input type="color" [(ngModel)]="formTema.colorPrimario" (change)="actualizarColorEnVivo()" />
-            <input type="text" [(ngModel)]="formTema.colorPrimario" (input)="actualizarColorEnVivo()" class="hex-input" />
-          </div>
-        </div>
+            <ion-card-content class="card-content-native">
+              <ion-list [inset]="true" class="form-list-native ion-no-padding">
+                <ion-item class="form-item-native">
+                  <ion-label slot="start">Color Principal (Rojo / Destacados)</ion-label>
+                  <input type="color" [(ngModel)]="formTema.colorPrimario" (change)="actualizarColorEnVivo()" slot="end" class="color-picker-input" />
+                  <ion-input [(ngModel)]="formTema.colorPrimario" (input)="actualizarColorEnVivo()" slot="end" class="hex-input-native"></ion-input>
+                </ion-item>
 
-        <div class="color-picker-group">
-          <label>Color Secundario (Dorado / Acentos)</label>
-          <div class="picker-row">
-            <input type="color" [(ngModel)]="formTema.colorSecundario" (change)="actualizarColorEnVivo()" />
-            <input type="text" [(ngModel)]="formTema.colorSecundario" (input)="actualizarColorEnVivo()" class="hex-input" />
-          </div>
-        </div>
+                <ion-item class="form-item-native">
+                  <ion-label slot="start">Color Secundario (Dorado / Acentos)</ion-label>
+                  <input type="color" [(ngModel)]="formTema.colorSecundario" (change)="actualizarColorEnVivo()" slot="end" class="color-picker-input" />
+                  <ion-input [(ngModel)]="formTema.colorSecundario" (input)="actualizarColorEnVivo()" slot="end" class="hex-input-native"></ion-input>
+                </ion-item>
 
-        <div class="color-picker-group">
-          <label>Color de Fondo (Pantalla Principal)</label>
-          <div class="picker-row">
-            <input type="color" [(ngModel)]="formTema.colorFondo" (change)="actualizarColorEnVivo()" />
-            <input type="text" [(ngModel)]="formTema.colorFondo" (input)="actualizarColorEnVivo()" class="hex-input" />
-          </div>
-        </div>
+                <ion-item class="form-item-native">
+                  <ion-label slot="start">Color de Fondo (Pantalla Principal)</ion-label>
+                  <input type="color" [(ngModel)]="formTema.colorFondo" (change)="actualizarColorEnVivo()" slot="end" class="color-picker-input" />
+                  <ion-input [(ngModel)]="formTema.colorFondo" (input)="actualizarColorEnVivo()" slot="end" class="hex-input-native"></ion-input>
+                </ion-item>
 
-        <div class="color-picker-group">
-          <label>Color de Tarjetas / Tarjetas de Producto</label>
-          <div class="picker-row">
-            <input type="color" [(ngModel)]="formTema.colorTarjetas" (change)="actualizarColorEnVivo()" />
-            <input type="text" [(ngModel)]="formTema.colorTarjetas" (input)="actualizarColorEnVivo()" class="hex-input" />
-          </div>
-        </div>
+                <ion-item class="form-item-native">
+                  <ion-label slot="start">Color de Tarjetas / Productos</ion-label>
+                  <input type="color" [(ngModel)]="formTema.colorTarjetas" (change)="actualizarColorEnVivo()" slot="end" class="color-picker-input" />
+                  <ion-input [(ngModel)]="formTema.colorTarjetas" (input)="actualizarColorEnVivo()" slot="end" class="hex-input-native"></ion-input>
+                </ion-item>
 
-        <div class="color-picker-group">
-          <label>Color de Texto Principal</label>
-          <div class="picker-row">
-            <input type="color" [(ngModel)]="formTema.colorTexto" (change)="actualizarColorEnVivo()" />
-            <input type="text" [(ngModel)]="formTema.colorTexto" (input)="actualizarColorEnVivo()" class="hex-input" />
-          </div>
-        </div>
+                <ion-item class="form-item-native">
+                  <ion-label slot="start">Color de Texto Principal</ion-label>
+                  <input type="color" [(ngModel)]="formTema.colorTexto" (change)="actualizarColorEnVivo()" slot="end" class="color-picker-input" />
+                  <ion-input [(ngModel)]="formTema.colorTexto" (input)="actualizarColorEnVivo()" slot="end" class="hex-input-native"></ion-input>
+                </ion-item>
 
-        <div class="color-picker-group">
-          <label>Color de Iconos & Acentos</label>
-          <div class="picker-row">
-            <input type="color" [(ngModel)]="formTema.colorIconos" (change)="actualizarColorEnVivo()" />
-            <input type="text" [(ngModel)]="formTema.colorIconos" (input)="actualizarColorEnVivo()" class="hex-input" />
-          </div>
-        </div>
+                <ion-item class="form-item-native" lines="none">
+                  <ion-label slot="start">Color de Iconos & Acentos</ion-label>
+                  <input type="color" [(ngModel)]="formTema.colorIconos" (change)="actualizarColorEnVivo()" slot="end" class="color-picker-input" />
+                  <ion-input [(ngModel)]="formTema.colorIconos" (input)="actualizarColorEnVivo()" slot="end" class="hex-input-native"></ion-input>
+                </ion-item>
+              </ion-list>
 
-        <div class="form-actions-bar">
-          <button class="btn-save-theme" (click)="guardarTema()">
-            <ion-icon name="save-outline"></ion-icon> Guardar Cambios de Tema
-          </button>
-        </div>
-      </div>
+              <ion-button expand="block" shape="round" color="danger" (click)="guardarTema()" class="btn-save-theme-native">
+                <ion-icon name="save-outline" slot="start"></ion-icon>
+                Guardar Cambios de Tema
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
 
-      <!-- PREVISTA DE COMPONENTES -->
-      <div class="preview-card">
-        <h3>Vista Previa en Vivo</h3>
-        <p class="preview-sub">Así es como lucirán tus botones y tarjetas en tiempo real:</p>
+        <!-- PREVISTA DE COMPONENTES -->
+        <ion-col size="12" size-lg="5">
+          <ion-card class="native-theme-card">
+            <ion-card-header>
+              <ion-card-title class="card-title-native">Vista Previa en Vivo</ion-card-title>
+              <ion-card-subtitle class="card-sub-native">Así lucen tus componentes en tiempo real:</ion-card-subtitle>
+            </ion-card-header>
 
-        <div class="demo-card-box" [style.background-color]="formTema.colorTarjetas">
-          <div class="demo-badge" [style.background-color]="formTema.colorSecundario" style="color: #000;">
-            🔥 VISTA PREVIA
-          </div>
+            <ion-card-content class="card-content-native">
+              <div class="demo-card-box" [style.background-color]="formTema.colorTarjetas">
+                <ion-badge class="demo-badge" [style.background-color]="formTema.colorSecundario" style="color: #000;">
+                  🔥 VISTA PREVIA
+                </ion-badge>
 
-          <h4 [style.color]="formTema.colorTexto">Producto Ejemplo Smoke</h4>
-          <p [style.color]="formTema.colorTextoSecundario">Cristalería de borosilicato premium y accesorios de parafernalia urbana.</p>
+                <h4 [style.color]="formTema.colorTexto">Producto Ejemplo Smoke</h4>
+                <p [style.color]="formTema.colorTextoSecundario">Cristalería de borosilicato premium y accesorios de parafernalia urbana.</p>
 
-          <div class="demo-footer">
-            <span class="demo-price" [style.color]="formTema.colorTexto">$1,850.00 MXN</span>
-            <button class="demo-btn" [style.background-color]="formTema.colorPrimario">
-              Consultar
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+                <div class="demo-footer">
+                  <span class="demo-price" [style.color]="formTema.colorTexto">$1,850.00 MXN</span>
+                  <ion-button [style.background-color]="formTema.colorPrimario" class="demo-btn-native">
+                    Consultar
+                  </ion-button>
+                </div>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
   </div>
 </ion-content>

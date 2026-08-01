@@ -265,8 +265,15 @@ ion-modal.modal-pin-native-sheet {
 @media (min-width: 769px) {
   ion-modal.modal-pin-native-sheet {
     --border-radius: 16px;
-    --width: 440px;
-    --height: 520px;
+    --width: 450px;
+    --height: auto;
+    --max-height: 88vh;
+  }
+
+  ion-modal.modal-pin-native-sheet::part(content) {
+    height: auto;
+    max-height: 88vh;
+    border-radius: 16px;
   }
 }
 
@@ -279,6 +286,112 @@ button, a, ion-button, .ion-activatable {
 @media (max-width: 768px) {
   ion-content.content-rebel::part(scroll) {
     padding-bottom: 75px !important;
+  }
+}
+
+/* 8. CONTRASTE Y VISIBILIDAD GLOBAL PARA ION-ALERT & ION-SELECT OVERLAYS */
+ion-alert {
+  --background: #1c1c1e;
+  --color: #ffffff;
+
+  .alert-wrapper {
+    background: #1c1c1e !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8) !important;
+  }
+
+  .alert-head {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .alert-title {
+    color: #ffffff !important;
+    font-size: 1.15rem !important;
+    font-weight: 900 !important;
+    font-family: 'Impact', 'Roboto', sans-serif !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .alert-sub-title,
+  .alert-message {
+    color: #cccccc !important;
+    font-size: 0.88rem !important;
+  }
+
+  .alert-radio-label,
+  .alert-checkbox-label,
+  [class*="alert-radio-label"],
+  [class*="alert-checkbox-label"],
+  .sc-ion-alert-md,
+  .sc-ion-alert-ios {
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+  }
+
+  .alert-radio-button[aria-checked="true"] .alert-radio-label,
+  .alert-checkbox-button[aria-checked="true"] .alert-checkbox-label,
+  [aria-checked="true"] .alert-radio-label,
+  [aria-checked="true"] .alert-checkbox-label {
+    color: var(--color-secundario, #F5B400) !important;
+    font-weight: 900 !important;
+  }
+
+  .alert-radio-icon {
+    border-color: #888888 !important;
+  }
+
+  [aria-checked="true"] .alert-radio-icon {
+    border-color: var(--color-primario, #D71920) !important;
+    background-color: var(--color-primario, #D71920) !important;
+  }
+
+  .alert-radio-inner {
+    background-color: #ffffff !important;
+  }
+
+  .alert-button-group {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 0.5rem !important;
+  }
+
+  .alert-button {
+    color: #aaaaaa !important;
+    font-weight: 800 !important;
+    font-size: 0.9rem !important;
+  }
+
+  .alert-button-confirm,
+  .alert-button:last-child {
+    color: var(--color-primario, #D71920) !important;
+    font-weight: 900 !important;
+  }
+}
+
+/* POPOVER E INTERFAZ SELECT NATIVA */
+ion-popover,
+ion-select-popover {
+  --background: #1c1c1e;
+  --color: #ffffff;
+
+  ion-item {
+    --background: #1c1c1e !important;
+    --color: #ffffff !important;
+    --border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  ion-label {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    opacity: 1 !important;
+  }
+
+  [aria-checked="true"] ion-label {
+    color: var(--color-secundario, #F5B400) !important;
+    font-weight: 800 !important;
   }
 }
 

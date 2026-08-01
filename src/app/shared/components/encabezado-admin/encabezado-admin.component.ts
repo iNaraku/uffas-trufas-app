@@ -13,7 +13,8 @@ import {
   settingsOutline,
   openOutline,
   shieldCheckmark,
-  logOutOutline
+  logOutOutline,
+  menuOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -42,7 +43,8 @@ export class EncabezadoAdminComponent {
     settingsOutline,
     openOutline,
     shieldCheckmark,
-    logOutOutline
+    logOutOutline,
+    menuOutline
   };
 
   irA(ruta: string, e?: Event): void {

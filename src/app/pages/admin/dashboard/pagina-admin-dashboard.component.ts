@@ -7,6 +7,7 @@ import { ServicioProductos } from '../../../services/products/servicio-productos
 import { ServicioUsuariosCatalogo } from '../../../services/users/servicio-usuarios-catalogo.service';
 import { ServicioBanners } from '../../../services/banners/servicio-banners.service';
 import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+import { PrecioPipe } from '../../../shared/pipes/precio.pipe';
 
 import {
   cubeOutline,
@@ -16,13 +17,14 @@ import {
   addCircleOutline,
   personAddOutline,
   colorPaletteOutline,
-  imageOutline
+  imageOutline,
+  chevronForwardOutline
 } from 'ionicons/icons';
 
 @Component({
   selector: 'app-pagina-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, IonicModule, EncabezadoAdminComponent],
+  imports: [CommonModule, RouterModule, IonicModule, EncabezadoAdminComponent, PrecioPipe],
   templateUrl: './pagina-admin-dashboard.component.html',
   styleUrls: ['./pagina-admin-dashboard.component.css'],
   host: { 'class': 'ion-page' }
@@ -44,7 +46,8 @@ export class PaginaAdminDashboardComponent {
     addCircleOutline,
     personAddOutline,
     colorPaletteOutline,
-    imageOutline
+    imageOutline,
+    chevronForwardOutline
   };
 
   get totalProductos(): number {

@@ -1,93 +1,167 @@
 <app-encabezado-admin rutaActiva="/admin/banners"></app-encabezado-admin>
 
-<ion-content class="content-admin">
+<ion-content class="content-admin ion-padding">
   <div class="admin-wrapper">
 
-    <div class="page-header">
-      <div>
+    <!-- PAGE HEADER -->
+    <div class="page-header-native">
+      <div class="header-text">
         <h2>Gestión de Banners e Inicio</h2>
         <p>Configura las imágenes principales, títulos y enlaces del carrusel de portada.</p>
       </div>
-      <button class="btn-add-banner" (click)="abrirCrear()">
-        <ion-icon name="image-outline"></ion-icon> Nuevo Banner
-      </button>
+      <ion-button color="danger" (click)="abrirCrear()" class="btn-add-banner-native">
+        <ion-icon name="image-outline" slot="start"></ion-icon>
+        Nuevo Banner
+      </ion-button>
     </div>
 
-    <!-- MODAL EDITAR / CREAR -->
-    @if (mostrandoModal) {
-      <div class="modal-backdrop">
-        <div class="modal-card">
-          <div class="modal-head">
-            <h3>{{ bannerEdicion ? 'Editar Banner' : 'Nuevo Banner' }}</h3>
-            <button class="btn-close" (click)="cerrarModal()">&times;</button>
-          </div>
+    <!-- GRID NATIVO DE TARJETAS DE BANNERS -->
+    <ion-grid class="banners-grid-ionic">
+      <ion-row>
+        @for (b of servicioBanners.banners(); track b.id) {
+          <ion-col size="12" size-md="6">
+            <ion-card class="native-banner-card">
+              <div class="banner-img-overlay" [style.background-image]="'linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.3)), url(' + b.imagenUrl + ')'">
+                <div class="banner-badge-header">
+                  <ion-badge color="dark">#{{ b.orden }}</ion-badge>
+                  <ion-badge [color]="b.activo ? 'success' : 'medium'">
+                    {{ b.activo ? 'ACTIVO' : 'INACTIVO' }}
+                  </ion-badge>
+                </div>
 
-          <form (ngSubmit)="guardar()" class="banner-form">
-            <div class="field">
-              <label>Título del Banner *</label>
-              <input type="text" [(ngModel)]="titulo" name="titulo" required />
-            </div>
-
-            <div class="field">
-              <label>Subtítulo</label>
-              <textarea [(ngModel)]="subtitulo" name="subtitulo" rows="2"></textarea>
-            </div>
-
-            <div class="field">
-              <label>URL de Imagen *</label>
-              <input type="text" [(ngModel)]="imagenUrl" name="imagenUrl" required />
-            </div>
-
-            <div class="form-row">
-              <div class="field col-6">
-                <label>Texto del Botón CTA</label>
-                <input type="text" [(ngModel)]="textoBoton" name="textoBoton" placeholder="Ej: Ver Catálogo" />
+                <div class="banner-card-info">
+                  <h3>{{ b.titulo }}</h3>
+                  <p>{{ b.subtitulo }}</p>
+                </div>
               </div>
-              <div class="field col-6">
-                <label>Enlace del Botón</label>
-                <input type="text" [(ngModel)]="enlaceBoton" name="enlaceBoton" placeholder="/catalogo" />
-              </div>
-            </div>
 
-            <div class="form-row">
-              <div class="field col-6">
-                <label>Orden</label>
-                <input type="number" [(ngModel)]="orden" name="orden" />
-              </div>
-              <div class="field col-6 chk-center">
-                <label><input type="checkbox" [(ngModel)]="activo" name="activo" /> Banner Activo</label>
-              </div>
-            </div>
+              <ion-card-content class="banner-card-actions">
+                <ion-button fill="outline" color="primary" size="small" (click)="abrirEditar(b)">
+                  <ion-icon name="create-outline" slot="start"></ion-icon>
+                  Editar
+                </ion-button>
 
-            <div class="modal-actions">
-              <button type="button" class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
-              <button type="submit" class="btn-save">Guardar Banner</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    }
+                <ion-button fill="clear" color="danger" size="small" (click)="eliminar(b.id)">
+                  <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
 
-    <!-- GRID BANNERS -->
-    <div class="banners-grid">
-      @for (b of servicioBanners.banners(); track b.id) {
-        <div class="banner-preview-card" [style.background-image]="'linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), url(' + b.imagenUrl + ')'">
-          <div class="banner-card-header">
-            <span class="badge-order">#{{ b.orden }}</span>
-            <span class="badge-status" [class.inactive]="!b.activo">{{ b.activo ? 'ACTIVO' : 'INACTIVO' }}</span>
-          </div>
-
-          <div class="banner-card-body">
-            <h4>{{ b.titulo }}</h4>
-            <p>{{ b.subtitulo }}</p>
-          </div>
-
-          <div class="banner-card-footer">
-            <button class="btn-act" (click)="abrirEditar(b)"><ion-icon name="create-outline"></ion-icon> Editar</button>
-            <button class="btn-act red" (click)="eliminar(b.id)"><ion-icon name="trash-outline"></ion-icon> Eliminar</button>
-          </div>
-        </div>
-      }
-    </div>
   </div>
 </ion-content>
+
+<!-- MODAL NATIVO IONIC (<ion-modal>) -->
+<ion-modal [isOpen]="mostrandoModal" (didDismiss)="cerrarModal()" class="modal-admin-form">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar class="modal-toolbar-admin">
+        <ion-title>{{ bannerEdicion ? 'Editar Banner' : 'Nuevo Banner' }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModal()" color="medium">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content-admin ion-padding">
+      <form (ngSubmit)="guardar()" id="form-banner-admin" class="admin-form-native">
+        <div class="form-group-card">
+          <h4 class="form-group-title">INFORMACIÓN DEL BANNER</h4>
+          <ion-list [inset]="true" class="form-list-native ion-no-padding">
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Título del Banner *"
+                labelPlacement="stacked"
+                [(ngModel)]="titulo"
+                name="titulo"
+                placeholder="Ej: Gran Inaguración Rebel"
+                required
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-textarea
+                label="Subtítulo"
+                labelPlacement="stacked"
+                [(ngModel)]="subtitulo"
+                name="subtitulo"
+                rows="2"
+                placeholder="Ej: Descubre la nueva línea VIP"
+              ></ion-textarea>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-input
+                label="URL de Imagen *"
+                labelPlacement="stacked"
+                [(ngModel)]="imagenUrl"
+                name="imagenUrl"
+                placeholder="https://..."
+                required
+              ></ion-input>
+            </ion-item>
+
+            @if (imagenUrl) {
+              <div class="image-preview-box">
+                <span class="preview-label">Vista Previa Banner:</span>
+                <img [src]="imagenUrl" alt="Preview Banner" class="img-banner-preview" />
+              </div>
+            }
+
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Texto del Botón CTA"
+                labelPlacement="stacked"
+                [(ngModel)]="textoBoton"
+                name="textoBoton"
+                placeholder="Ej: Ver Catálogo"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Enlace del Botón"
+                labelPlacement="stacked"
+                [(ngModel)]="enlaceBoton"
+                name="enlaceBoton"
+                placeholder="/catalog"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-input
+                type="number"
+                label="Orden de Despliegue"
+                labelPlacement="stacked"
+                [(ngModel)]="orden"
+                name="orden"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native" lines="none">
+              <ion-toggle [(ngModel)]="activo" name="activo" justify="space-between">
+                Banner Activo en Carrusel
+              </ion-toggle>
+            </ion-item>
+          </ion-list>
+        </div>
+      </form>
+    </ion-content>
+
+    <ion-footer class="modal-footer-admin ion-no-border ion-padding">
+      <div class="modal-form-actions-footer">
+        <ion-button fill="clear" color="medium" (click)="cerrarModal()" class="btn-cancel-native">
+          Cancelar
+        </ion-button>
+        <ion-button type="submit" form="form-banner-admin" color="danger" class="btn-save-native">
+          Guardar Banner
+        </ion-button>
+      </div>
+    </ion-footer>
+  </ng-template>
+</ion-modal>

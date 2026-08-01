@@ -1,114 +1,159 @@
 <app-encabezado-admin rutaActiva="/admin/users"></app-encabezado-admin>
 
-<ion-content class="content-admin">
+<ion-content class="content-admin ion-padding">
   <div class="admin-wrapper">
 
-    <div class="page-header">
-      <div>
+    <!-- PAGE HEADER -->
+    <div class="page-header-native">
+      <div class="header-text">
         <h2>Usuarios de Catálogo (Acceso PIN)</h2>
         <p>Estos usuarios no usan correo ni contraseña. Ingresan únicamente mediante su PIN asignado.</p>
       </div>
-      <button class="btn-add-user" (click)="abrirCrear()">
-        <ion-icon name="person-add-outline"></ion-icon> Crear Usuario PIN
-      </button>
+      <ion-button color="danger" (click)="abrirCrear()" class="btn-add-user-native">
+        <ion-icon name="person-add-outline" slot="start"></ion-icon>
+        Nuevo Usuario PIN
+      </ion-button>
     </div>
 
-    <!-- BUSCADOR -->
-    <div class="search-bar">
-      <ion-icon name="search-outline"></ion-icon>
-      <input
-        type="text"
-        [ngModel]="terminoBusqueda()"
-        (ngModelChange)="terminoBusqueda.set($event)"
-        placeholder="Buscar por nombre de usuario, PIN u observaciones..."
-      />
-    </div>
+    <!-- BUSCADOR NATIVO IONIC -->
+    <ion-searchbar
+      [value]="terminoBusqueda()"
+      (ionInput)="terminoBusqueda.set($event.detail.value || '')"
+      placeholder="Buscar por nombre, PIN u observaciones..."
+      class="native-admin-searchbar"
+    ></ion-searchbar>
 
-    <!-- MODAL EDITAR / CREAR -->
-    @if (mostrandoModal()) {
-      <div class="modal-backdrop">
-        <div class="modal-card">
-          <div class="modal-head">
-            <h3>{{ usuarioEdicion() ? 'Editar Usuario PIN' : 'Nuevo Usuario PIN' }}</h3>
-            <button class="btn-close" (click)="cerrarModal()">&times;</button>
-          </div>
-
-          <form (ngSubmit)="guardar()" class="user-form">
-            <div class="field">
-              <label>Nombre del Usuario / Cliente *</label>
-              <input type="text" [(ngModel)]="nombreForm" name="nombre" placeholder="Ej: Cliente VIP Rebel" required />
-            </div>
-
-            <div class="field">
-              <label>PIN de Acceso (Numérico) *</label>
-              <input type="text" [(ngModel)]="pinForm" name="pin" placeholder="Ej: 1234" maxlength="10" required />
-            </div>
-
-            <div class="field">
-              <label>Observaciones / Notas Admin</label>
-              <textarea [(ngModel)]="observacionesForm" name="observaciones" rows="2" placeholder="Ej: Cliente VIP autorizado"></textarea>
-            </div>
-
-            <div class="chk-row">
-              <label>
-                <input type="checkbox" [(ngModel)]="activoForm" name="activo" /> Usuario Activo (Permitir acceso)
-              </label>
-            </div>
-
-            <div class="modal-actions">
-              <button type="button" class="btn-cancel" (click)="cerrarModal()">Cancelar</button>
-              <button type="submit" class="btn-save">Guardar Usuario</button>
-            </div>
-          </form>
+    <!-- GRID NATIVA DE TARJETAS DE USUARIO PIN -->
+    <section class="users-list-section">
+      @if (usuariosFiltrados().length === 0) {
+        <div class="empty-users-state">
+          <ion-icon name="key-outline" class="empty-icon"></ion-icon>
+          <h3>Sin usuarios encontrados</h3>
+          <p>No hay coincidencias con la búsqueda o PIN ingresado.</p>
         </div>
-      </div>
-    }
+      } @else {
+        <ion-grid class="users-grid-native">
+          <ion-row>
+            @for (u of usuariosFiltrados(); track u.id) {
+              <ion-col size="12" size-sm="6" size-md="4" size-xl="3">
+                <ion-card class="native-user-card">
+                  <div class="user-card-header">
+                    <div class="user-avatar-badge">
+                      <ion-icon name="key-outline" class="key-icon"></ion-icon>
+                    </div>
 
-    <!-- TABLA DE USUARIOS -->
-    <div class="table-card">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Nombre Usuario</th>
-            <th>PIN Autorizado</th>
-            <th>Estado</th>
-            <th>Fecha Creación</th>
-            <th>Observaciones</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (u of usuariosFiltrados(); track u.id) {
-            <tr>
-              <td><strong class="user-title">{{ u.nombre }}</strong></td>
-              <td><span class="pin-badge">🔑 {{ u.pin }}</span></td>
-              <td>
-                <button
-                  class="btn-status"
-                  [class.active]="u.activo"
-                  (click)="cambiarEstado(u.id, u.activo)"
-                >
-                  {{ u.activo ? '✔ Activo' : '✖ Inactivo' }}
-                </button>
-              </td>
-              <td>{{ u.fechaCreacion | date:'shortDate' }}</td>
-              <td>{{ u.observaciones || 'Sin notas' }}</td>
-              <td class="actions-cell">
-                <button class="btn-act" (click)="abrirEditar(u)" title="Editar">
-                  <ion-icon name="create-outline"></ion-icon>
-                </button>
-                <button class="btn-act red" (click)="eliminar(u.id)" title="Eliminar">
-                  <ion-icon name="trash-outline"></ion-icon>
-                </button>
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="6" class="text-center">No se encontraron usuarios de catálogo.</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+                    <div class="user-header-badges">
+                      <ion-badge color="warning" class="pin-badge-native">🔑 PIN: {{ u.pin }}</ion-badge>
+                      <ion-badge
+                        [color]="u.activo ? 'success' : 'medium'"
+                        class="clickable-badge"
+                        (click)="cambiarEstado(u.id, u.activo)"
+                      >
+                        {{ u.activo ? 'Activo' : 'Inactivo' }}
+                      </ion-badge>
+                    </div>
+                  </div>
+
+                  <ion-card-content class="user-card-body">
+                    <h3 class="user-name-title">{{ u.nombre }}</h3>
+                    <p class="user-notes-text">{{ u.observaciones || 'Sin observaciones registradas' }}</p>
+                    <span class="user-date-text">Creado: {{ u.fechaCreacion | date:'shortDate' }}</span>
+
+                    <div class="user-card-actions">
+                      <ion-button fill="outline" color="primary" size="small" (click)="abrirEditar(u)" class="btn-card-edit">
+                        <ion-icon name="create-outline" slot="start"></ion-icon>
+                        Editar
+                      </ion-button>
+
+                      <ion-button fill="clear" color="danger" size="small" (click)="eliminar(u.id)" class="btn-card-delete" title="Eliminar">
+                        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            }
+          </ion-row>
+        </ion-grid>
+      }
+    </section>
+
   </div>
 </ion-content>
+
+<!-- MODAL NATIVO EDITAR / CREAR (<ion-modal>) -->
+<ion-modal [isOpen]="mostrandoModal()" (didDismiss)="cerrarModal()" class="modal-admin-form">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar class="modal-toolbar-admin">
+        <ion-title>{{ usuarioEdicion() ? 'Editar Usuario PIN' : 'Nuevo Usuario PIN' }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModal()" color="medium">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content-admin ion-padding">
+      <form (ngSubmit)="guardar()" id="form-usuario-admin" class="admin-form-native">
+        <div class="form-group-card">
+          <h4 class="form-group-title">DATOS DE ACCESO DE CLIENTE</h4>
+          <ion-list [inset]="true" class="form-list-native ion-no-padding">
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Nombre del Usuario / Cliente *"
+                labelPlacement="stacked"
+                [(ngModel)]="nombreForm"
+                name="nombre"
+                placeholder="Ej: Cliente VIP Rebel"
+                required
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-input
+                type="text"
+                label="PIN de Acceso Numérico *"
+                labelPlacement="stacked"
+                [(ngModel)]="pinForm"
+                name="pin"
+                placeholder="Ej: 1234"
+                maxlength="10"
+                required
+              ></ion-input>
+            </ion-item>
+
+            <ion-item class="form-item-native">
+              <ion-textarea
+                label="Observaciones / Notas Internas"
+                labelPlacement="stacked"
+                [(ngModel)]="observacionesForm"
+                name="observaciones"
+                rows="2"
+                placeholder="Ej: Cliente autoriza compras catálogo privado"
+              ></ion-textarea>
+            </ion-item>
+
+            <ion-item class="form-item-native" lines="none">
+              <ion-toggle [(ngModel)]="activoForm" name="activo" justify="space-between">
+                Usuario Activo (Permitir Acceso PIN)
+              </ion-toggle>
+            </ion-item>
+          </ion-list>
+        </div>
+      </form>
+    </ion-content>
+
+    <ion-footer class="modal-footer-admin ion-no-border ion-padding">
+      <div class="modal-form-actions-footer">
+        <ion-button fill="clear" color="medium" (click)="cerrarModal()" class="btn-cancel-native">
+          Cancelar
+        </ion-button>
+        <ion-button type="submit" form="form-usuario-admin" color="danger" class="btn-save-native">
+          Guardar Usuario
+        </ion-button>
+      </div>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
