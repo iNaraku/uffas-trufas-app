@@ -36,7 +36,8 @@
                   <ion-card-subtitle class="metric-title">Usuarios PIN VIP</ion-card-subtitle>
                   <ion-icon [src]="icons.keyOutline" class="metric-icon"></ion-icon>
                 </div>
-                <ion-card-title class="metric-value-native">{{ servicioUsuarios.listaUsuarios().length }}</ion-card-title>
+                <ion-card-title class="metric-value-native">{{ servicioUsuarios.listaUsuarios().length
+                  }}</ion-card-title>
               </ion-card-header>
               <ion-card-content class="metric-sub-native">
                 <span>{{ usuariosActivos }} usuarios activos autorizados</span>
@@ -78,72 +79,33 @@
         </ion-row>
       </ion-grid>
 
-      <!-- ACCIONES RÁPIDAS (ION-LIST INSET NATIVO TIPO AJUSTES MOBILE) -->
-      <section class="quick-actions-section">
-        <h3 class="section-title">Acciones Rápidas</h3>
-
-        <ion-list [inset]="true" class="native-actions-list">
-          <ion-item button routerLink="/admin/products" detail="true" class="native-action-item">
-            <ion-icon [src]="icons.addCircleOutline" slot="start" color="danger"></ion-icon>
-            <ion-label>
-              <h2>Gestión de Productos</h2>
-              <p>Crear, editar precios y visibilidad pública/privada</p>
-            </ion-label>
-          </ion-item>
-
-          <ion-item button routerLink="/admin/users" detail="true" class="native-action-item">
-            <ion-icon [src]="icons.personAddOutline" slot="start" color="warning"></ion-icon>
-            <ion-label>
-              <h2>Crear / Administrar Usuarios PIN</h2>
-              <p>Genera claves de acceso personal para el catálogo VIP</p>
-            </ion-label>
-          </ion-item>
-
-          <ion-item button routerLink="/admin/theme" detail="true" class="native-action-item">
-            <ion-icon [src]="icons.colorPaletteOutline" slot="start" color="tertiary"></ion-icon>
-            <ion-label>
-              <h2>Personalizar Tema Visual</h2>
-              <p>Modifica colores principales, logos y eslogan</p>
-            </ion-label>
-          </ion-item>
-
-          <ion-item button routerLink="/admin/banners" detail="true" class="native-action-item" lines="none">
-            <ion-icon [src]="icons.imageOutline" slot="start" color="success"></ion-icon>
-            <ion-label>
-              <h2>Editar Banners Promocionales</h2>
-              <p>Cambia imágenes y textos del carrusel principal</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </section>
-
       <!-- RESUMEN ÚLTIMOS PRODUCTOS (NATIVO MOBILE CON ION-LIST E ION-THUMBNAIL) -->
       <section class="recent-products-section">
         <h3 class="section-title">Últimos Productos Agregados</h3>
 
         <ion-list [inset]="true" class="native-products-list">
           @for (prod of servicioProductos.productos().slice(0, 5); track prod.id; let last = $last) {
-            <ion-item [lines]="last ? 'none' : 'inset'" class="native-product-item">
-              <ion-thumbnail slot="start" class="prod-thumb">
-                <img [src]="prod.imagenUrl" [alt]="prod.nombre" />
-              </ion-thumbnail>
+          <ion-item [lines]="last ? 'none' : 'inset'" class="native-product-item">
+            <ion-thumbnail slot="start" class="prod-thumb">
+              <img [src]="prod.imagenUrl" [alt]="prod.nombre" />
+            </ion-thumbnail>
 
-              <ion-label>
-                <div class="prod-item-header">
-                  <h2>{{ prod.nombre }}</h2>
-                  <span class="prod-price">{{ prod.precio | precio }}</span>
-                </div>
-                <p>{{ prod.categoriaNombre || 'Sin categoría' }}</p>
-                <div class="prod-badges-row">
-                  <ion-badge [color]="prod.visibilidad === 'PRIVATE' ? 'warning' : 'tertiary'" class="mini-badge">
-                    {{ prod.visibilidad === 'PRIVATE' ? '🔒 PRIVADO' : '🌐 PÚBLICO' }}
-                  </ion-badge>
-                  <ion-badge [color]="prod.estado === 'ACTIVE' ? 'success' : 'medium'" class="mini-badge">
-                    {{ prod.estado === 'ACTIVE' ? 'Activo' : 'Inactivo' }}
-                  </ion-badge>
-                </div>
-              </ion-label>
-            </ion-item>
+            <ion-label>
+              <div class="prod-item-header">
+                <h2>{{ prod.nombre }}</h2>
+                <span class="prod-price">{{ prod.precio | precio }}</span>
+              </div>
+              <p>{{ prod.categoriaNombre || 'Sin categoría' }}</p>
+              <div class="prod-badges-row">
+                <ion-badge [color]="prod.visibilidad === 'PRIVATE' ? 'warning' : 'tertiary'" class="mini-badge">
+                  {{ prod.visibilidad === 'PRIVATE' ? '🔒 PRIVADO' : '🌐 PÚBLICO' }}
+                </ion-badge>
+                <ion-badge [color]="prod.estado === 'ACTIVE' ? 'success' : 'medium'" class="mini-badge">
+                  {{ prod.estado === 'ACTIVE' ? 'Activo' : 'Inactivo' }}
+                </ion-badge>
+              </div>
+            </ion-label>
+          </ion-item>
           }
         </ion-list>
       </section>

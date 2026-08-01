@@ -27,56 +27,56 @@
         <ion-list class="drawer-menu-list ion-no-padding">
           <ion-menu-toggle auto-hide="false">
             <ion-item button (click)="irAAdmin('/admin/dashboard')" [class.active-drawer-item]="router.url.includes('/admin/dashboard')">
-              <ion-icon name="grid-outline" slot="start" color="danger"></ion-icon>
+              <ion-icon name="grid-outline" slot="start"></ion-icon>
               <ion-label>Dashboard General</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
             <ion-item button (click)="irAAdmin('/admin/products')" [class.active-drawer-item]="router.url.includes('/admin/products')">
-              <ion-icon name="cube-outline" slot="start" color="warning"></ion-icon>
+              <ion-icon name="cube-outline" slot="start"></ion-icon>
               <ion-label>Gestión de Productos</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
             <ion-item button (click)="irAAdmin('/admin/users')" [class.active-drawer-item]="router.url.includes('/admin/users')">
-              <ion-icon name="people-outline" slot="start" color="warning"></ion-icon>
+              <ion-icon name="people-outline" slot="start"></ion-icon>
               <ion-label>Usuarios PIN de Catálogo</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
             <ion-item button (click)="irAAdmin('/admin/banners')" [class.active-drawer-item]="router.url.includes('/admin/banners')">
-              <ion-icon name="images-outline" slot="start" color="success"></ion-icon>
+              <ion-icon name="images-outline" slot="start"></ion-icon>
               <ion-label>Banners Promocionales</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
             <ion-item button (click)="irAAdmin('/admin/categories')" [class.active-drawer-item]="router.url.includes('/admin/categories')">
-              <ion-icon name="pricetags-outline" slot="start" color="tertiary"></ion-icon>
+              <ion-icon name="pricetags-outline" slot="start"></ion-icon>
               <ion-label>Categorías del Catálogo</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
             <ion-item button (click)="irAAdmin('/admin/theme')" [class.active-drawer-item]="router.url.includes('/admin/theme')">
-              <ion-icon name="color-palette-outline" slot="start" color="tertiary"></ion-icon>
+              <ion-icon name="color-palette-outline" slot="start"></ion-icon>
               <ion-label>Tema Dinámico y Colores</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
             <ion-item button (click)="irAAdmin('/admin/settings')" [class.active-drawer-item]="router.url.includes('/admin/settings')">
-              <ion-icon name="settings-outline" slot="start" color="medium"></ion-icon>
+              <ion-icon name="settings-outline" slot="start"></ion-icon>
               <ion-label>Configuración de Tienda</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false">
             <ion-item button (click)="irAAdmin('/home')" class="drawer-public-site-item" lines="none">
-              <ion-icon name="open-outline" slot="start" color="warning"></ion-icon>
+              <ion-icon name="open-outline" slot="start"></ion-icon>
               <ion-label class="gold-text">Ver Sitio Público</ion-label>
             </ion-item>
           </ion-menu-toggle>
