@@ -7,6 +7,17 @@ import { ServicioTema } from '../../../services/theme/servicio-tema.service';
 import { ServicioConfiguracion } from '../../../services/settings/servicio-configuracion.service';
 import { ModalPinComponent } from '../modal-pin/modal-pin.component';
 
+import { addIcons } from 'ionicons';
+import {
+  flame,
+  lockClosedOutline,
+  lockOpenOutline,
+  powerOutline,
+  shieldCheckmarkOutline,
+  homeOutline,
+  cubeOutline
+} from 'ionicons/icons';
+
 @Component({
   selector: 'app-encabezado',
   standalone: true,
@@ -23,6 +34,18 @@ export class EncabezadoComponent {
   private ngZone = inject(NgZone);
 
   public mostrarModalPin = false;
+
+  constructor() {
+    addIcons({
+      'flame': flame,
+      'lock-closed-outline': lockClosedOutline,
+      'lock-open-outline': lockOpenOutline,
+      'power-outline': powerOutline,
+      'shield-checkmark-outline': shieldCheckmarkOutline,
+      'home-outline': homeOutline,
+      'cube-outline': cubeOutline
+    });
+  }
 
   irAHome(e?: Event): void {
     if (e) e.preventDefault();

@@ -59,7 +59,8 @@ import {
   saveOutline,
   informationCircleOutline,
   checkmarkOutline,
-  arrowForwardOutline
+  arrowForwardOutline,
+  powerOutline
 } from 'ionicons/icons';
 import { ServicioTema } from './services/theme/servicio-tema.service';
 
@@ -141,7 +142,8 @@ export class AppComponent {
       'save-outline': saveOutline,
       'information-circle-outline': informationCircleOutline,
       'checkmark-outline': checkmarkOutline,
-      'arrow-forward-outline': arrowForwardOutline
+      'arrow-forward-outline': arrowForwardOutline,
+      'power-outline': powerOutline
     });
   }
 }

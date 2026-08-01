@@ -143,6 +143,14 @@ ion-content::part(scroll) {
   background: var(--color-secundario, #F5B400) !important;
 }
 
+/* ION-ICON REGLA GLOBAL DE DIMENSIÓN */
+ion-icon {
+  display: inline-block !important;
+  font-size: 1.15rem;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 /* 6. ESTILOS GLOBALES DE NAVEGACIÓN Y HEADER ADMIN (PROD PROOF) */
 .admin-header {
   border-bottom: 2px solid var(--color-primario, #D71920) !important;
