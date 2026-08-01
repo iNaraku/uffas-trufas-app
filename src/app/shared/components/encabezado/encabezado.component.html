@@ -3,7 +3,7 @@
     <div class="header-container">
       <div class="brand-box" (click)="irAHome($event)" style="cursor: pointer;">
         <div class="logo-circle">
-          <ion-icon name="flame" class="flame-icon"></ion-icon>
+          <ion-icon [src]="icons.flame" class="flame-icon"></ion-icon>
         </div>
         <div class="brand-text">
           <span class="brand-title">{{ servicioConfig.configuracion().nombreTienda }}</span>
@@ -21,22 +21,22 @@
         <!-- BOTÓN PIN / CATÁLOGO PRIVADO -->
         @if (servicioPin.estaDesbloqueado()) {
           <div class="unlocked-badge">
-            <ion-icon name="lock-open-outline" class="badge-icon"></ion-icon>
+            <ion-icon [src]="icons.lockOpenOutline" class="badge-icon"></ion-icon>
             <span class="user-name">{{ servicioPin.usuarioCatalogoActual()?.nombre }}</span>
             <button class="btn-lock" (click)="bloquear()" title="Cerrar Catálogo Privado">
-              <ion-icon name="power-outline"></ion-icon>
+              <ion-icon [src]="icons.powerOutline"></ion-icon>
             </button>
           </div>
         } @else {
           <button class="btn-pin-unlock" (click)="abrirModalPin()">
-            <ion-icon name="lock-closed-outline"></ion-icon>
+            <ion-icon [src]="icons.lockClosedOutline"></ion-icon>
             <span>Desbloquear PIN 🔒</span>
           </button>
         }
 
         <!-- BOTÓN ADMIN LOGIN -->
         <a routerLink="/admin/login" class="btn-admin-access" title="Acceso Administrativo">
-          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          <ion-icon [src]="icons.shieldCheckmarkOutline"></ion-icon>
           <span class="admin-text">Admin</span>
         </a>
       </div>
@@ -46,10 +46,10 @@
   <!-- SUBNAVBAR SECUNDARIO ABAJO PARA MÓVILES Y DISPOSITIVOS -->
   <div class="subnav-bar">
     <a (click)="irAHome($event)" [class.active-link]="router.url === '/home' || router.url === '/'" class="subnav-item" style="cursor: pointer;">
-      <ion-icon name="home-outline"></ion-icon> Inicio
+      <ion-icon [src]="icons.homeOutline"></ion-icon> Inicio
     </a>
     <a (click)="irACatalogo($event)" [class.active-link]="router.url.includes('/catalog')" class="subnav-item" style="cursor: pointer;">
-      <ion-icon name="cube-outline"></ion-icon> Catálogo
+      <ion-icon [src]="icons.cubeOutline"></ion-icon> Catálogo
     </a>
   </div>
 </ion-header>

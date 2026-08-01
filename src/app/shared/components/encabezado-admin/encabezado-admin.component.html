@@ -1,44 +1,46 @@
-<ion-header class="admin-header">
+<ion-header class="admin-header ion-no-border">
   <ion-toolbar class="admin-toolbar">
     <div class="admin-nav-box">
       <div class="brand-admin" (click)="irA('/admin/dashboard', $event)" style="cursor: pointer;">
-        <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
+        <ion-icon [src]="icons.shieldCheckmark" class="gold-icon"></ion-icon>
         <span>REBEL ADMIN PANEL</span>
       </div>
 
       <div class="user-badge">
         <span>👤 {{ servicioAuth.administradorActual()?.nombre || 'Administrador' }}</span>
         <button (click)="salirAdmin()" class="btn-logout" title="Cerrar Sesión Admin">
-          <ion-icon name="log-out-outline"></ion-icon> Salir
+          <ion-icon [src]="icons.logOutOutline"></ion-icon> Salir
         </button>
       </div>
     </div>
   </ion-toolbar>
-</ion-header>
 
-<nav class="admin-menu">
-  <a (click)="irA('/admin/dashboard', $event)" [class.active]="router.url.includes('/admin/dashboard') || rutaActiva === '/admin/dashboard'" class="menu-item" style="cursor: pointer;">
-    <ion-icon name="grid-outline"></ion-icon> Dashboard
-  </a>
-  <a (click)="irA('/admin/products', $event)" [class.active]="router.url.includes('/admin/products') || rutaActiva === '/admin/products'" class="menu-item" style="cursor: pointer;">
-    <ion-icon name="cube-outline"></ion-icon> Productos
-  </a>
-  <a (click)="irA('/admin/users', $event)" [class.active]="router.url.includes('/admin/users') || rutaActiva === '/admin/users'" class="menu-item" style="cursor: pointer;">
-    <ion-icon name="people-outline"></ion-icon> Usuarios PIN
-  </a>
-  <a (click)="irA('/admin/banners', $event)" [class.active]="router.url.includes('/admin/banners') || rutaActiva === '/admin/banners'" class="menu-item" style="cursor: pointer;">
-    <ion-icon name="images-outline"></ion-icon> Banners
-  </a>
-  <a (click)="irA('/admin/categories', $event)" [class.active]="router.url.includes('/admin/categories') || rutaActiva === '/admin/categories'" class="menu-item" style="cursor: pointer;">
-    <ion-icon name="pricetags-outline"></ion-icon> Categorías
-  </a>
-  <a (click)="irA('/admin/theme', $event)" [class.active]="router.url.includes('/admin/theme') || rutaActiva === '/admin/theme'" class="menu-item" style="cursor: pointer;">
-    <ion-icon name="color-palette-outline"></ion-icon> Tema Dinámico
-  </a>
-  <a (click)="irA('/admin/settings', $event)" [class.active]="router.url.includes('/admin/settings') || rutaActiva === '/admin/settings'" class="menu-item" style="cursor: pointer;">
-    <ion-icon name="settings-outline"></ion-icon> Configuración
-  </a>
-  <a (click)="irA('/home', $event)" class="menu-item btn-view-site" style="cursor: pointer;">
-    <ion-icon name="open-outline"></ion-icon> Ver Sitio Público
-  </a>
-</nav>
+  <div class="admin-menu-wrapper">
+    <nav class="admin-menu">
+      <a (click)="irA('/admin/dashboard', $event)" [class.active]="router.url.includes('/admin/dashboard') || rutaActiva === '/admin/dashboard'" class="menu-item" style="cursor: pointer;">
+        <ion-icon [src]="icons.gridOutline"></ion-icon> <span>Dashboard</span>
+      </a>
+      <a (click)="irA('/admin/products', $event)" [class.active]="router.url.includes('/admin/products') || rutaActiva === '/admin/products'" class="menu-item" style="cursor: pointer;">
+        <ion-icon [src]="icons.cubeOutline"></ion-icon> <span>Productos</span>
+      </a>
+      <a (click)="irA('/admin/users', $event)" [class.active]="router.url.includes('/admin/users') || rutaActiva === '/admin/users'" class="menu-item" style="cursor: pointer;">
+        <ion-icon [src]="icons.peopleOutline"></ion-icon> <span>Usuarios PIN</span>
+      </a>
+      <a (click)="irA('/admin/banners', $event)" [class.active]="router.url.includes('/admin/banners') || rutaActiva === '/admin/banners'" class="menu-item" style="cursor: pointer;">
+        <ion-icon [src]="icons.imagesOutline"></ion-icon> <span>Banners</span>
+      </a>
+      <a (click)="irA('/admin/categories', $event)" [class.active]="router.url.includes('/admin/categories') || rutaActiva === '/admin/categories'" class="menu-item" style="cursor: pointer;">
+        <ion-icon [src]="icons.pricetagsOutline"></ion-icon> <span>Categorías</span>
+      </a>
+      <a (click)="irA('/admin/theme', $event)" [class.active]="router.url.includes('/admin/theme') || rutaActiva === '/admin/theme'" class="menu-item" style="cursor: pointer;">
+        <ion-icon [src]="icons.colorPaletteOutline"></ion-icon> <span>Tema Dinámico</span>
+      </a>
+      <a (click)="irA('/admin/settings', $event)" [class.active]="router.url.includes('/admin/settings') || rutaActiva === '/admin/settings'" class="menu-item" style="cursor: pointer;">
+        <ion-icon [src]="icons.settingsOutline"></ion-icon> <span>Configuración</span>
+      </a>
+      <a (click)="irA('/home', $event)" class="menu-item btn-view-site" style="cursor: pointer;">
+        <ion-icon [src]="icons.openOutline"></ion-icon> <span>Ver Sitio Público</span>
+      </a>
+    </nav>
+  </div>
+</ion-header>
