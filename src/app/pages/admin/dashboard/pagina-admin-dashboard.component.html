@@ -14,7 +14,7 @@
         <div class="metric-card red-card">
           <div class="metric-header">
             <span>Total Productos</span>
-            <ion-icon [icon]="icons.cubeOutline"></ion-icon>
+            <ion-icon name="cube-outline"></ion-icon>
           </div>
           <div class="metric-value">{{ totalProductos }}</div>
           <div class="metric-sub">{{ productosPublicos }} públicos | {{ productosPrivados }} privados 🔒</div>
@@ -23,7 +23,7 @@
         <div class="metric-card gold-card">
           <div class="metric-header">
             <span>Usuarios Catálogo PIN</span>
-            <ion-icon [icon]="icons.keyOutline"></ion-icon>
+            <ion-icon name="key-outline"></ion-icon>
           </div>
           <div class="metric-value">{{ servicioUsuarios.listaUsuarios().length }}</div>
           <div class="metric-sub">{{ usuariosActivos }} usuarios activos autorizados</div>
@@ -32,7 +32,7 @@
         <div class="metric-card dark-card">
           <div class="metric-header">
             <span>Categorías Activas</span>
-            <ion-icon [icon]="icons.pricetagsOutline"></ion-icon>
+            <ion-icon name="pricetags-outline"></ion-icon>
           </div>
           <div class="metric-value">{{ servicioProductos.categorias().length }}</div>
           <div class="metric-sub">Secciones de catálogo</div>
@@ -41,7 +41,7 @@
         <div class="metric-card green-card">
           <div class="metric-header">
             <span>Banners Promocionales</span>
-            <ion-icon [icon]="icons.imagesOutline"></ion-icon>
+            <ion-icon name="images-outline"></ion-icon>
           </div>
           <div class="metric-value">{{ totalBanners }}</div>
           <div class="metric-sub">Carrusel de portada</div>
@@ -53,19 +53,19 @@
         <h3>Acciones Rápidas</h3>
         <div class="actions-grid">
           <a routerLink="/admin/products" class="action-btn">
-            <ion-icon [icon]="icons.addCircleOutline"></ion-icon>
+            <ion-icon name="add-circle-outline"></ion-icon>
             <span>Gestión de Productos</span>
           </a>
           <a routerLink="/admin/users" class="action-btn">
-            <ion-icon [icon]="icons.personAddOutline"></ion-icon>
+            <ion-icon name="person-add-outline"></ion-icon>
             <span>Crear Usuario PIN</span>
           </a>
           <a routerLink="/admin/theme" class="action-btn">
-            <ion-icon [icon]="icons.colorPaletteOutline"></ion-icon>
+            <ion-icon name="color-palette-outline"></ion-icon>
             <span>Personalizar Tema</span>
           </a>
           <a routerLink="/admin/banners" class="action-btn">
-            <ion-icon [icon]="icons.imageOutline"></ion-icon>
+            <ion-icon name="image-outline"></ion-icon>
             <span>Editar Banners</span>
           </a>
         </div>

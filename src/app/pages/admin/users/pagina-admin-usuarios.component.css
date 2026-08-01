@@ -1,8 +1,9 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   width: 100%;
-  min-height: 100vh;
-  overflow: visible;
+  flex: 1;
 }
 
 .content-admin {
