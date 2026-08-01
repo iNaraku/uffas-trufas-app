@@ -13,53 +13,46 @@
       <div class="search-filter-bar">
         <div class="search-box">
           <ion-icon name="search-outline" class="search-icon"></ion-icon>
-          <input
-            type="text"
-            [ngModel]="terminoBusqueda()"
-            (ngModelChange)="terminoBusqueda.set($event)"
-            placeholder="Buscar por producto, marca o categoría..."
-          />
+          <input type="text" [ngModel]="terminoBusqueda()" (ngModelChange)="terminoBusqueda.set($event)"
+            placeholder="Buscar por producto, marca o categoría..." />
           @if (terminoBusqueda()) {
-            <button class="btn-clear-search" (click)="terminoBusqueda.set('')">&times;</button>
+          <button class="btn-clear-search" (click)="terminoBusqueda.set('')">&times;</button>
           }
         </div>
 
         <!-- VISIBILIDAD TAB TOGGLE -->
         <div class="vis-toggle">
-          <button [class.active]="filtroVisibilidad() === 'TODOS'" (click)="filtroVisibilidad.set('TODOS')">Todos</button>
-          <button [class.active]="filtroVisibilidad() === 'PUBLICOS'" (click)="filtroVisibilidad.set('PUBLICOS')">Públicos</button>
+          <button [class.active]="filtroVisibilidad() === 'TODOS'"
+            (click)="filtroVisibilidad.set('TODOS')">Todos</button>
+          <button [class.active]="filtroVisibilidad() === 'PUBLICOS'"
+            (click)="filtroVisibilidad.set('PUBLICOS')">Públicos</button>
           @if (servicioPin.estaDesbloqueado()) {
-            <button class="btn-private-tab" [class.active]="filtroVisibilidad() === 'PRIVADOS'" (click)="filtroVisibilidad.set('PRIVADOS')">
-              Privados 🔒
-            </button>
+          <button class="btn-private-tab" [class.active]="filtroVisibilidad() === 'PRIVADOS'"
+            (click)="filtroVisibilidad.set('PRIVADOS')">
+            Privados 🔒
+          </button>
           } @else {
-            <button class="btn-private-locked" (click)="abrirPinModal()" title="Ingresa un PIN para desbloquear">
-              Privados 🔒
-            </button>
+          <button class="btn-private-locked" (click)="abrirPinModal()" title="Ingresa un PIN para desbloquear">
+            Privados 🔒
+          </button>
           }
         </div>
       </div>
 
       <!-- PILLS DE CATEGORÍAS -->
       <div class="categories-pills">
-        <button
-          class="pill-btn"
-          [class.active]="categoriaSeleccionada() === 'TODAS'"
-          (click)="categoriaSeleccionada.set('TODAS')"
-        >
+        <button class="pill-btn" [class.active]="categoriaSeleccionada() === 'TODAS'"
+          (click)="categoriaSeleccionada.set('TODAS')">
           Todas las categorías
         </button>
 
         @for (cat of servicioProductos.categorias(); track cat.id) {
-          @if (cat.activa) {
-            <button
-              class="pill-btn"
-              [class.active]="categoriaSeleccionada() === cat.id"
-              (click)="categoriaSeleccionada.set(cat.id)"
-            >
-              {{ cat.nombre }}
-            </button>
-          }
+        @if (cat.activa) {
+        <button class="pill-btn" [class.active]="categoriaSeleccionada() === cat.id"
+          (click)="categoriaSeleccionada.set(cat.id)">
+          {{ cat.nombre }}
+        </button>
+        }
         }
       </div>
     </div>
@@ -69,24 +62,26 @@
   <section class="catalog-grid-section">
     <div class="container">
       @if (servicioPin.estaDesbloqueado()) {
-        <div class="access-notice unlocked">
-          <span>🔓 Tienes sesión activa como <strong>{{ servicioPin.usuarioCatalogoActual()?.nombre }}</strong>. Estás viendo productos públicos y privados.</span>
-        </div>
+      <div class="access-notice unlocked">
+        <span>🔓 Tienes sesión activa como <strong>{{ servicioPin.usuarioCatalogoActual()?.nombre }}</strong>. Estás
+          viendo productos públicos y privados.</span>
+      </div>
       } @else {
-        <div class="access-notice locked">
-          <span>🔒 Estás viendo el <strong>Catálogo Público</strong>. Para ingresar a productos privados, <a (click)="abrirPinModal()" class="link-unlock">introduce tu PIN de usuario aquí</a>.</span>
-        </div>
+      <div class="access-notice locked">
+        <span>🔒 Estás viendo el <strong>Catálogo Público</strong>. Para ingresar a productos privados, <a
+            (click)="abrirPinModal()" class="link-unlock">introduce tu PIN de usuario aquí</a>.</span>
+      </div>
       }
 
       <div class="products-grid">
         @for (prod of productosFiltrados(); track prod.id) {
-          <app-tarjeta-producto [producto]="prod" (solicitarDesbloqueo)="abrirPinModal()"></app-tarjeta-producto>
+        <app-tarjeta-producto [producto]="prod" (solicitarDesbloqueo)="abrirPinModal()"></app-tarjeta-producto>
         } @empty {
-          <div class="empty-state">
-            <ion-icon name="alert-circle-outline"></ion-icon>
-            <h3>No se encontraron productos</h3>
-            <p>Intenta ajustar tus criterios de búsqueda o cambiar de categoría.</p>
-          </div>
+        <div class="empty-state">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <h3>No se encontraron productos</h3>
+          <p>Intenta ajustar tus criterios de búsqueda o cambiar de categoría.</p>
+        </div>
         }
       </div>
     </div>

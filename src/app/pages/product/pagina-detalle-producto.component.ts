@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { EncabezadoComponent } from '../../shared/components/encabezado/encabezado.component';
-import { PiePaginaComponent } from '../../shared/components/pie-pagina/pie-pagina.component';
 import { ServicioProductos } from '../../services/products/servicio-productos.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
 import { ServicioConfiguracion } from '../../services/settings/servicio-configuracion.service';
@@ -19,7 +18,6 @@ import { PrecioPipe } from '../../shared/pipes/precio.pipe';
     RouterModule,
     IonicModule,
     EncabezadoComponent,
-    PiePaginaComponent,
     PrecioPipe
   ],
   templateUrl: './pagina-detalle-producto.component.html',

@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { EncabezadoComponent } from '../../shared/components/encabezado/encabezado.component';
-import { PiePaginaComponent } from '../../shared/components/pie-pagina/pie-pagina.component';
 import { TarjetaProductoComponent } from '../../shared/components/tarjeta-producto/tarjeta-producto.component';
 import { ServicioProductos } from '../../services/products/servicio-productos.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
@@ -19,7 +18,6 @@ import { ServicioPin } from '../../services/pin/servicio-pin.service';
     RouterModule,
     IonicModule,
     EncabezadoComponent,
-    PiePaginaComponent,
     TarjetaProductoComponent
   ],
   templateUrl: './pagina-catalogo.component.html',
