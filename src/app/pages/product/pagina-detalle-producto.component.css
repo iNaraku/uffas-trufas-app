@@ -10,203 +10,221 @@
   --color: var(--color-texto, #FFFFFF);
 }
 
-.container {
-  max-width: 1100px;
+.native-detail-container {
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 0.5rem 0.5rem 4rem;
 }
 
-.breadcrumb a {
-  color: var(--color-secundario, #F5B400);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.9rem;
-  display: inline-block;
-  margin-bottom: 1.5rem;
-}
-
-.detail-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  background: var(--color-tarjetas, #232323);
-  border: 1px solid #333;
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-}
-
-.image-gallery-box {
-  position: relative;
-  border-radius: 12px;
+/* TARJETA DE PRODUCTO NATIVA IONIC */
+.native-product-card {
+  background: #1c1c1e;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7);
+  margin: 0 0 2rem 0;
   overflow: hidden;
-  background: #181818;
-  height: 400px;
 }
 
-.main-image {
+.native-media-box {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: #111111;
+  overflow: hidden;
+}
+
+.native-product-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.image-badge {
+.chips-overlay {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 0.35rem 0.75rem;
-  border-radius: 20px;
+  top: 0.85rem;
+  left: 0.85rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.badge-chip {
+  --background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-weight: 800;
   font-size: 0.75rem;
-  font-weight: 800;
-  border: 1px solid #555;
+  letter-spacing: 0.5px;
+  height: 32px;
 }
 
-.image-badge.badge-priv {
-  background: var(--color-secundario, #F5B400);
-  color: #000;
-}
-
-.category-pill {
-  display: inline-block;
-  background: rgba(245, 180, 0, 0.15);
-  color: var(--color-secundario, #F5B400);
-  padding: 0.3rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-.item-title {
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: var(--color-texto, #FFFFFF);
-  margin: 0 0 1rem 0;
-  font-family: 'Impact', sans-serif;
-  letter-spacing: 1px;
-}
-
-.price-header {
-  font-size: 2rem;
-  font-weight: 900;
-  color: #ffffff;
-  margin-bottom: 1rem;
-}
-
-.availability-tag {
-  display: inline-flex;
+/* HEADER & TITULO */
+.header-top-row {
+  display: flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  background: rgba(215, 25, 32, 0.2);
-  color: #ff6b6b;
-}
-
-.availability-tag.in-stock {
-  background: rgba(46, 125, 50, 0.2);
-  color: #81c784;
-}
-
-.divider {
-  height: 1px;
-  background: #333;
-  margin: 1.5rem 0;
-}
-
-.description-section h3 {
-  color: var(--color-secundario, #F5B400);
-  font-size: 1.1rem;
+  justify-content: space-between;
   margin-bottom: 0.5rem;
 }
 
-.description-section p {
-  color: var(--color-texto-secundario, #C9C9C9);
-  line-height: 1.6;
+.native-category {
+  color: var(--color-secundario, #F5B400);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.stock-badge {
+  font-size: 0.78rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.native-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ffffff;
+  font-family: 'Impact', 'Roboto', sans-serif;
+  letter-spacing: 0.8px;
+  margin: 0.25rem 0 0.75rem 0;
+  line-height: 1.2;
+}
+
+.native-price-row {
+  margin-top: 0.5rem;
+}
+
+.native-price {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--color-secundario, #F5B400);
+}
+
+/* CONTENIDO Y SECCIONES */
+.native-content {
+  padding-top: 0;
+}
+
+.description-block h3, .specs-block h3 {
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.description-text {
+  color: #c0c0c0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+.native-specs-list {
+  --background: #141416;
+  border-radius: 14px;
+  margin: 0.5rem 0 1.5rem 0;
+  padding: 0;
+}
+
+.native-specs-list ion-item {
+  --background: #141416;
+  --color: #ffffff;
+  --border-color: rgba(255, 255, 255, 0.08);
+}
+
+.native-specs-list ion-label h2 {
+  color: #ffffff;
+  font-weight: 700;
   font-size: 0.95rem;
 }
 
-.specs-section {
-  margin: 1.5rem 0;
-  background: #181818;
-  padding: 1rem;
-  border-radius: 8px;
+.native-specs-list ion-label p {
+  color: #888888;
+  font-size: 0.8rem;
 }
 
-.spec-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.4rem 0;
-  font-size: 0.85rem;
-}
-
-.spec-label {
-  color: #888;
-}
-
-.spec-val {
-  color: #fff;
-  font-weight: 700;
-}
-
-.btn-whatsapp-large {
-  width: 100%;
-  background: #25d366;
-  color: #fff;
-  border: none;
-  padding: 1rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
+.btn-whatsapp-native {
+  --background: #25d366;
+  --color: #ffffff;
+  --border-radius: 16px;
   font-weight: 900;
+  font-size: 1.1rem;
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  margin-top: 1rem;
+}
+
+/* ESTADO BLOQUEADO NATIVO */
+.native-locked-card, .native-not-found-card {
+  background: #1c1c1e;
+  border: 2px solid var(--color-secundario, #F5B400);
+  border-radius: 20px;
+  padding: 2.5rem 1.5rem;
+  max-width: 550px;
+  margin: 2rem auto;
+  box-shadow: 0 10px 30px rgba(245, 180, 0, 0.2);
+}
+
+.lock-icon-circle {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primario, #D71920), #800b0f);
+  border: 2px solid var(--color-secundario, #F5B400);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-  transition: transform 0.2s ease;
+  box-shadow: 0 0 20px rgba(245, 180, 0, 0.4);
 }
 
-.btn-whatsapp-large:hover {
-  transform: translateY(-2px);
-}
-
-.locked-detail-card, .not-found-card {
-  text-align: center;
-  background: var(--color-tarjetas, #232323);
-  border: 2px solid var(--color-secundario, #F5B400);
-  padding: 4rem 2rem;
-  border-radius: 16px;
-  max-width: 600px;
-  margin: 2rem auto;
-}
-
-.lock-icon-box ion-icon, .not-found-card ion-icon {
-  font-size: 4rem;
+.lock-icon-circle ion-icon, .not-found-icon {
+  font-size: 2.5rem;
   color: var(--color-secundario, #F5B400);
-  margin-bottom: 1rem;
 }
 
-.btn-unlock-large {
-  background: var(--color-secundario, #F5B400);
-  color: #000;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 8px;
+.locked-title {
+  color: #ffffff;
   font-weight: 900;
-  font-size: 1rem;
-  text-transform: uppercase;
-  cursor: pointer;
-  margin-top: 1.5rem;
+  font-size: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .detail-grid {
-    grid-template-columns: 1fr;
+.locked-subtitle {
+  color: var(--color-secundario, #F5B400);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.locked-text {
+  color: #b0b0b0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.btn-native-unlock {
+  --border-radius: 14px;
+  font-weight: 900;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 480px) {
+  .native-media-box {
+    height: 280px;
+  }
+
+  .native-title {
+    font-size: 1.45rem;
+  }
+
+  .native-price {
+    font-size: 1.8rem;
   }
 }

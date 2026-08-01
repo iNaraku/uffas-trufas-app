@@ -1,12 +1,16 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { ModalController, ToastController } from '@ionic/angular/standalone';
 import { UsuarioCatalogo } from '../../models/usuario-catalogo.model';
 import { ServicioUsuariosCatalogo } from '../users/servicio-usuarios-catalogo.service';
+import { ModalPinComponent } from '../../shared/components/modal-pin/modal-pin.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServicioPin {
   private servicioUsuarios = inject(ServicioUsuariosCatalogo);
+  private modalCtrl = inject(ModalController);
+  private toastCtrl = inject(ToastController);
 
   public estaDesbloqueado = signal<boolean>(false);
   public usuarioCatalogoActual = signal<UsuarioCatalogo | null>(null);
@@ -14,6 +18,37 @@ export class ServicioPin {
 
   constructor() {
     this.recuperarSesionPin();
+  }
+
+  public async abrirModalPin(): Promise<boolean> {
+    const modal = await this.modalCtrl.create({
+      component: ModalPinComponent,
+      cssClass: 'modal-pin-native-sheet',
+      breakpoints: [0, 0.75, 1],
+      initialBreakpoint: 0.75,
+      handle: true,
+      backdropDismiss: true
+    });
+
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    return !!data?.exito;
+  }
+
+  private async mostrarToast(mensaje: string, color: 'success' | 'danger' | 'warning' = 'success'): Promise<void> {
+    const toast = await this.toastCtrl.create({
+      message: mensaje,
+      duration: 3000,
+      color: color,
+      position: 'bottom',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'cancel'
+        }
+      ]
+    });
+    await toast.present();
   }
 
   private recuperarSesionPin(): void {
@@ -45,17 +80,20 @@ export class ServicioPin {
       this.estaDesbloqueado.set(true);
       this.usuarioCatalogoActual.set(usuarioValido);
       sessionStorage.setItem('smoke_shop_pin_usuario', JSON.stringify(usuarioValido));
+      this.mostrarToast(`¡Bienvenido ${usuarioValido.nombre}! Catálogo Privado Desbloqueado 🔓`, 'success');
       return true;
     } else {
-      this.mensajeError.set('PIN incorrecto o usuario inactivado. Contacta al administrador.');
+      this.mensajeError.set('PIN incorrecto o usuario inactivado.');
+      this.mostrarToast('PIN incorrecto o no autorizado 🔒', 'danger');
       return false;
     }
   }
 
-  public bloquearCatalogo(): void {
+  public async bloquearCatalogo(): Promise<void> {
     this.estaDesbloqueado.set(false);
     this.usuarioCatalogoActual.set(null);
     this.mensajeError.set(null);
     sessionStorage.removeItem('smoke_shop_pin_usuario');
+    this.mostrarToast('Catálogo Privado Bloqueado 🔒', 'warning');
   }
 }

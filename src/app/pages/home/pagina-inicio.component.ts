@@ -5,12 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { EncabezadoComponent } from '../../shared/components/encabezado/encabezado.component';
 import { PiePaginaComponent } from '../../shared/components/pie-pagina/pie-pagina.component';
 import { TarjetaProductoComponent } from '../../shared/components/tarjeta-producto/tarjeta-producto.component';
-import { ModalPinComponent } from '../../shared/components/modal-pin/modal-pin.component';
 import { ServicioProductos } from '../../services/products/servicio-productos.service';
 import { ServicioBanners } from '../../services/banners/servicio-banners.service';
 import { ServicioInicio } from '../../services/home/servicio-inicio.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
-import { Producto } from '../../models/producto.model';
 
 @Component({
   selector: 'app-pagina-inicio',
@@ -22,8 +20,7 @@ import { Producto } from '../../models/producto.model';
     IonicModule,
     EncabezadoComponent,
     PiePaginaComponent,
-    TarjetaProductoComponent,
-    ModalPinComponent
+    TarjetaProductoComponent
   ],
   templateUrl: './pagina-inicio.component.html',
   styleUrls: ['./pagina-inicio.component.css']
@@ -35,7 +32,6 @@ export class PaginaInicioComponent {
   public servicioPin = inject(ServicioPin);
 
   public filtroTab = signal<'TODOS' | 'PUBLICOS' | 'PRIVADOS'>('TODOS');
-  public mostrarModalPin = false;
 
   public productosVisibles = computed(() => {
     const estaDesbloqueado = this.servicioPin.estaDesbloqueado();
@@ -60,10 +56,6 @@ export class PaginaInicioComponent {
   });
 
   abrirPinModal(): void {
-    this.mostrarModalPin = true;
-  }
-
-  cerrarPinModal(): void {
-    this.mostrarModalPin = false;
+    this.servicioPin.abrirModalPin();
   }
 }

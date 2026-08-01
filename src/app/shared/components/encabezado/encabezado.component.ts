@@ -5,7 +5,6 @@ import { IonicModule, NavController } from '@ionic/angular';
 import { ServicioPin } from '../../../services/pin/servicio-pin.service';
 import { ServicioTema } from '../../../services/theme/servicio-tema.service';
 import { ServicioConfiguracion } from '../../../services/settings/servicio-configuracion.service';
-import { ModalPinComponent } from '../modal-pin/modal-pin.component';
 
 import {
   flame,
@@ -20,7 +19,7 @@ import {
 @Component({
   selector: 'app-encabezado',
   standalone: true,
-  imports: [CommonModule, RouterModule, IonicModule, ModalPinComponent],
+  imports: [CommonModule, RouterModule, IonicModule],
   templateUrl: './encabezado.component.html',
   styleUrls: ['./encabezado.component.css'],
   encapsulation: ViewEncapsulation.None
@@ -32,8 +31,6 @@ export class EncabezadoComponent {
   public router = inject(Router);
   private navCtrl = inject(NavController);
   private ngZone = inject(NgZone);
-
-  public mostrarModalPin = false;
 
   public icons = {
     flame,
@@ -66,14 +63,20 @@ export class EncabezadoComponent {
   }
 
   abrirModalPin(): void {
-    this.mostrarModalPin = true;
-  }
-
-  cerrarModalPin(): void {
-    this.mostrarModalPin = false;
+    this.servicioPin.abrirModalPin();
   }
 
   bloquear(): void {
     this.servicioPin.bloquearCatalogo();
+  }
+
+  esSubpagina(): boolean {
+    const url = this.router.url;
+    return url !== '/' && url !== '/home';
+  }
+
+  mostrarBotonAdmin(): boolean {
+    const url = this.router.url;
+    return url === '/' || url === '/home' || url.includes('/catalog');
   }
 }

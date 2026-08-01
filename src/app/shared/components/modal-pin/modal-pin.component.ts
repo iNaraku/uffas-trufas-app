@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { ServicioPin } from '../../../services/pin/servicio-pin.service';
 
 @Component({
@@ -12,9 +12,9 @@ import { ServicioPin } from '../../../services/pin/servicio-pin.service';
   styleUrls: ['./modal-pin.component.css']
 })
 export class ModalPinComponent {
-  @Output() cerrarModal = new EventEmitter<void>();
-
   public servicioPin = inject(ServicioPin);
+  private modalCtrl = inject(ModalController);
+
   public pinIngresado: string = '';
   public cargando: boolean = false;
 
@@ -26,11 +26,11 @@ export class ModalPinComponent {
     this.cargando = false;
 
     if (exito) {
-      this.cerrar();
+      this.cerrar(true);
     }
   }
 
-  cerrar(): void {
-    this.cerrarModal.emit();
+  cerrar(exito: boolean = false): void {
+    this.modalCtrl.dismiss({ exito });
   }
 }

@@ -4,7 +4,6 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { EncabezadoComponent } from '../../shared/components/encabezado/encabezado.component';
 import { PiePaginaComponent } from '../../shared/components/pie-pagina/pie-pagina.component';
-import { ModalPinComponent } from '../../shared/components/modal-pin/modal-pin.component';
 import { ServicioProductos } from '../../services/products/servicio-productos.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
 import { ServicioConfiguracion } from '../../services/settings/servicio-configuracion.service';
@@ -21,7 +20,6 @@ import { PrecioPipe } from '../../shared/pipes/precio.pipe';
     IonicModule,
     EncabezadoComponent,
     PiePaginaComponent,
-    ModalPinComponent,
     PrecioPipe
   ],
   templateUrl: './pagina-detalle-producto.component.html',
@@ -34,7 +32,6 @@ export class PaginaDetalleProductoComponent implements OnInit {
   public servicioConfig = inject(ServicioConfiguracion);
 
   public producto = signal<Producto | null>(null);
-  public mostrarModalPin = false;
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -55,10 +52,6 @@ export class PaginaDetalleProductoComponent implements OnInit {
   }
 
   abrirPinModal(): void {
-    this.mostrarModalPin = true;
-  }
-
-  cerrarPinModal(): void {
-    this.mostrarModalPin = false;
+    this.servicioPin.abrirModalPin();
   }
 }
