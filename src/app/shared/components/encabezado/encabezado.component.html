@@ -1,6 +1,12 @@
 <ion-header class="header-rebel ion-no-border">
   <ion-toolbar class="toolbar-rebel">
     <div class="header-container">
+      @if (esSubpagina()) {
+        <ion-buttons slot="start" class="back-btn-box">
+          <ion-back-button defaultHref="/home" text="" icon="arrow-back-outline" class="btn-native-back"></ion-back-button>
+        </ion-buttons>
+      }
+
       <div class="brand-box" (click)="irAHome($event)" style="cursor: pointer;">
         <div class="logo-circle">
           <ion-icon [src]="icons.flame" class="flame-icon"></ion-icon>
@@ -18,43 +24,59 @@
       </nav>
 
       <div class="header-actions">
-        <!-- BOTÓN PIN / CATÁLOGO PRIVADO -->
-        @if (servicioPin.estaDesbloqueado()) {
-          <div class="unlocked-badge">
-            <ion-icon [src]="icons.lockOpenOutline" class="badge-icon"></ion-icon>
-            <span class="user-name">{{ servicioPin.usuarioCatalogoActual()?.nombre }}</span>
-            <button class="btn-lock" (click)="bloquear()" title="Cerrar Catálogo Privado">
-              <ion-icon [src]="icons.powerOutline"></ion-icon>
+        <!-- BOTÓN PIN / CATÁLOGO PRIVADO (DESKTOP ONLY PARA EVITAR REDUNDANCIA EN MOBILE) -->
+        <div class="desktop-only">
+          @if (servicioPin.estaDesbloqueado()) {
+            <div class="unlocked-badge">
+              <ion-icon [src]="icons.lockOpenOutline" class="badge-icon"></ion-icon>
+              <span class="user-name">{{ servicioPin.usuarioCatalogoActual()?.nombre }}</span>
+              <button class="btn-lock" (click)="bloquear()" title="Cerrar Catálogo Privado">
+                <ion-icon [src]="icons.powerOutline"></ion-icon>
+              </button>
+            </div>
+          } @else {
+            <button class="btn-pin-unlock" (click)="abrirModalPin()">
+              <ion-icon [src]="icons.lockClosedOutline"></ion-icon>
+              <span>Desbloquear PIN 🔒</span>
             </button>
-          </div>
-        } @else {
-          <button class="btn-pin-unlock" (click)="abrirModalPin()">
-            <ion-icon [src]="icons.lockClosedOutline"></ion-icon>
-            <span>Desbloquear PIN 🔒</span>
-          </button>
-        }
+          }
+        </div>
 
-        <!-- BOTÓN ADMIN LOGIN -->
-        <a routerLink="/admin/login" class="btn-admin-access" title="Acceso Administrativo">
-          <ion-icon [src]="icons.shieldCheckmarkOutline"></ion-icon>
-          <span class="admin-text">Admin</span>
-        </a>
+        <!-- BOTÓN ADMIN LOGIN (DISPONIBLE SOLO EN HOME Y CATÁLOGO) -->
+        @if (mostrarBotonAdmin()) {
+          <a routerLink="/admin/login" class="btn-admin-access" title="Acceso Administrativo">
+            <ion-icon [src]="icons.shieldCheckmarkOutline"></ion-icon>
+            <span class="admin-text">Admin</span>
+          </a>
+        }
       </div>
     </div>
   </ion-toolbar>
 
-  <!-- SUBNAVBAR SECUNDARIO ABAJO PARA MÓVILES Y DISPOSITIVOS -->
-  <div class="subnav-bar">
-    <a (click)="irAHome($event)" [class.active-link]="router.url === '/home' || router.url === '/'" class="subnav-item" style="cursor: pointer;">
-      <ion-icon [src]="icons.homeOutline"></ion-icon> Inicio
+  <!-- BARRA DE NAVEGACIÓN INFERIOR NATIVA MOBILE -->
+  <div class="subnav-bar ion-activatable">
+    <a (click)="irAHome($event)" [class.active-link]="router.url === '/home' || router.url === '/'" class="subnav-item ion-activatable">
+      <ion-icon [src]="icons.homeOutline"></ion-icon>
+      <span>Inicio</span>
+      <ion-ripple-effect></ion-ripple-effect>
     </a>
-    <a (click)="irACatalogo($event)" [class.active-link]="router.url.includes('/catalog')" class="subnav-item" style="cursor: pointer;">
-      <ion-icon [src]="icons.cubeOutline"></ion-icon> Catálogo
+    <a (click)="irACatalogo($event)" [class.active-link]="router.url.includes('/catalog')" class="subnav-item ion-activatable">
+      <ion-icon [src]="icons.cubeOutline"></ion-icon>
+      <span>Catálogo</span>
+      <ion-ripple-effect></ion-ripple-effect>
     </a>
+    @if (!servicioPin.estaDesbloqueado()) {
+      <a (click)="abrirModalPin()" class="subnav-item btn-subnav-pin ion-activatable">
+        <ion-icon [src]="icons.lockClosedOutline"></ion-icon>
+        <span>PIN 🔒</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </a>
+    } @else {
+      <a (click)="bloquear()" class="subnav-item btn-subnav-unlocked ion-activatable">
+        <ion-icon [src]="icons.lockOpenOutline"></ion-icon>
+        <span>VIP 🔓</span>
+        <ion-ripple-effect></ion-ripple-effect>
+      </a>
+    }
   </div>
 </ion-header>
-
-<!-- MODAL PIN -->
-@if (mostrarModalPin) {
-  <app-modal-pin (cerrado)="cerrarModalPin()"></app-modal-pin>
-}

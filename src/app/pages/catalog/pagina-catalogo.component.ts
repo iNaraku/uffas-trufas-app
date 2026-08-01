@@ -6,10 +6,8 @@ import { IonicModule } from '@ionic/angular';
 import { EncabezadoComponent } from '../../shared/components/encabezado/encabezado.component';
 import { PiePaginaComponent } from '../../shared/components/pie-pagina/pie-pagina.component';
 import { TarjetaProductoComponent } from '../../shared/components/tarjeta-producto/tarjeta-producto.component';
-import { ModalPinComponent } from '../../shared/components/modal-pin/modal-pin.component';
 import { ServicioProductos } from '../../services/products/servicio-productos.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
-import { Producto } from '../../models/producto.model';
 
 @Component({
   selector: 'app-pagina-catalogo',
@@ -22,8 +20,7 @@ import { Producto } from '../../models/producto.model';
     IonicModule,
     EncabezadoComponent,
     PiePaginaComponent,
-    TarjetaProductoComponent,
-    ModalPinComponent
+    TarjetaProductoComponent
   ],
   templateUrl: './pagina-catalogo.component.html',
   styleUrls: ['./pagina-catalogo.component.css']
@@ -35,7 +32,6 @@ export class PaginaCatalogoComponent {
   public terminoBusqueda = signal<string>('');
   public categoriaSeleccionada = signal<string>('TODAS');
   public filtroVisibilidad = signal<'TODOS' | 'PUBLICOS' | 'PRIVADOS'>('TODOS');
-  public mostrarModalPin = false;
 
   public productosFiltrados = computed(() => {
     const todos = this.servicioProductos.productos().filter(p => p.estado === 'ACTIVE');
@@ -68,10 +64,6 @@ export class PaginaCatalogoComponent {
   });
 
   abrirPinModal(): void {
-    this.mostrarModalPin = true;
-  }
-
-  cerrarPinModal(): void {
-    this.mostrarModalPin = false;
+    this.servicioPin.abrirModalPin();
   }
 }

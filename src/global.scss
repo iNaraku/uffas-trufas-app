@@ -255,3 +255,30 @@ ion-icon {
   border: 1px solid var(--color-secundario, #F5B400) !important;
 }
 
+/* 7. ESTILOS NATIVOS DE MODAL IONIC (modal-pin-native-sheet) */
+ion-modal.modal-pin-native-sheet {
+  --background: #1e1e1e;
+  --border-radius: 20px 20px 0 0;
+  --box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+}
+
+@media (min-width: 769px) {
+  ion-modal.modal-pin-native-sheet {
+    --border-radius: 16px;
+    --width: 440px;
+    --height: 520px;
+  }
+}
+
+/* TAP HIGHLIGHT Y DESPLAZAMIENTO FLUIDO NATIVO */
+button, a, ion-button, .ion-activatable {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* SAFE AREA BOTTOM PADDING PARA ION-CONTENT EN MÓVILES (POR TABBAR FLOTANTE) */
+@media (max-width: 768px) {
+  ion-content.content-rebel::part(scroll) {
+    padding-bottom: 75px !important;
+  }
+}
+
