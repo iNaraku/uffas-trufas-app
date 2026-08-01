@@ -23,48 +23,59 @@
       class="native-admin-searchbar"
     ></ion-searchbar>
 
-    <!-- LISTADO MÓVIL NATIVO DE USUARIOS PIN -->
+    <!-- GRID NATIVA DE TARJETAS DE USUARIO PIN -->
     <section class="users-list-section">
-      <ion-list [inset]="true" class="native-users-admin-list">
-        @for (u of usuariosFiltrados(); track u.id; let last = $last) {
-          <ion-item [lines]="last ? 'none' : 'inset'" class="native-user-item">
-            <ion-icon name="key-outline" slot="start" color="warning" class="user-key-icon"></ion-icon>
+      @if (usuariosFiltrados().length === 0) {
+        <div class="empty-users-state">
+          <ion-icon name="key-outline" class="empty-icon"></ion-icon>
+          <h3>Sin usuarios encontrados</h3>
+          <p>No hay coincidencias con la búsqueda o PIN ingresado.</p>
+        </div>
+      } @else {
+        <ion-grid class="users-grid-native">
+          <ion-row>
+            @for (u of usuariosFiltrados(); track u.id) {
+              <ion-col size="12" size-sm="6" size-md="4" size-xl="3">
+                <ion-card class="native-user-card">
+                  <div class="user-card-header">
+                    <div class="user-avatar-badge">
+                      <ion-icon name="key-outline" class="key-icon"></ion-icon>
+                    </div>
 
-            <ion-label>
-              <div class="user-item-header">
-                <h2>{{ u.nombre }}</h2>
-                <ion-badge color="warning" class="pin-badge-native">🔑 PIN: {{ u.pin }}</ion-badge>
-              </div>
-              <p>{{ u.observaciones || 'Sin observaciones' }} • {{ u.fechaCreacion | date:'shortDate' }}</p>
-            </ion-label>
+                    <div class="user-header-badges">
+                      <ion-badge color="warning" class="pin-badge-native">🔑 PIN: {{ u.pin }}</ion-badge>
+                      <ion-badge
+                        [color]="u.activo ? 'success' : 'medium'"
+                        class="clickable-badge"
+                        (click)="cambiarEstado(u.id, u.activo)"
+                      >
+                        {{ u.activo ? 'Activo' : 'Inactivo' }}
+                      </ion-badge>
+                    </div>
+                  </div>
 
-            <!-- TOGGLE ESTADO Y ACCIONES -->
-            <div slot="end" class="user-item-end">
-              <ion-badge
-                [color]="u.activo ? 'success' : 'medium'"
-                class="clickable-badge"
-                (click)="cambiarEstado(u.id, u.activo)"
-              >
-                {{ u.activo ? 'Activo' : 'Inactivo' }}
-              </ion-badge>
+                  <ion-card-content class="user-card-body">
+                    <h3 class="user-name-title">{{ u.nombre }}</h3>
+                    <p class="user-notes-text">{{ u.observaciones || 'Sin observaciones registradas' }}</p>
+                    <span class="user-date-text">Creado: {{ u.fechaCreacion | date:'shortDate' }}</span>
 
-              <ion-button fill="clear" color="primary" (click)="abrirEditar(u)" title="Editar">
-                <ion-icon name="create-outline" slot="icon-only"></ion-icon>
-              </ion-button>
+                    <div class="user-card-actions">
+                      <ion-button fill="outline" color="primary" size="small" (click)="abrirEditar(u)" class="btn-card-edit">
+                        <ion-icon name="create-outline" slot="start"></ion-icon>
+                        Editar
+                      </ion-button>
 
-              <ion-button fill="clear" color="danger" (click)="eliminar(u.id)" title="Eliminar">
-                <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-              </ion-button>
-            </div>
-          </ion-item>
-        } @empty {
-          <ion-item lines="none">
-            <ion-label class="ion-text-center text-muted">
-              No se encontraron usuarios de catálogo PIN.
-            </ion-label>
-          </ion-item>
-        }
-      </ion-list>
+                      <ion-button fill="clear" color="danger" size="small" (click)="eliminar(u.id)" class="btn-card-delete" title="Eliminar">
+                        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            }
+          </ion-row>
+        </ion-grid>
+      }
     </section>
 
   </div>
@@ -85,59 +96,64 @@
     </ion-header>
 
     <ion-content class="modal-content-admin ion-padding">
-      <form (ngSubmit)="guardar()" class="admin-form-native">
-        <ion-list [inset]="true" class="form-list-native ion-no-padding">
-          <ion-item class="form-item-native">
-            <ion-input
-              label="Nombre del Usuario / Cliente *"
-              labelPlacement="floating"
-              [(ngModel)]="nombreForm"
-              name="nombre"
-              placeholder="Ej: Cliente VIP Rebel"
-              required
-            ></ion-input>
-          </ion-item>
+      <form (ngSubmit)="guardar()" id="form-usuario-admin" class="admin-form-native">
+        <div class="form-group-card">
+          <h4 class="form-group-title">DATOS DE ACCESO DE CLIENTE</h4>
+          <ion-list [inset]="true" class="form-list-native ion-no-padding">
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Nombre del Usuario / Cliente *"
+                labelPlacement="stacked"
+                [(ngModel)]="nombreForm"
+                name="nombre"
+                placeholder="Ej: Cliente VIP Rebel"
+                required
+              ></ion-input>
+            </ion-item>
 
-          <ion-item class="form-item-native">
-            <ion-input
-              type="text"
-              label="PIN de Acceso (Numérico) *"
-              labelPlacement="floating"
-              [(ngModel)]="pinForm"
-              name="pin"
-              placeholder="Ej: 1234"
-              maxlength="10"
-              required
-            ></ion-input>
-          </ion-item>
+            <ion-item class="form-item-native">
+              <ion-input
+                type="text"
+                label="PIN de Acceso Numérico *"
+                labelPlacement="stacked"
+                [(ngModel)]="pinForm"
+                name="pin"
+                placeholder="Ej: 1234"
+                maxlength="10"
+                required
+              ></ion-input>
+            </ion-item>
 
-          <ion-item class="form-item-native">
-            <ion-textarea
-              label="Observaciones / Notas Admin"
-              labelPlacement="floating"
-              [(ngModel)]="observacionesForm"
-              name="observaciones"
-              rows="2"
-              placeholder="Ej: Cliente VIP autorizado"
-            ></ion-textarea>
-          </ion-item>
+            <ion-item class="form-item-native">
+              <ion-textarea
+                label="Observaciones / Notas Internas"
+                labelPlacement="stacked"
+                [(ngModel)]="observacionesForm"
+                name="observaciones"
+                rows="2"
+                placeholder="Ej: Cliente autoriza compras catálogo privado"
+              ></ion-textarea>
+            </ion-item>
 
-          <ion-item class="form-item-native" lines="none">
-            <ion-toggle [(ngModel)]="activoForm" name="activo" justify="space-between">
-              Usuario Activo (Permitir acceso)
-            </ion-toggle>
-          </ion-item>
-        </ion-list>
-
-        <div class="modal-form-actions">
-          <ion-button fill="clear" color="medium" (click)="cerrarModal()">
-            Cancelar
-          </ion-button>
-          <ion-button type="submit" color="danger" class="btn-save-native">
-            Guardar Usuario
-          </ion-button>
+            <ion-item class="form-item-native" lines="none">
+              <ion-toggle [(ngModel)]="activoForm" name="activo" justify="space-between">
+                Usuario Activo (Permitir Acceso PIN)
+              </ion-toggle>
+            </ion-item>
+          </ion-list>
         </div>
       </form>
     </ion-content>
+
+    <ion-footer class="modal-footer-admin ion-no-border ion-padding">
+      <div class="modal-form-actions-footer">
+        <ion-button fill="clear" color="medium" (click)="cerrarModal()" class="btn-cancel-native">
+          Cancelar
+        </ion-button>
+        <ion-button type="submit" form="form-usuario-admin" color="danger" class="btn-save-native">
+          Guardar Usuario
+        </ion-button>
+      </div>
+    </ion-footer>
   </ng-template>
 </ion-modal>

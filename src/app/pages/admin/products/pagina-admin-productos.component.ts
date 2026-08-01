@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
@@ -44,6 +44,30 @@ export class PaginaAdminProductosComponent {
   public mostrandoFormulario = signal<boolean>(false);
   public productoEdicion = signal<Producto | null>(null);
   public busquedaAdmin = signal<string>('');
+  public segmentoFiltro = signal<string>('TODOS');
+
+  public productosFiltrados = computed(() => {
+    let list = this.servicioProductos.productos();
+    const q = this.busquedaAdmin().toLowerCase().trim();
+    const seg = this.segmentoFiltro();
+
+    if (q) {
+      list = list.filter(p => 
+        p.nombre.toLowerCase().includes(q) || 
+        (p.categoriaNombre && p.categoriaNombre.toLowerCase().includes(q))
+      );
+    }
+
+    if (seg === 'PUBLIC') {
+      list = list.filter(p => p.visibilidad === 'PUBLIC');
+    } else if (seg === 'PRIVATE') {
+      list = list.filter(p => p.visibilidad === 'PRIVATE');
+    } else if (seg === 'INACTIVE') {
+      list = list.filter(p => p.estado === 'INACTIVE');
+    }
+
+    return list;
+  });
 
   public icons = {
     addCircle,

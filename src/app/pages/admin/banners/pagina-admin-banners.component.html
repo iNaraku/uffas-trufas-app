@@ -16,7 +16,7 @@
     </div>
 
     <!-- GRID NATIVO DE TARJETAS DE BANNERS -->
-    <ion-grid class="banners-grid-ionic ion-no-padding">
+    <ion-grid class="banners-grid-ionic">
       <ion-row>
         @for (b of servicioBanners.banners(); track b.id) {
           <ion-col size="12" size-md="6">
@@ -36,14 +36,13 @@
               </div>
 
               <ion-card-content class="banner-card-actions">
-                <ion-button fill="clear" color="primary" (click)="abrirEditar(b)">
+                <ion-button fill="outline" color="primary" size="small" (click)="abrirEditar(b)">
                   <ion-icon name="create-outline" slot="start"></ion-icon>
                   Editar
                 </ion-button>
 
-                <ion-button fill="clear" color="danger" (click)="eliminar(b.id)">
-                  <ion-icon name="trash-outline" slot="start"></ion-icon>
-                  Eliminar
+                <ion-button fill="clear" color="danger" size="small" (click)="eliminar(b.id)">
+                  <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
                 </ion-button>
               </ion-card-content>
             </ion-card>
@@ -70,85 +69,99 @@
     </ion-header>
 
     <ion-content class="modal-content-admin ion-padding">
-      <form (ngSubmit)="guardar()" class="admin-form-native">
-        <ion-list [inset]="true" class="form-list-native ion-no-padding">
-          <ion-item class="form-item-native">
-            <ion-input
-              label="Título del Banner *"
-              labelPlacement="floating"
-              [(ngModel)]="titulo"
-              name="titulo"
-              required
-            ></ion-input>
-          </ion-item>
+      <form (ngSubmit)="guardar()" id="form-banner-admin" class="admin-form-native">
+        <div class="form-group-card">
+          <h4 class="form-group-title">INFORMACIÓN DEL BANNER</h4>
+          <ion-list [inset]="true" class="form-list-native ion-no-padding">
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Título del Banner *"
+                labelPlacement="stacked"
+                [(ngModel)]="titulo"
+                name="titulo"
+                placeholder="Ej: Gran Inaguración Rebel"
+                required
+              ></ion-input>
+            </ion-item>
 
-          <ion-item class="form-item-native">
-            <ion-textarea
-              label="Subtítulo"
-              labelPlacement="floating"
-              [(ngModel)]="subtitulo"
-              name="subtitulo"
-              rows="2"
-            ></ion-textarea>
-          </ion-item>
+            <ion-item class="form-item-native">
+              <ion-textarea
+                label="Subtítulo"
+                labelPlacement="stacked"
+                [(ngModel)]="subtitulo"
+                name="subtitulo"
+                rows="2"
+                placeholder="Ej: Descubre la nueva línea VIP"
+              ></ion-textarea>
+            </ion-item>
 
-          <ion-item class="form-item-native">
-            <ion-input
-              label="URL de Imagen *"
-              labelPlacement="floating"
-              [(ngModel)]="imagenUrl"
-              name="imagenUrl"
-              placeholder="https://..."
-              required
-            ></ion-input>
-          </ion-item>
+            <ion-item class="form-item-native">
+              <ion-input
+                label="URL de Imagen *"
+                labelPlacement="stacked"
+                [(ngModel)]="imagenUrl"
+                name="imagenUrl"
+                placeholder="https://..."
+                required
+              ></ion-input>
+            </ion-item>
 
-          <ion-item class="form-item-native">
-            <ion-input
-              label="Texto del Botón CTA"
-              labelPlacement="floating"
-              [(ngModel)]="textoBoton"
-              name="textoBoton"
-              placeholder="Ej: Ver Catálogo"
-            ></ion-input>
-          </ion-item>
+            @if (imagenUrl) {
+              <div class="image-preview-box">
+                <span class="preview-label">Vista Previa Banner:</span>
+                <img [src]="imagenUrl" alt="Preview Banner" class="img-banner-preview" />
+              </div>
+            }
 
-          <ion-item class="form-item-native">
-            <ion-input
-              label="Enlace del Botón"
-              labelPlacement="floating"
-              [(ngModel)]="enlaceBoton"
-              name="enlaceBoton"
-              placeholder="/catalog"
-            ></ion-input>
-          </ion-item>
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Texto del Botón CTA"
+                labelPlacement="stacked"
+                [(ngModel)]="textoBoton"
+                name="textoBoton"
+                placeholder="Ej: Ver Catálogo"
+              ></ion-input>
+            </ion-item>
 
-          <ion-item class="form-item-native">
-            <ion-input
-              type="number"
-              label="Orden de Despliegue"
-              labelPlacement="floating"
-              [(ngModel)]="orden"
-              name="orden"
-            ></ion-input>
-          </ion-item>
+            <ion-item class="form-item-native">
+              <ion-input
+                label="Enlace del Botón"
+                labelPlacement="stacked"
+                [(ngModel)]="enlaceBoton"
+                name="enlaceBoton"
+                placeholder="/catalog"
+              ></ion-input>
+            </ion-item>
 
-          <ion-item class="form-item-native" lines="none">
-            <ion-toggle [(ngModel)]="activo" name="activo" justify="space-between">
-              Banner Activo en Carrusel
-            </ion-toggle>
-          </ion-item>
-        </ion-list>
+            <ion-item class="form-item-native">
+              <ion-input
+                type="number"
+                label="Orden de Despliegue"
+                labelPlacement="stacked"
+                [(ngModel)]="orden"
+                name="orden"
+              ></ion-input>
+            </ion-item>
 
-        <div class="modal-form-actions">
-          <ion-button fill="clear" color="medium" (click)="cerrarModal()">
-            Cancelar
-          </ion-button>
-          <ion-button type="submit" color="danger" class="btn-save-native">
-            Guardar Banner
-          </ion-button>
+            <ion-item class="form-item-native" lines="none">
+              <ion-toggle [(ngModel)]="activo" name="activo" justify="space-between">
+                Banner Activo en Carrusel
+              </ion-toggle>
+            </ion-item>
+          </ion-list>
         </div>
       </form>
     </ion-content>
+
+    <ion-footer class="modal-footer-admin ion-no-border ion-padding">
+      <div class="modal-form-actions-footer">
+        <ion-button fill="clear" color="medium" (click)="cerrarModal()" class="btn-cancel-native">
+          Cancelar
+        </ion-button>
+        <ion-button type="submit" form="form-banner-admin" color="danger" class="btn-save-native">
+          Guardar Banner
+        </ion-button>
+      </div>
+    </ion-footer>
   </ng-template>
 </ion-modal>

@@ -12,12 +12,13 @@
 }
 
 .admin-wrapper {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0.5rem 0.25rem 4rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 /* PAGE HEADER */
@@ -29,7 +30,7 @@
   gap: 1rem;
   background: linear-gradient(135deg, #222225, #151517);
   padding: 1.25rem 1.5rem;
-  border-radius: 16px;
+  border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -53,58 +54,146 @@
   font-weight: 800;
 }
 
-/* LISTA NATIVA DE CATEGORÍAS */
-.native-categories-admin-list {
-  --background: #1c1c1e;
+/* GRID DE TARJETAS NATIVAS DE CATEGORÍAS */
+.cats-grid-native {
+  margin-top: 0.5rem;
+  padding: 0;
+}
+
+.cats-grid-native ion-col {
+  padding: 0.65rem;
+}
+
+.native-cat-card {
+  background: #1c1c1e;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.native-cat-item {
-  --background: #1c1c1e;
-  --color: #ffffff;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --padding-start: 1rem;
-  --padding-end: 0.5rem;
-}
-
-.order-badge-native {
-  font-weight: 900;
-  font-size: 0.82rem;
-  padding: 0.35rem 0.6rem;
-  border-radius: 8px;
-  margin-right: 0.75rem;
-}
-
-.cat-item-header {
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-  h2 {
-    font-size: 0.98rem;
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+}
+
+.cat-card-header {
+  padding: 1.15rem 1.15rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cat-order-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cat-order-num {
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: #aaaaaa;
+  font-family: monospace;
+}
+
+.cat-status-badge {
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.cat-card-body {
+  padding: 0.5rem 1.15rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.cat-name-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0 0 0.2rem 0;
+  line-height: 1.25;
+}
+
+.cat-desc-text {
+  font-size: 0.82rem;
+  color: #a0a0a0;
+  margin: 0;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.cat-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  .btn-card-edit {
+    --border-radius: 10px;
     font-weight: 800;
-    color: #ffffff;
+    flex: 1;
+  }
+
+  .btn-card-delete {
+    --border-radius: 10px;
     margin: 0;
   }
 }
 
-.native-cat-item p {
-  color: #888888;
-  font-size: 0.78rem;
-  margin: 0.2rem 0 0.1rem 0;
-}
-
-.cat-actions-btns {
+.empty-cats-state {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.2rem;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: #1c1c1e;
+  border-radius: 18px;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  text-align: center;
+
+  .empty-icon {
+    font-size: 3.5rem;
+    color: var(--color-secundario, #F5B400);
+    margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 0 0 0.4rem 0;
+  }
+
+  p {
+    color: #888888;
+    font-size: 0.88rem;
+    margin: 0;
+  }
 }
 
-/* MODAL DE FORMULARIO NATIVO */
+/* MODAL DE FORMULARIO NATIVO ESTILO IOS / ANDROID APP */
 ion-modal.modal-admin-form {
-  --background: #1c1c1e;
-  --border-radius: 20px;
+  --background: #18181a;
+  --border-radius: 22px;
   --width: 94%;
   --max-width: 600px;
   --height: 80vh;
@@ -113,42 +202,78 @@ ion-modal.modal-admin-form {
 
 ion-modal.modal-admin-form::part(content) {
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
+  border-radius: 22px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
 }
 
 .modal-toolbar-admin {
-  --background: #151517;
-  --color: var(--color-secundario, #F5B400);
-  --padding-start: 1rem;
-  --padding-end: 0.5rem;
+  --background: #141416;
+  --color: #ffffff;
+  --padding-start: 1.25rem;
+  --padding-end: 0.75rem;
+  --min-height: 60px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  ion-title {
+    font-size: 1.1rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: var(--color-secundario, #F5B400);
+  }
 }
 
 .modal-content-admin {
-  --background: #1c1c1e;
+  --background: #18181a;
 }
 
-.form-list-native {
-  --background: #151517;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.form-group-card {
   margin-bottom: 1.5rem;
 }
 
+.form-group-title {
+  color: var(--color-secundario, #F5B400);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem 0.5rem;
+}
+
+.form-list-native {
+  --background: #141416;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .form-item-native {
-  --background: #151517;
+  --background: #141416;
   --color: #ffffff;
   --border-color: rgba(255, 255, 255, 0.08);
   --highlight-color-focused: var(--color-secundario, #F5B400);
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  font-size: 0.92rem;
 }
 
-.modal-form-actions {
+.modal-footer-admin {
+  background: #141416;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-form-actions-footer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
+}
+
+.btn-cancel-native {
+  font-weight: 700;
 }
 
 .btn-save-native {
   --border-radius: 12px;
   font-weight: 900;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
