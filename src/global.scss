@@ -265,8 +265,15 @@ ion-modal.modal-pin-native-sheet {
 @media (min-width: 769px) {
   ion-modal.modal-pin-native-sheet {
     --border-radius: 16px;
-    --width: 440px;
-    --height: 520px;
+    --width: 450px;
+    --height: auto;
+    --max-height: 88vh;
+  }
+
+  ion-modal.modal-pin-native-sheet::part(content) {
+    height: auto;
+    max-height: 88vh;
+    border-radius: 16px;
   }
 }
 

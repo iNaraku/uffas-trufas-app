@@ -10,54 +10,56 @@
 </ion-header>
 
 <ion-content class="modal-content ion-padding">
-  <div class="modal-header-body">
-    <div class="lock-circle">
-      <ion-icon name="lock-closed"></ion-icon>
-    </div>
-    <h2>Catálogo Privado</h2>
-    <p>Ingresa tu PIN de usuario autorizado para desbloquear bongs premium, extractos y productos exclusivos.</p>
-  </div>
-
-  <form (ngSubmit)="validar()" class="modal-form">
-    <div class="input-group">
-      <label for="pinInput">PIN de Seguridad</label>
-      <input
-        id="pinInput"
-        type="password"
-        [(ngModel)]="pinIngresado"
-        name="pinInput"
-        placeholder="Ej: 1234"
-        maxlength="10"
-        class="native-pin-input"
-        autocomplete="off"
-        autofocus
-        required
-      />
-    </div>
-
-    @if (servicioPin.mensajeError()) {
-      <div class="error-box">
-        <ion-icon name="alert-circle-outline"></ion-icon>
-        <span>{{ servicioPin.mensajeError() }}</span>
+  <div class="modal-body-container">
+    <div class="modal-header-body">
+      <div class="lock-circle">
+        <ion-icon name="lock-closed"></ion-icon>
       </div>
-    }
-
-    <div class="hint-box">
-      <span>💡 <em>PIN de prueba: <strong>1234</strong> o <strong>7777</strong></em></span>
+      <h2>Catálogo Privado</h2>
+      <p>Ingresa tu PIN de usuario autorizado para desbloquear bongs premium, extractos y productos exclusivos.</p>
     </div>
 
-    <div class="modal-actions">
-      <ion-button fill="clear" color="medium" (click)="cerrar(false)" class="btn-cancel">
-        Cancelar
-      </ion-button>
+    <form (ngSubmit)="validar()" class="modal-form">
+      <div class="input-group">
+        <label for="pinInput">PIN de Seguridad</label>
+        <input
+          id="pinInput"
+          type="password"
+          [(ngModel)]="pinIngresado"
+          name="pinInput"
+          placeholder="Ej: 1234"
+          maxlength="10"
+          class="native-pin-input"
+          autocomplete="off"
+          autofocus
+          required
+        />
+      </div>
 
-      <ion-button expand="block" type="submit" [disabled]="cargando || !pinIngresado" class="btn-submit">
-        @if (cargando) {
-          <ion-spinner name="crescent"></ion-spinner>
-        } @else {
-          <span>Desbloquear 🔓</span>
-        }
-      </ion-button>
-    </div>
-  </form>
+      @if (servicioPin.mensajeError()) {
+        <div class="error-box">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <span>{{ servicioPin.mensajeError() }}</span>
+        </div>
+      }
+
+      <div class="hint-box">
+        <span>💡 <em>PIN de prueba: <strong>1234</strong> o <strong>7777</strong></em></span>
+      </div>
+
+      <div class="modal-actions">
+        <ion-button fill="clear" color="medium" (click)="cerrar(false)" class="btn-cancel">
+          Cancelar
+        </ion-button>
+
+        <ion-button expand="block" type="submit" [disabled]="cargando || !pinIngresado" class="btn-submit">
+          @if (cargando) {
+            <ion-spinner name="crescent"></ion-spinner>
+          } @else {
+            <span>Desbloquear 🔓</span>
+          }
+        </ion-button>
+      </div>
+    </form>
+  </div>
 </ion-content>

@@ -21,15 +21,20 @@ export class ServicioPin {
   }
 
   public async abrirModalPin(): Promise<boolean> {
-    const modal = await this.modalCtrl.create({
+    const isMobile = window.innerWidth <= 768;
+    const modalOptions: any = {
       component: ModalPinComponent,
       cssClass: 'modal-pin-native-sheet',
-      breakpoints: [0, 0.75, 1],
-      initialBreakpoint: 0.75,
-      handle: true,
       backdropDismiss: true
-    });
+    };
 
+    if (isMobile) {
+      modalOptions.breakpoints = [0, 0.85, 1];
+      modalOptions.initialBreakpoint = 0.85;
+      modalOptions.handle = true;
+    }
+
+    const modal = await this.modalCtrl.create(modalOptions);
     await modal.present();
     const { data } = await modal.onWillDismiss();
     return !!data?.exito;
