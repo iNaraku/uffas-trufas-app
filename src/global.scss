@@ -29,50 +29,41 @@
   box-sizing: border-box;
 }
 
-/* 1. SISTEMA DE SCROLLBAR GLOBAL A NIVEL DE VENTANA (PROD READY) */
-html {
-  width: 100% !important;
-  height: 100% !important;
-  overflow-y: scroll !important;
-  scroll-behavior: smooth;
-}
-
-body {
-  width: 100% !important;
-  min-height: 100vh !important;
-  margin: 0 !important;
-  padding: 0 !important;
+/* 1. ARCHITECTURAL LAYOUT & SCROLL SYSTEM FOR IONIC MOBILE */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
   background-color: var(--color-fondo, #111111);
   color: var(--color-texto, #FFFFFF);
   font-family: 'Outfit', 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
-  position: relative !important;
-  transform: none !important;
-  overflow-y: auto !important;
 }
 
 app-root,
 ion-app,
 ion-router-outlet {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 100vh !important;
-  position: relative !important;
-  overflow: visible !important;
-  contain: none !important;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  position: relative;
 }
 
 /* 2. COMPONENTES DE PÁGINA ACTIVOS (HOME, CATÁLOGO, PRODUCTO, ADMIN) */
 ion-router-outlet > :not(.ion-page-hidden):not([aria-hidden="true"]),
 .ion-page:not(.ion-page-hidden):not([aria-hidden="true"]) {
-  display: block !important;
-  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
   width: 100% !important;
-  height: auto !important;
-  min-height: 100vh !important;
-  overflow: visible !important;
-  contain: none !important;
+  height: 100% !important;
 }
 
 /* 3. REGLA CRÍTICA: OCULTAR PÁGINAS INACTIVAS EN IONIC */
@@ -97,43 +88,41 @@ app-pagina-admin-configuracion.ion-page-hidden {
 
 /* 4. ENCABEZADO FIJO Y ZONA SEGURA DE NAVEGACIÓN (MOBILE SAFE AREA) */
 app-encabezado,
-app-encabezado-admin,
+app-encabezado-admin {
+  display: block;
+  width: 100%;
+  flex-shrink: 0;
+  z-index: 1000;
+}
+
 ion-header {
-  display: block !important;
-  width: 100% !important;
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 1000 !important;
-  padding-top: max(0px, env(safe-area-inset-top)) !important;
-  background-color: var(--color-fondo, #111111) !important;
+  display: block;
+  width: 100%;
+  background-color: var(--color-fondo, #111111);
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .toolbar-rebel,
 .admin-toolbar {
-  --padding-top: max(0.4rem, env(safe-area-inset-top)) !important;
-  --padding-bottom: 0.4rem !important;
-  min-height: 56px !important;
+  --background: var(--color-fondo, #111111);
+  --color: var(--color-texto, #FFFFFF);
+  min-height: 56px;
 }
 
-/* 5. ION-CONTENT EXPANSIBLE CON SCROLL DE NAVEGADOR EN PRODUCCIÓN */
+/* 5. ION-CONTENT SCROLL FLUIDO ORIENTADO A APP MÓVIL */
 ion-content {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  min-height: 100% !important;
-  --overflow: auto !important;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  --overflow: auto;
   --background: var(--color-fondo, #111111);
-  overflow: visible !important;
-  contain: none !important;
 }
 
 ion-content::part(scroll) {
-  display: block !important;
-  position: relative !important;
-  height: auto !important;
-  min-height: 100% !important;
-  overflow: visible !important;
-  touch-action: pan-y !important;
+  position: relative;
+  height: 100%;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom Scrollbar a nivel global en la ventana/body */
