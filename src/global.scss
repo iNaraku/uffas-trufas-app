@@ -145,9 +145,14 @@ ion-content::part(scroll) {
   background: var(--color-secundario, #F5B400) !important;
 }
 
-/* ION-ICON REGLA GLOBAL DE DIMENSIÓN */
+/* ION-ICON REGLA GLOBAL DE DIMENSIÓN Y RENDERIZADO INLINE */
 ion-icon {
   display: inline-block !important;
+  width: 1em !important;
+  height: 1em !important;
+  contain: strict;
+  fill: currentColor !important;
+  color: inherit;
   font-size: 1.15rem;
   vertical-align: middle;
   flex-shrink: 0;
@@ -155,6 +160,9 @@ ion-icon {
 
 /* 6. ESTILOS GLOBALES DE NAVEGACIÓN Y HEADER ADMIN (PROD PROOF) */
 .admin-header {
+  display: block !important;
+  width: 100% !important;
+  background: #181818 !important;
   border-bottom: 2px solid var(--color-primario, #D71920) !important;
 }
 
@@ -163,6 +171,8 @@ ion-icon {
   --color: #ffffff !important;
   --padding-start: 1.5rem !important;
   --padding-end: 1.5rem !important;
+  --min-height: 60px !important;
+  min-height: 60px !important;
 }
 
 .admin-nav-box {
@@ -178,7 +188,7 @@ ion-icon {
   gap: 0.5rem !important;
   font-size: 1.15rem !important;
   font-weight: 900 !important;
-  font-family: 'Impact', sans-serif !important;
+  font-family: 'Impact', 'Roboto', sans-serif !important;
   letter-spacing: 1px !important;
   cursor: pointer !important;
   color: #ffffff !important;
@@ -217,7 +227,7 @@ ion-icon {
   padding: 0.5rem !important;
   border-radius: 10px !important;
   border: 1px solid #333333 !important;
-  margin: 1rem 1.5rem 0 1.5rem !important;
+  margin: 0.75rem 1.5rem 0.75rem 1.5rem !important;
 }
 
 .menu-item {
