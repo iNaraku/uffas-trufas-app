@@ -7,10 +7,12 @@ import { ServicioConfiguracion } from '../../../services/settings/servicio-confi
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { ConfiguracionSitio } from '../../../models/configuracion.model';
 
+import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
 @Component({
   selector: 'app-pagina-admin-configuracion',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, IonicModule],
+  imports: [CommonModule, FormsModule, RouterModule, IonicModule, EncabezadoAdminComponent],
   templateUrl: './pagina-admin-configuracion.component.html',
   styleUrls: ['./pagina-admin-configuracion.component.css'],
   host: { 'class': 'ion-page' }

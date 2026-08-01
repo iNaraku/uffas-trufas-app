@@ -15,6 +15,7 @@ import { Producto } from '../../models/producto.model';
 @Component({
   selector: 'app-pagina-inicio',
   standalone: true,
+  host: { 'class': 'ion-page' },
   imports: [
     CommonModule,
     RouterModule,

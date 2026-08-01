@@ -11,33 +11,6 @@ export class ServicioUsuariosCatalogo {
 
   public listaUsuarios = signal<UsuarioCatalogo[]>([]);
 
-  private usuariosIniciales: UsuarioCatalogo[] = [
-    {
-      id: 'usr-1',
-      nombre: 'Cliente VIP Premium',
-      pin: '1234',
-      activo: true,
-      fechaCreacion: new Date().toISOString(),
-      observaciones: 'Acceso completo al catálogo privado VIP'
-    },
-    {
-      id: 'usr-2',
-      nombre: 'Socio Exclusivo Rebel',
-      pin: '7777',
-      activo: true,
-      fechaCreacion: new Date().toISOString(),
-      observaciones: 'Miembro del club Rebel Smoke'
-    },
-    {
-      id: 'usr-3',
-      nombre: 'Usuario Prueba Inactivo',
-      pin: '0000',
-      activo: false,
-      fechaCreacion: new Date().toISOString(),
-      observaciones: 'Cuenta suspendida por mantenimiento'
-    }
-  ];
-
   constructor() {
     this.cargarUsuarios();
   }
@@ -46,35 +19,12 @@ export class ServicioUsuariosCatalogo {
     try {
       const refColeccion = collection(db, 'usuarios_catalogo');
       onSnapshot(refColeccion, (snapshot) => {
-        if (!snapshot.empty) {
-          const lista: UsuarioCatalogo[] = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as UsuarioCatalogo));
-          this.listaUsuarios.set(lista);
-          this.guardarEnStorage(lista);
-        } else {
-          this.usuariosIniciales.forEach(u => {
-            const refDoc = doc(db, 'usuarios_catalogo', u.id);
-            setDoc(refDoc, u);
-          });
-          this.listaUsuarios.set(this.usuariosIniciales);
-        }
+        const lista: UsuarioCatalogo[] = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as UsuarioCatalogo));
+        this.listaUsuarios.set(lista);
+        this.guardarEnStorage(lista);
       });
-      return;
     } catch (e) {
-      console.warn('⚠️ Error al escuchar Firestore usuarios_catalogo:', e);
-    }
-
-    const datosLocal = localStorage.getItem(this.claveStorage);
-    if (datosLocal) {
-      try {
-        const parsed = JSON.parse(datosLocal);
-        this.listaUsuarios.set(parsed);
-      } catch (e) {
-        this.listaUsuarios.set(this.usuariosIniciales);
-        this.guardarEnStorage(this.usuariosIniciales);
-      }
-    } else {
-      this.listaUsuarios.set(this.usuariosIniciales);
-      this.guardarEnStorage(this.usuariosIniciales);
+      console.error('❌ Error al escuchar Firestore usuarios_catalogo:', e);
     }
   }
 

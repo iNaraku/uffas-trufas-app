@@ -1,0 +1,88 @@
+.admin-header {
+  border-bottom: 2px solid var(--color-primario, #D71920);
+}
+
+.admin-toolbar {
+  --background: #181818;
+  --color: #fff;
+  --padding-start: 1.5rem;
+  --padding-end: 1.5rem;
+}
+
+.admin-nav-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.brand-admin {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-family: 'Impact', sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.gold-icon {
+  color: var(--color-secundario, #F5B400);
+}
+
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.85rem;
+}
+
+.btn-logout {
+  background: rgba(215, 25, 32, 0.2);
+  border: 1px solid var(--color-primario, #D71920);
+  color: #ff6b6b;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-weight: 700;
+}
+
+.admin-menu {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  background: #1c1c1c;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid #333;
+  margin: 1rem 1.5rem 0 1.5rem;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #ccc;
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.menu-item:hover, .menu-item.active {
+  background: var(--color-primario, #D71920);
+  color: #fff;
+}
+
+.btn-view-site {
+  margin-left: auto;
+  background: rgba(245, 180, 0, 0.15);
+  color: var(--color-secundario, #F5B400);
+  border: 1px solid var(--color-secundario, #F5B400);
+}

@@ -39,22 +39,8 @@ export class ServicioTema {
           setDoc(refDoc, this.temaActual());
         }
       });
-      return;
     } catch (e) {
-      console.warn('⚠️ Error al escuchar Firestore configuracion/tema:', e);
-    }
-
-    const guardado = localStorage.getItem(this.claveStorageTema);
-    if (guardado) {
-      try {
-        const tema = JSON.parse(guardado);
-        this.temaActual.set(tema);
-        this.aplicarEstilosCss(tema);
-      } catch (e) {
-        this.aplicarEstilosCss(this.temaActual());
-      }
-    } else {
-      this.aplicarEstilosCss(this.temaActual());
+      console.error('❌ Error al escuchar Firestore configuracion/tema:', e);
     }
   }
 

@@ -1,29 +1,7 @@
-<ion-header class="admin-header">
-  <ion-toolbar class="admin-toolbar">
-    <div class="admin-nav-box">
-      <div class="brand-admin" routerLink="/admin/dashboard">
-        <ion-icon name="shield-checkmark" class="gold-icon"></ion-icon>
-        <span>REBEL ADMIN PANEL</span>
-      </div>
-      <div class="user-badge">
-        <span>👤 {{ servicioAuth.administradorActual()?.nombre }}</span>
-        <button (click)="salirAdmin()" class="btn-logout"><ion-icon name="log-out-outline"></ion-icon> Salir</button>
-      </div>
-    </div>
-  </ion-toolbar>
-</ion-header>
+<app-encabezado-admin rutaActiva="/admin/settings"></app-encabezado-admin>
 
 <ion-content class="content-admin">
   <div class="admin-wrapper">
-    <nav class="admin-menu">
-      <a routerLink="/admin/dashboard" class="menu-item"><ion-icon name="grid-outline"></ion-icon> Dashboard</a>
-      <a routerLink="/admin/products" class="menu-item"><ion-icon name="cube-outline"></ion-icon> Productos</a>
-      <a routerLink="/admin/users" class="menu-item"><ion-icon name="people-outline"></ion-icon> Usuarios PIN</a>
-      <a routerLink="/admin/banners" class="menu-item"><ion-icon name="images-outline"></ion-icon> Banners</a>
-      <a routerLink="/admin/categories" class="menu-item"><ion-icon name="pricetags-outline"></ion-icon> Categorías</a>
-      <a routerLink="/admin/theme" class="menu-item"><ion-icon name="color-palette-outline"></ion-icon> Tema Dinámico</a>
-      <a routerLink="/admin/settings" class="menu-item active"><ion-icon name="settings-outline"></ion-icon> Configuración</a>
-    </nav>
 
     <div class="page-header">
       <div>

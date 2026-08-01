@@ -10,6 +10,7 @@ import { ServicioPin } from '../../services/pin/servicio-pin.service';
 @Component({
   selector: 'app-pagina-desbloqueo',
   standalone: true,
+  host: { 'class': 'ion-page' },
   imports: [CommonModule, FormsModule, RouterModule, IonicModule, EncabezadoComponent, PiePaginaComponent],
   templateUrl: './pagina-desbloqueo.component.html',
   styleUrls: ['./pagina-desbloqueo.component.css']

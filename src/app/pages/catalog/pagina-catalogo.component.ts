@@ -14,6 +14,7 @@ import { Producto } from '../../models/producto.model';
 @Component({
   selector: 'app-pagina-catalogo',
   standalone: true,
+  host: { 'class': 'ion-page' },
   imports: [
     CommonModule,
     FormsModule,

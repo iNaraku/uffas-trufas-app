@@ -29,26 +29,16 @@
   box-sizing: border-box;
 }
 
-/* 1. SISTEMA DE SCROLLBAR GLOBAL A NIVEL DE VENTANA */
-html {
+html, body {
   width: 100% !important;
   height: 100% !important;
-  overflow-y: scroll !important;
-  scroll-behavior: smooth;
-}
-
-body {
-  width: 100% !important;
-  min-height: 100vh !important;
   margin: 0 !important;
   padding: 0 !important;
   background-color: var(--color-fondo, #111111);
   color: var(--color-texto, #FFFFFF);
   font-family: 'Outfit', 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
-  position: relative !important;
-  transform: none !important;
-  overflow-y: auto !important;
+  overflow: hidden !important;
 }
 
 app-root,
@@ -56,72 +46,65 @@ ion-app,
 ion-router-outlet {
   display: block !important;
   width: 100% !important;
-  height: auto !important;
-  min-height: 100vh !important;
-  position: relative !important;
-  overflow: visible !important;
-  contain: none !important;
+  height: 100% !important;
+  overflow: hidden !important;
 }
 
-/* 2. COMPONENTES DE PÁGINA (HOME, CATÁLOGO, PRODUCTO, ADMIN) */
-ion-router-outlet > *,
-.ion-page,
-app-pagina-inicio,
-app-pagina-catalogo,
-app-pagina-detalle-producto,
-app-pagina-desbloqueo,
-app-pagina-admin-login,
-app-pagina-admin-dashboard,
-app-pagina-admin-productos,
-app-pagina-admin-usuarios,
-app-pagina-admin-banners,
-app-pagina-admin-categorias,
-app-pagina-admin-tema,
-app-pagina-admin-configuracion {
-  display: block !important;
-  position: relative !important;
+/* COMPONENTES DE PÁGINA ACTIVOS EN IONIC */
+.ion-page:not(.ion-page-hidden):not([aria-hidden="true"]),
+ion-router-outlet > :not(.ion-page-hidden):not([aria-hidden="true"]) {
+  display: flex !important;
+  flex-direction: column !important;
   width: 100% !important;
-  height: auto !important;
-  min-height: 100vh !important;
-  overflow: visible !important;
-  contain: none !important;
-}
-
-/* 3. ENCABEZADO FIJO EN LA PARTE SUPERIOR */
-app-encabezado,
-ion-header {
-  display: block !important;
-  width: 100% !important;
-  position: sticky !important;
+  height: 100% !important;
+  position: absolute !important;
   top: 0 !important;
+  left: 0 !important;
+  overflow: hidden !important;
+}
+
+/* OCULTAR PÁGINAS INACTIVAS EN IONIC */
+.ion-page-hidden,
+[aria-hidden="true"].ion-page,
+ion-router-outlet > .ion-page-hidden,
+ion-router-outlet > [aria-hidden="true"],
+app-pagina-inicio.ion-page-hidden,
+app-pagina-catalogo.ion-page-hidden,
+app-pagina-detalle-producto.ion-page-hidden,
+app-pagina-desbloqueo.ion-page-hidden,
+app-pagina-admin-login.ion-page-hidden,
+app-pagina-admin-dashboard.ion-page-hidden,
+app-pagina-admin-productos.ion-page-hidden,
+app-pagina-admin-usuarios.ion-page-hidden,
+app-pagina-admin-banners.ion-page-hidden,
+app-pagina-admin-categorias.ion-page-hidden,
+app-pagina-admin-tema.ion-page-hidden,
+app-pagina-admin-configuracion.ion-page-hidden {
+  display: none !important;
+}
+
+/* ENCABEZADOS SUPERIORES */
+app-encabezado,
+app-encabezado-admin,
+ion-header {
+  flex-shrink: 0 !important;
+  width: 100% !important;
   z-index: 1000 !important;
 }
 
-/* 4. ION-CONTENT EXPANSIBLE */
+/* ION-CONTENT FLUIDO Y CON SCROLL ACTIVO */
 ion-content {
-  display: block !important;
+  flex: 1 !important;
   width: 100% !important;
-  height: auto !important;
-  min-height: 100% !important;
-  --overflow: auto !important;
+  height: 100% !important;
   --background: var(--color-fondo, #111111);
-  overflow: visible !important;
-  contain: none !important;
+  --overflow: auto !important;
 }
 
-ion-content::part(scroll) {
-  display: block !important;
-  position: relative !important;
-  height: auto !important;
-  min-height: 100% !important;
-  overflow: visible !important;
-  touch-action: pan-y !important;
-}
-
-/* Custom Scrollbar a nivel global en la ventana/body */
+/* Custom Scrollbar global */
 ::-webkit-scrollbar {
-  width: 10px !important;
-  height: 10px !important;
+  width: 8px !important;
+  height: 8px !important;
 }
 ::-webkit-scrollbar-track {
   background: #111111 !important;

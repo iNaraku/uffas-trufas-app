@@ -7,10 +7,12 @@ import { ServicioProductos } from '../../../services/products/servicio-productos
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { Categoria } from '../../../models/categoria.model';
 
+import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
 @Component({
   selector: 'app-pagina-admin-categorias',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, IonicModule],
+  imports: [CommonModule, FormsModule, RouterModule, IonicModule, EncabezadoAdminComponent],
   templateUrl: './pagina-admin-categorias.component.html',
   styleUrls: ['./pagina-admin-categorias.component.css'],
   host: { 'class': 'ion-page' }

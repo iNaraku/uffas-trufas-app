@@ -6,7 +6,8 @@ export const guardiaAutenticacion: CanActivateFn = (route, state) => {
   const authService = inject(ServicioAutenticacion);
   const router = inject(Router);
 
-  if (authService.estaAutenticadoAdmin()) {
+  const sesionLocal = localStorage.getItem('smoke_shop_admin_session');
+  if (authService.estaAutenticadoAdmin() || sesionLocal) {
     return router.createUrlTree(['/admin/dashboard']);
   }
 

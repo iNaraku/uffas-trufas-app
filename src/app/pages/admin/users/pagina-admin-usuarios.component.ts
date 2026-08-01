@@ -7,10 +7,12 @@ import { ServicioUsuariosCatalogo } from '../../../services/users/servicio-usuar
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { UsuarioCatalogo } from '../../../models/usuario-catalogo.model';
 
+import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
 @Component({
   selector: 'app-pagina-admin-usuarios',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, IonicModule],
+  imports: [CommonModule, FormsModule, RouterModule, IonicModule, EncabezadoAdminComponent],
   templateUrl: './pagina-admin-usuarios.component.html',
   styleUrls: ['./pagina-admin-usuarios.component.css'],
   host: { 'class': 'ion-page' }

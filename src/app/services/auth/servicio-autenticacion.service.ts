@@ -14,6 +14,14 @@ export class ServicioAutenticacion {
   public administradorActual = signal<Administrador | null>(null);
 
   constructor() {
+    const sesionLocal = localStorage.getItem(this.claveSesionAdmin);
+    if (sesionLocal) {
+      try {
+        const admin: Administrador = JSON.parse(sesionLocal);
+        this.administradorActual.set(admin);
+        this.estaAutenticadoAdmin.set(true);
+      } catch (e) { }
+    }
     this.escucharEstadoAutenticacion();
   }
 

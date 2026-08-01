@@ -7,10 +7,12 @@ import { ServicioProductos } from '../../../services/products/servicio-productos
 import { ServicioUsuariosCatalogo } from '../../../services/users/servicio-usuarios-catalogo.service';
 import { ServicioBanners } from '../../../services/banners/servicio-banners.service';
 
+import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
 @Component({
   selector: 'app-pagina-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, IonicModule],
+  imports: [CommonModule, RouterModule, IonicModule, EncabezadoAdminComponent],
   templateUrl: './pagina-admin-dashboard.component.html',
   styleUrls: ['./pagina-admin-dashboard.component.css'],
   host: { 'class': 'ion-page' }

@@ -7,10 +7,12 @@ import { ServicioTema } from '../../../services/theme/servicio-tema.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { TemaConfiguracion } from '../../../models/tema.model';
 
+import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
 @Component({
   selector: 'app-pagina-admin-tema',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, IonicModule],
+  imports: [CommonModule, FormsModule, RouterModule, IonicModule, EncabezadoAdminComponent],
   templateUrl: './pagina-admin-tema.component.html',
   styleUrls: ['./pagina-admin-tema.component.css'],
   host: { 'class': 'ion-page' }

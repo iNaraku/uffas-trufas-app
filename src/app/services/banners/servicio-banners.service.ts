@@ -11,31 +11,6 @@ export class ServicioBanners {
 
   public banners = signal<Banner[]>([]);
 
-  private bannersIniciales: Banner[] = [
-    {
-      id: 'ban-1',
-      titulo: 'REBEL SMOKE CATALOG',
-      subtitulo: 'Colección urbana de parafernalia premium y cristalería exclusiva.',
-      imagenUrl: 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80',
-      textoBoton: 'Ver Catálogo',
-      enlaceBoton: '/catalogo',
-      orden: 1,
-      activo: true,
-      destacado: true
-    },
-    {
-      id: 'ban-2',
-      titulo: 'ZONA PRIVADA VIP 🔒',
-      subtitulo: 'Ingresa tu PIN autorizado para desbloquear bongs, rigs y extractos.',
-      imagenUrl: 'https://images.unsplash.com/photo-1527016021513-b09758b777bd?auto=format&fit=crop&w=1200&q=80',
-      textoBoton: 'Desbloquear PIN',
-      enlaceBoton: '/desbloqueo',
-      orden: 2,
-      activo: true,
-      destacado: true
-    }
-  ];
-
   constructor() {
     this.cargarBanners();
   }
@@ -44,34 +19,12 @@ export class ServicioBanners {
     try {
       const refColeccion = collection(db, 'banners');
       onSnapshot(refColeccion, (snapshot) => {
-        if (!snapshot.empty) {
-          const lista: Banner[] = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Banner));
-          this.banners.set(lista);
-          this.guardarBanners(lista);
-        } else {
-          this.bannersIniciales.forEach(b => {
-            const refDoc = doc(db, 'banners', b.id);
-            setDoc(refDoc, b);
-          });
-          this.banners.set(this.bannersIniciales);
-        }
+        const lista: Banner[] = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Banner));
+        this.banners.set(lista);
+        this.guardarBanners(lista);
       });
-      return;
     } catch (e) {
-      console.warn('⚠️ Error al escuchar Firestore banners:', e);
-    }
-
-    const local = localStorage.getItem(this.claveStorageBanners);
-    if (local) {
-      try {
-        this.banners.set(JSON.parse(local));
-      } catch (e) {
-        this.banners.set(this.bannersIniciales);
-        this.guardarBanners(this.bannersIniciales);
-      }
-    } else {
-      this.banners.set(this.bannersIniciales);
-      this.guardarBanners(this.bannersIniciales);
+      console.error('❌ Error al escuchar Firestore banners:', e);
     }
   }
 
@@ -81,8 +34,8 @@ export class ServicioBanners {
 
   public obtenerBannersActivos(): Banner[] {
     return this.banners()
-      .filter(b => b.activo)
-      .sort((a, b) => a.orden - b.orden);
+      .filter(b => b.activo !== false)
+      .sort((a, b) => (a.orden || 0) - (b.orden || 0));
   }
 
   public async crearBanner(nuevo: Omit<Banner, 'id'>): Promise<Banner> {
@@ -130,5 +83,6 @@ export class ServicioBanners {
     return true;
   }
 }
+
 
 

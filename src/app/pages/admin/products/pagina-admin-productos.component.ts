@@ -9,6 +9,8 @@ import { ServicioAutenticacion } from '../../../services/auth/servicio-autentica
 import { Producto, VisibilidadProducto, EstadoProducto } from '../../../models/producto.model';
 import { PrecioPipe } from '../../../shared/pipes/precio.pipe';
 
+import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
 @Component({
   selector: 'app-pagina-admin-productos',
   standalone: true,
@@ -18,7 +20,8 @@ import { PrecioPipe } from '../../../shared/pipes/precio.pipe';
     ReactiveFormsModule,
     RouterModule,
     IonicModule,
-    PrecioPipe
+    PrecioPipe,
+    EncabezadoAdminComponent
   ],
   templateUrl: './pagina-admin-productos.component.html',
   styleUrls: ['./pagina-admin-productos.component.css'],

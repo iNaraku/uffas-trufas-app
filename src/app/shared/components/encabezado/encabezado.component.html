@@ -1,7 +1,7 @@
 <ion-header class="header-rebel ion-no-border">
   <ion-toolbar class="toolbar-rebel">
     <div class="header-container">
-      <div class="brand-box" routerLink="/home">
+      <div class="brand-box" (click)="irAHome($event)" style="cursor: pointer;">
         <div class="logo-circle">
           <ion-icon name="flame" class="flame-icon"></ion-icon>
         </div>
@@ -12,8 +12,8 @@
       </div>
 
       <nav class="nav-links">
-        <a routerLink="/home" routerLinkActive="active-link" class="nav-item">Inicio</a>
-        <a routerLink="/catalog" routerLinkActive="active-link" class="nav-item">Catálogo</a>
+        <a (click)="irAHome($event)" [class.active-link]="router.url === '/home' || router.url === '/'" class="nav-item" style="cursor: pointer;">Inicio</a>
+        <a (click)="irACatalogo($event)" [class.active-link]="router.url.includes('/catalog')" class="nav-item" style="cursor: pointer;">Catálogo</a>
       </nav>
 
       <div class="header-actions">

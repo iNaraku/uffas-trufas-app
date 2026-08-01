@@ -14,6 +14,7 @@ import { PrecioPipe } from '../../shared/pipes/precio.pipe';
 @Component({
   selector: 'app-pagina-detalle-producto',
   standalone: true,
+  host: { 'class': 'ion-page' },
   imports: [
     CommonModule,
     RouterModule,

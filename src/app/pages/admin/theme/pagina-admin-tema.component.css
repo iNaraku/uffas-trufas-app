@@ -1,9 +1,8 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: block;
   width: 100%;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow: visible;
 }
 
 .content-admin { --background: #111; --color: #fff; }

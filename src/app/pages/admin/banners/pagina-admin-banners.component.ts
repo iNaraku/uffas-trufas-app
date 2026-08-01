@@ -7,10 +7,12 @@ import { ServicioBanners } from '../../../services/banners/servicio-banners.serv
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { Banner } from '../../../models/banner.model';
 
+import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-admin/encabezado-admin.component';
+
 @Component({
   selector: 'app-pagina-admin-banners',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, IonicModule],
+  imports: [CommonModule, FormsModule, RouterModule, IonicModule, EncabezadoAdminComponent],
   templateUrl: './pagina-admin-banners.component.html',
   styleUrls: ['./pagina-admin-banners.component.css'],
   host: { 'class': 'ion-page' }

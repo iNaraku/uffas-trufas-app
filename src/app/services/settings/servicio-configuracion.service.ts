@@ -36,16 +36,8 @@ export class ServicioConfiguracion {
           setDoc(refDoc, this.configuracion());
         }
       });
-      return;
     } catch (e) {
-      console.warn('⚠️ Error al escuchar Firestore configuracion/tienda:', e);
-    }
-
-    const local = localStorage.getItem(this.claveStorageConfig);
-    if (local) {
-      try {
-        this.configuracion.set(JSON.parse(local));
-      } catch (e) { }
+      console.error('❌ Error al escuchar Firestore configuracion/tienda:', e);
     }
   }
 

@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { Router, RouterModule } from '@angular/router';
+import { IonicModule, NavController } from '@ionic/angular';
 import { ServicioPin } from '../../../services/pin/servicio-pin.service';
 import { ServicioTema } from '../../../services/theme/servicio-tema.service';
 import { ServicioConfiguracion } from '../../../services/settings/servicio-configuracion.service';
@@ -18,8 +18,31 @@ export class EncabezadoComponent {
   public servicioPin = inject(ServicioPin);
   public servicioTema = inject(ServicioTema);
   public servicioConfig = inject(ServicioConfiguracion);
+  public router = inject(Router);
+  private navCtrl = inject(NavController);
+  private ngZone = inject(NgZone);
 
   public mostrarModalPin = false;
+
+  irAHome(e?: Event): void {
+    if (e) e.preventDefault();
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    this.ngZone.run(() => {
+      this.navCtrl.navigateRoot('/home', { animated: true, animationDirection: 'back' });
+    });
+  }
+
+  irACatalogo(e?: Event): void {
+    if (e) e.preventDefault();
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    this.ngZone.run(() => {
+      this.navCtrl.navigateRoot('/catalog', { animated: true, animationDirection: 'forward' });
+    });
+  }
 
   abrirModalPin(): void {
     this.mostrarModalPin = true;
@@ -33,3 +56,5 @@ export class EncabezadoComponent {
     this.servicioPin.bloquearCatalogo();
   }
 }
+
+
