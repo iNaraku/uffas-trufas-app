@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot, query, where, getDocs } from 'firebase/firestore';
-import { UsuarioCatalogo } from '../../core/models/usuario-catalogo.model';
+import { UsuarioCatalogo } from '../../models/usuario-catalogo.model';
 import { db } from '../../config/firebase';
 
 @Injectable({

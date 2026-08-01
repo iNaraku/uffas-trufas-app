@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
-import { Producto, VisibilidadProducto, EstadoProducto } from '../../core/models/producto.model';
-import { Categoria } from '../../core/models/categoria.model';
+import { Producto, VisibilidadProducto, EstadoProducto } from '../../models/producto.model';
+import { Categoria } from '../../models/categoria.model';
 import { db } from '../../config/firebase';
 
 @Injectable({

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { Producto } from '../../../core/models/producto.model';
+import { Producto } from '../../../models/producto.model';
 import { PrecioPipe } from '../../pipes/precio.pipe';
 import { ServicioPin } from '../../../services/pin/servicio-pin.service';
 import { ServicioConfiguracion } from '../../../services/settings/servicio-configuracion.service';

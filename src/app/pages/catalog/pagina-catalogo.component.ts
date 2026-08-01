@@ -9,7 +9,7 @@ import { TarjetaProductoComponent } from '../../shared/components/tarjeta-produc
 import { ModalPinComponent } from '../../shared/components/modal-pin/modal-pin.component';
 import { ServicioProductos } from '../../services/products/servicio-productos.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
-import { Producto } from '../../core/models/producto.model';
+import { Producto } from '../../models/producto.model';
 
 @Component({
   selector: 'app-pagina-catalogo',

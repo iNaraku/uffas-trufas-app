@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ServicioBanners } from '../../../services/banners/servicio-banners.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
-import { Banner } from '../../../core/models/banner.model';
+import { Banner } from '../../../models/banner.model';
 
 @Component({
   selector: 'app-pagina-admin-banners',

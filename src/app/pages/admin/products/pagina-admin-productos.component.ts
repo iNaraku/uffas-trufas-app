@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { ServicioProductos } from '../../../services/products/servicio-productos.service';
 import { ServicioAlmacenamiento } from '../../../services/storage/servicio-almacenamiento.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
-import { Producto, VisibilidadProducto, EstadoProducto } from '../../../core/models/producto.model';
+import { Producto, VisibilidadProducto, EstadoProducto } from '../../../models/producto.model';
 import { PrecioPipe } from '../../../shared/pipes/precio.pipe';
 
 @Component({

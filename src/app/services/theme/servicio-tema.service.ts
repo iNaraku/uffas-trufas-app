@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { doc, setDoc, onSnapshot } from 'firebase/firestore';
-import { TemaConfiguracion } from '../../core/models/tema.model';
+import { TemaConfiguracion } from '../../models/tema.model';
 import { db } from '../../config/firebase';
 
 @Injectable({

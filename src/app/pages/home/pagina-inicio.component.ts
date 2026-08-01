@@ -10,7 +10,7 @@ import { ServicioProductos } from '../../services/products/servicio-productos.se
 import { ServicioBanners } from '../../services/banners/servicio-banners.service';
 import { ServicioInicio } from '../../services/home/servicio-inicio.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
-import { Producto } from '../../core/models/producto.model';
+import { Producto } from '../../models/producto.model';
 
 @Component({
   selector: 'app-pagina-inicio',

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { guardiaAdmin } from './core/guards/guardia-admin.guard';
-import { guardiaAutenticacion } from './core/guards/guardia-autenticacion.guard';
+import { guardiaAdmin } from './guards/guardia-admin.guard';
+import { guardiaAutenticacion } from './guards/guardia-autenticacion.guard';
 
 export const routes: Routes = [
   {

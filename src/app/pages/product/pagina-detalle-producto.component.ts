@@ -8,7 +8,7 @@ import { ModalPinComponent } from '../../shared/components/modal-pin/modal-pin.c
 import { ServicioProductos } from '../../services/products/servicio-productos.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
 import { ServicioConfiguracion } from '../../services/settings/servicio-configuracion.service';
-import { Producto } from '../../core/models/producto.model';
+import { Producto } from '../../models/producto.model';
 import { PrecioPipe } from '../../shared/pipes/precio.pipe';
 
 @Component({

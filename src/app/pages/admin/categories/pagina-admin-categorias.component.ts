@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ServicioProductos } from '../../../services/products/servicio-productos.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
-import { Categoria } from '../../../core/models/categoria.model';
+import { Categoria } from '../../../models/categoria.model';
 
 @Component({
   selector: 'app-pagina-admin-categorias',

@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { collection, doc, setDoc, updateDoc, deleteDoc, onSnapshot } from 'firebase/firestore';
-import { Banner } from '../../core/models/banner.model';
+import { Banner } from '../../models/banner.model';
 import { db } from '../../config/firebase';
 
 @Injectable({

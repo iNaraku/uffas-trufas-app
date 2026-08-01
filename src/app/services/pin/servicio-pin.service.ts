@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
-import { UsuarioCatalogo } from '../../core/models/usuario-catalogo.model';
+import { UsuarioCatalogo } from '../../models/usuario-catalogo.model';
 import { ServicioUsuariosCatalogo } from '../users/servicio-usuarios-catalogo.service';
 
 @Injectable({

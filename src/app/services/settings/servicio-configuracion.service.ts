@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { doc, setDoc, onSnapshot } from 'firebase/firestore';
-import { ConfiguracionSitio } from '../../core/models/configuracion.model';
+import { ConfiguracionSitio } from '../../models/configuracion.model';
 import { db } from '../../config/firebase';
 
 @Injectable({
@@ -45,7 +45,7 @@ export class ServicioConfiguracion {
     if (local) {
       try {
         this.configuracion.set(JSON.parse(local));
-      } catch (e) {}
+      } catch (e) { }
     }
   }
 

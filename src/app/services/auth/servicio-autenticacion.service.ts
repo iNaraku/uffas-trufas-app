@@ -1,6 +1,6 @@
 import { Injectable, inject, NgZone, signal } from '@angular/core';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
-import { Administrador } from '../../core/models/administrador.model';
+import { Administrador } from '../../models/administrador.model';
 import { auth } from '../../config/firebase';
 
 @Injectable({
@@ -55,7 +55,7 @@ export class ServicioAutenticacion {
     try {
       const credencial = await this.conTimeout(signInWithEmailAndPassword(auth, emailLimpio, pass));
       const user = credencial.user;
-      
+
       this.ngZone.run(() => {
         const admin: Administrador = {
           uid: user.uid,

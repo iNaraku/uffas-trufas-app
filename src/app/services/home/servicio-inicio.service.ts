@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { ConfiguracionHome } from '../../core/models/configuracion.model';
+import { ConfiguracionHome } from '../../models/configuracion.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class ServicioInicio {
     if (local) {
       try {
         this.configuracionHome.set(JSON.parse(local));
-      } catch (e) {}
+      } catch (e) { }
     }
   }
 

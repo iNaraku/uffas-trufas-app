@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ServicioUsuariosCatalogo } from '../../../services/users/servicio-usuarios-catalogo.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
-import { UsuarioCatalogo } from '../../../core/models/usuario-catalogo.model';
+import { UsuarioCatalogo } from '../../../models/usuario-catalogo.model';
 
 @Component({
   selector: 'app-pagina-admin-usuarios',

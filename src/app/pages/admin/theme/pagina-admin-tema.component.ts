@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ServicioTema } from '../../../services/theme/servicio-tema.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
-import { TemaConfiguracion } from '../../../core/models/tema.model';
+import { TemaConfiguracion } from '../../../models/tema.model';
 
 @Component({
   selector: 'app-pagina-admin-tema',

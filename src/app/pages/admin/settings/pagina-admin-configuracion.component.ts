@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ServicioConfiguracion } from '../../../services/settings/servicio-configuracion.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
-import { ConfiguracionSitio } from '../../../core/models/configuracion.model';
+import { ConfiguracionSitio } from '../../../models/configuracion.model';
 
 @Component({
   selector: 'app-pagina-admin-configuracion',
