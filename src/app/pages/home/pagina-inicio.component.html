@@ -8,13 +8,15 @@
     </div>
   }
 
-  <!-- BANNER PRINCIPAL / HERO SLIDER -->
+  <!-- BANNER PRINCIPAL / HERO SLIDER PWA -->
   <section class="hero-section">
-    @for (banner of servicioBanners.obtenerBannersActivos(); track banner.id; let first = $first) {
-      @if (first) {
-        <div class="hero-card" [style.background-image]="'linear-gradient(to right, rgba(0,0,0,0.95), rgba(0,0,0,0.4)), url(' + banner.imagenUrl + ')'">
+    <div class="hero-slider-container">
+      @for (banner of servicioBanners.obtenerBannersActivos(); track banner.id; let idx = $index) {
+        <div class="hero-card" 
+             [class.active-slide]="bannerBannerIndex() === idx"
+             [style.background-image]="'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(10,10,10,0.92) 100%), url(' + banner.imagenUrl + ')'">
           <div class="hero-content">
-            <span class="hero-badge">🔥 OFICIAL REBEL SMOKE SHOP</span>
+            <span class="hero-badge">🔥 OFICIAL {{ servicioConfig.configuracion().nombreTienda }}</span>
             <h1 class="hero-title">{{ banner.titulo }}</h1>
             <p class="hero-subtitle">{{ banner.subtitulo }}</p>
             <div class="hero-actions">
@@ -27,8 +29,33 @@
             </div>
           </div>
         </div>
+      } @empty {
+        <div class="hero-card default-hero">
+          <div class="hero-content">
+            <span class="hero-badge">🔥 OFICIAL {{ servicioConfig.configuracion().nombreTienda }}</span>
+            <h1 class="hero-title">CATÁLOGO EXCLUSIVO & ACCESORIOS VIP</h1>
+            <p class="hero-subtitle">Descubre la colección más exclusiva de parafernalia urbana y cristalería de borosilicato.</p>
+            <div class="hero-actions">
+              <a routerLink="/catalog" class="btn-primary-hero">Explorar Catálogo</a>
+              @if (!servicioPin.estaDesbloqueado()) {
+                <button class="btn-gold-hero" (click)="abrirPinModal()">
+                  <ion-icon name="lock-closed"></ion-icon> Desbloquear PIN 🔒
+                </button>
+              }
+            </div>
+          </div>
+        </div>
       }
-    }
+
+      <!-- PUNTOS PAGARES / INDICADORES -->
+      @if (servicioBanners.obtenerBannersActivos().length > 1) {
+        <div class="slider-dots">
+          @for (banner of servicioBanners.obtenerBannersActivos(); track banner.id; let idx = $index) {
+            <button class="dot" [class.active]="bannerBannerIndex() === idx" (click)="bannerBannerIndex.set(idx)"></button>
+          }
+        </div>
+      }
+    </div>
   </section>
 
   <!-- BANNER DE ESTADO DE CATÁLOGO PRIVADO -->

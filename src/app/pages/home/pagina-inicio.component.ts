@@ -9,6 +9,7 @@ import { ServicioProductos } from '../../services/products/servicio-productos.se
 import { ServicioBanners } from '../../services/banners/servicio-banners.service';
 import { ServicioInicio } from '../../services/home/servicio-inicio.service';
 import { ServicioPin } from '../../services/pin/servicio-pin.service';
+import { ServicioConfiguracion } from '../../services/settings/servicio-configuracion.service';
 
 @Component({
   selector: 'app-pagina-inicio',
@@ -30,8 +31,28 @@ export class PaginaInicioComponent {
   public servicioBanners = inject(ServicioBanners);
   public servicioInicio = inject(ServicioInicio);
   public servicioPin = inject(ServicioPin);
+  public servicioConfig = inject(ServicioConfiguracion);
 
   public filtroTab = signal<'TODOS' | 'PUBLICOS' | 'PRIVADOS'>('TODOS');
+  public bannerBannerIndex = signal<number>(0);
+  private timerAutoSlide: any;
+
+  ngOnInit(): void {
+    this.iniciarAutoSlide();
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerAutoSlide) clearInterval(this.timerAutoSlide);
+  }
+
+  private iniciarAutoSlide(): void {
+    this.timerAutoSlide = setInterval(() => {
+      const banners = this.servicioBanners.obtenerBannersActivos();
+      if (banners.length > 1) {
+        this.bannerBannerIndex.update(idx => (idx + 1) % banners.length);
+      }
+    }, 5000);
+  }
 
   public productosVisibles = computed(() => {
     const estaDesbloqueado = this.servicioPin.estaDesbloqueado();
