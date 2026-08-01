@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { Router, NavigationStart } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Router, NavigationStart, RouterModule } from '@angular/router';
+import { IonicModule, NavController, MenuController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
   mailOutline,
@@ -64,22 +65,27 @@ import {
   powerOutline
 } from 'ionicons/icons';
 import { ServicioTema } from './services/theme/servicio-tema.service';
+import { ServicioAutenticacion } from './services/auth/servicio-autenticacion.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonApp, IonRouterOutlet],
+  imports: [CommonModule, RouterModule, IonicModule],
 })
 export class AppComponent {
-  private servicioTema = inject(ServicioTema);
-  private router = inject(Router);
+  public servicioTema = inject(ServicioTema);
+  public servicioAuth = inject(ServicioAutenticacion);
+  public router = inject(Router);
+  private navCtrl = inject(NavController);
+  private menuCtrl = inject(MenuController);
 
   constructor() {
     // Evitar retención de foco ARIA al ocultar páginas en Ionic
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
-        if (document.activeElement instanceof HTMLElement) {
+        if (typeof document !== 'undefined' && document.activeElement instanceof HTMLElement) {
           document.activeElement.blur();
         }
       }
@@ -147,6 +153,17 @@ export class AppComponent {
       'arrow-forward-outline': arrowForwardOutline, arrowForwardOutline,
       'power-outline': powerOutline, powerOutline
     });
+  }
+
+  irAAdmin(ruta: string): void {
+    this.menuCtrl.close('admin-menu');
+    this.navCtrl.navigateRoot(ruta, { animated: false });
+  }
+
+  async salirAdmin(): Promise<void> {
+    this.menuCtrl.close('admin-menu');
+    await this.servicioAuth.cerrarSesion();
+    this.navCtrl.navigateRoot('/admin/login', { animated: false });
   }
 }
 
