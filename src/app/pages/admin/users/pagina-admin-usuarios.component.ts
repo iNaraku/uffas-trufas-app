@@ -45,10 +45,23 @@ export class PaginaAdminUsuariosComponent {
     );
   });
 
+  private generarPinUnico(): string {
+    const usuarios = this.servicioUsuarios.listaUsuarios();
+    let pinGenerado = '';
+    let existe = true;
+    let intentos = 0;
+    while (existe && intentos < 1000) {
+      pinGenerado = Math.floor(1000 + Math.random() * 9000).toString();
+      existe = usuarios.some(u => u.pin === pinGenerado);
+      intentos++;
+    }
+    return pinGenerado;
+  }
+
   abrirCrear(): void {
     this.usuarioEdicion.set(null);
     this.nombreForm = '';
-    this.pinForm = Math.floor(1000 + Math.random() * 9000).toString();
+    this.pinForm = this.generarPinUnico();
     this.activoForm = true;
     this.observacionesForm = '';
     this.mostrandoModal.set(true);
@@ -71,18 +84,32 @@ export class PaginaAdminUsuariosComponent {
   async guardar(): Promise<void> {
     if (!this.nombreForm || !this.pinForm) return;
 
+    const pinLimpio = this.pinForm.trim();
     const edicion = this.usuarioEdicion();
+    const usuarios = this.servicioUsuarios.listaUsuarios();
+
+    const yaExiste = usuarios.some(u => u.pin === pinLimpio && u.id !== edicion?.id);
+    if (yaExiste) {
+      const alert = await this.alertCtrl.create({
+        header: 'PIN Duplicado ⚠️',
+        message: `El PIN "${pinLimpio}" ya se encuentra asignado a otro usuario de catálogo.`,
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
     if (edicion) {
       await this.servicioUsuarios.actualizarUsuario(edicion.id, {
         nombre: this.nombreForm,
-        pin: this.pinForm,
+        pin: pinLimpio,
         activo: this.activoForm,
         observaciones: this.observacionesForm
       });
     } else {
       await this.servicioUsuarios.crearUsuario({
         nombre: this.nombreForm,
-        pin: this.pinForm,
+        pin: pinLimpio,
         activo: this.activoForm,
         observaciones: this.observacionesForm
       });
