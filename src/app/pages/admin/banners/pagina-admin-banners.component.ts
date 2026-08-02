@@ -30,7 +30,6 @@ export class PaginaAdminBannersComponent {
   public subtitulo: string = '';
   public imagenUrl: string = '';
   public textoBoton: string = '';
-  public enlaceBoton: string = '';
   public orden: number = 1;
   public activo: boolean = true;
   public destacado: boolean = true;
@@ -41,7 +40,6 @@ export class PaginaAdminBannersComponent {
     this.subtitulo = 'Descripción de la promoción u oferta especial';
     this.imagenUrl = 'https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=1200&q=80';
     this.textoBoton = 'Ver Catálogo';
-    this.enlaceBoton = '/catalogo';
     this.orden = this.servicioBanners.banners().length + 1;
     this.activo = true;
     this.destacado = true;
@@ -54,7 +52,6 @@ export class PaginaAdminBannersComponent {
     this.subtitulo = b.subtitulo;
     this.imagenUrl = b.imagenUrl;
     this.textoBoton = b.textoBoton || '';
-    this.enlaceBoton = b.enlaceBoton || '';
     this.orden = b.orden;
     this.activo = b.activo;
     this.destacado = b.destacado;
@@ -75,7 +72,6 @@ export class PaginaAdminBannersComponent {
         subtitulo: this.subtitulo,
         imagenUrl: this.imagenUrl,
         textoBoton: this.textoBoton,
-        enlaceBoton: this.enlaceBoton,
         orden: this.orden,
         activo: this.activo,
         destacado: this.destacado
@@ -86,7 +82,6 @@ export class PaginaAdminBannersComponent {
         subtitulo: this.subtitulo,
         imagenUrl: this.imagenUrl,
         textoBoton: this.textoBoton,
-        enlaceBoton: this.enlaceBoton,
         orden: this.orden,
         activo: this.activo,
         destacado: this.destacado

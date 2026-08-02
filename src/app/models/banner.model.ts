@@ -4,7 +4,6 @@ export interface Banner {
   subtitulo: string;
   imagenUrl: string;
   textoBoton?: string;
-  enlaceBoton?: string;
   orden: number;
   activo: boolean;
   destacado: boolean;
