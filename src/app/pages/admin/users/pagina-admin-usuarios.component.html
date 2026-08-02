@@ -114,12 +114,14 @@
             <ion-item class="form-item-native">
               <ion-input
                 type="text"
-                label="PIN de Acceso Numérico *"
+                label="PIN de Acceso Numérico Auto-generado (Bloqueado) *"
                 labelPlacement="stacked"
                 [(ngModel)]="pinForm"
                 name="pin"
                 placeholder="Ej: 1234"
                 maxlength="10"
+                [readonly]="true"
+                [disabled]="true"
                 required
               ></ion-input>
             </ion-item>

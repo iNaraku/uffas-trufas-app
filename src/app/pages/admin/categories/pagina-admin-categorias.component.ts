@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { ServicioProductos } from '../../../services/products/servicio-productos.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { Categoria } from '../../../models/categoria.model';
@@ -20,6 +20,7 @@ import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-
 export class PaginaAdminCategoriasComponent {
   public servicioProductos = inject(ServicioProductos);
   public servicioAuth = inject(ServicioAutenticacion);
+  private alertCtrl = inject(AlertController);
   private router = inject(Router);
 
   public mostrandoModal: boolean = false;
@@ -76,9 +77,24 @@ export class PaginaAdminCategoriasComponent {
   }
 
   async eliminar(id: string): Promise<void> {
-    if (confirm('¿Eliminar esta categoría?')) {
-      await this.servicioProductos.eliminarCategoria(id);
-    }
+    const alert = await this.alertCtrl.create({
+      header: 'Eliminar Categoría 🗑️',
+      message: '¿Estás seguro de que deseas eliminar esta categoría? Los productos asociados podrían quedar sin categoría.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            await this.servicioProductos.eliminarCategoria(id);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async salirAdmin(): Promise<void> {
