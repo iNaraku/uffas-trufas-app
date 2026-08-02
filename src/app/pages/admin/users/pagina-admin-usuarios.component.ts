@@ -2,7 +2,7 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { ServicioUsuariosCatalogo } from '../../../services/users/servicio-usuarios-catalogo.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { UsuarioCatalogo } from '../../../models/usuario-catalogo.model';
@@ -20,6 +20,7 @@ import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-
 export class PaginaAdminUsuariosComponent {
   public servicioUsuarios = inject(ServicioUsuariosCatalogo);
   public servicioAuth = inject(ServicioAutenticacion);
+  private alertCtrl = inject(AlertController);
   private router = inject(Router);
 
   public terminoBusqueda = signal<string>('');
@@ -95,9 +96,24 @@ export class PaginaAdminUsuariosComponent {
   }
 
   async eliminar(id: string): Promise<void> {
-    if (confirm('¿Deseas eliminar este usuario de catálogo?')) {
-      await this.servicioUsuarios.eliminarUsuario(id);
-    }
+    const alert = await this.alertCtrl.create({
+      header: 'Eliminar Usuario PIN 👤',
+      message: '¿Estás seguro de que deseas eliminar este acceso PIN de catálogo privado?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            await this.servicioUsuarios.eliminarUsuario(id);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async salirAdmin(): Promise<void> {

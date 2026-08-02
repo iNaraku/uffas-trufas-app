@@ -2,7 +2,7 @@ import { Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { ServicioProductos } from '../../../services/products/servicio-productos.service';
 import { ServicioAlmacenamiento } from '../../../services/storage/servicio-almacenamiento.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
@@ -38,6 +38,7 @@ export class PaginaAdminProductosComponent {
   public servicioProductos = inject(ServicioProductos);
   public servicioStorage = inject(ServicioAlmacenamiento);
   public servicioAuth = inject(ServicioAutenticacion);
+  private alertCtrl = inject(AlertController);
   private fb = inject(FormBuilder);
   private router = inject(Router);
 
@@ -152,9 +153,24 @@ export class PaginaAdminProductosComponent {
   }
 
   async eliminar(id: string): Promise<void> {
-    if (confirm('¿Estás seguro de eliminar este producto?')) {
-      await this.servicioProductos.eliminarProducto(id);
-    }
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar Eliminación 🗑️',
+      message: '¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            await this.servicioProductos.eliminarProducto(id);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async cambiarVisibilidad(id: string, vis: VisibilidadProducto): Promise<void> {

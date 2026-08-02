@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { ServicioBanners } from '../../../services/banners/servicio-banners.service';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { Banner } from '../../../models/banner.model';
@@ -20,6 +20,7 @@ import { EncabezadoAdminComponent } from '../../../shared/components/encabezado-
 export class PaginaAdminBannersComponent {
   public servicioBanners = inject(ServicioBanners);
   public servicioAuth = inject(ServicioAutenticacion);
+  private alertCtrl = inject(AlertController);
   private router = inject(Router);
 
   public mostrandoModal: boolean = false;
@@ -96,9 +97,24 @@ export class PaginaAdminBannersComponent {
   }
 
   async eliminar(id: string): Promise<void> {
-    if (confirm('¿Eliminar este banner?')) {
-      await this.servicioBanners.eliminarBanner(id);
-    }
+    const alert = await this.alertCtrl.create({
+      header: 'Eliminar Banner 🖼️',
+      message: '¿Estás seguro de que deseas eliminar este banner promocional del carrusel?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: async () => {
+            await this.servicioBanners.eliminarBanner(id);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
   async salirAdmin(): Promise<void> {
