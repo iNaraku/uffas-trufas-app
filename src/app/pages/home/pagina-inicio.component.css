@@ -296,57 +296,67 @@
   font-size: 0.9rem;
 }
 
-.tab-filters {
-  display: flex;
-  gap: 0.5rem;
+.segment-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rebel-segment-native {
+  --background: var(--color-tarjetas, #232323);
   background: var(--color-tarjetas, #232323);
-  padding: 0.35rem;
-  border-radius: 8px;
+  border-radius: 12px;
+  padding: 4px;
   border: 1px solid #333;
+  min-width: 310px;
 }
 
-.tab-btn {
-  background: transparent;
-  border: none;
-  color: var(--color-texto-secundario, #C9C9C9);
-  padding: 0.6rem 1rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.rebel-segment-native ion-segment-button {
+  --color: var(--color-texto-secundario, #C9C9C9);
+  --color-checked: #ffffff;
+  --indicator-color: var(--color-primario, #D71920);
+  --indicator-height: 100%;
+  --border-radius: 8px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  min-height: 38px;
+  margin: 0;
+  text-transform: none;
+  letter-spacing: 0.3px;
 }
 
-.tab-btn.active {
-  background: var(--color-primario, #D71920);
-  color: #fff;
+.rebel-segment-native ion-segment-button.segment-btn-private {
+  --indicator-color: var(--color-secundario, #F5B400);
+  --color-checked: #000000;
 }
 
-.btn-tab-private.active {
-  background: var(--color-secundario, #F5B400);
-  color: #000;
-}
-
-.btn-tab-disabled {
+.rebel-segment-native ion-segment-button.segment-btn-disabled {
   opacity: 0.6;
 }
 
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
+.products-grid-row {
+  margin: 0 -0.5rem;
 }
 
-.empty-state {
-  grid-column: 1 / -1;
+.product-col {
+  padding: 0.5rem;
+  display: flex;
+}
+
+.product-col app-tarjeta-producto {
+  width: 100%;
+}
+
+.empty-state-native {
   text-align: center;
   padding: 4rem 1rem;
   background: var(--color-tarjetas, #232323);
   border-radius: 12px;
   border: 1px dashed #444;
+  width: 100%;
 }
 
-.empty-state ion-icon {
+.empty-state-native ion-icon {
   font-size: 3rem;
   color: var(--color-secundario, #F5B400);
   margin-bottom: 1rem;

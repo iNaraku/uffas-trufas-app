@@ -2,58 +2,59 @@
 
 <ion-content class="content-rebel">
   <!-- ANUNCIO ALERT ENCABEZADO -->
-  @if (servicioPin.estaDesbloqueado() && servicioInicio.configuracionHome().mostrarAnuncio && servicioInicio.configuracionHome().anuncioAlert) {
-    <div class="announcement-bar">
-      <span>{{ servicioInicio.configuracionHome().anuncioAlert }}</span>
-    </div>
+  @if (servicioPin.estaDesbloqueado() && servicioInicio.configuracionHome().mostrarAnuncio &&
+  servicioInicio.configuracionHome().anuncioAlert) {
+  <div class="announcement-bar">
+    <span>{{ servicioInicio.configuracionHome().anuncioAlert }}</span>
+  </div>
   }
 
   <!-- BANNER PRINCIPAL / HERO SLIDER PWA -->
   <section class="hero-section">
     <div class="hero-slider-container">
       @for (banner of servicioBanners.obtenerBannersActivos(); track banner.id; let idx = $index) {
-        <div class="hero-card" 
-             [class.active-slide]="bannerBannerIndex() === idx"
-             [style.background-image]="'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(10,10,10,0.92) 100%), url(' + banner.imagenUrl + ')'">
-          <div class="hero-content">
-            <span class="hero-badge">🔥 OFICIAL {{ servicioConfig.configuracion().nombreTienda }}</span>
-            <h1 class="hero-title">{{ banner.titulo }}</h1>
-            <p class="hero-subtitle">{{ banner.subtitulo }}</p>
-            <div class="hero-actions">
-              <a routerLink="/catalog" class="btn-primary-hero">Explorar Catálogo</a>
-              @if (!servicioPin.estaDesbloqueado()) {
-                <button class="btn-gold-hero" (click)="abrirPinModal()">
-                  <ion-icon name="lock-closed"></ion-icon> Desbloquear PIN 🔒
-                </button>
-              }
-            </div>
+      <div class="hero-card" [class.active-slide]="bannerBannerIndex() === idx"
+        [style.background-image]="'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(10,10,10,0.92) 100%), url(' + banner.imagenUrl + ')'">
+        <div class="hero-content">
+          <span class="hero-badge">🔥 OFICIAL {{ servicioConfig.configuracion().nombreTienda }}</span>
+          <h1 class="hero-title">{{ banner.titulo }}</h1>
+          <p class="hero-subtitle">{{ banner.subtitulo }}</p>
+          <div class="hero-actions">
+            <a routerLink="/catalog" class="btn-primary-hero">Explorar Catálogo</a>
+            @if (!servicioPin.estaDesbloqueado()) {
+            <button class="btn-gold-hero" (click)="abrirPinModal()">
+              <ion-icon name="lock-closed"></ion-icon> Desbloquear PIN 🔒
+            </button>
+            }
           </div>
         </div>
+      </div>
       } @empty {
-        <div class="hero-card default-hero">
-          <div class="hero-content">
-            <span class="hero-badge">🔥 OFICIAL {{ servicioConfig.configuracion().nombreTienda }}</span>
-            <h1 class="hero-title">CATÁLOGO EXCLUSIVO & ACCESORIOS VIP</h1>
-            <p class="hero-subtitle">Descubre la colección más exclusiva de parafernalia urbana y cristalería de borosilicato.</p>
-            <div class="hero-actions">
-              <a routerLink="/catalog" class="btn-primary-hero">Explorar Catálogo</a>
-              @if (!servicioPin.estaDesbloqueado()) {
-                <button class="btn-gold-hero" (click)="abrirPinModal()">
-                  <ion-icon name="lock-closed"></ion-icon> Desbloquear PIN 🔒
-                </button>
-              }
-            </div>
+      <div class="hero-card default-hero">
+        <div class="hero-content">
+          <span class="hero-badge">🔥 OFICIAL {{ servicioConfig.configuracion().nombreTienda }}</span>
+          <h1 class="hero-title">CATÁLOGO EXCLUSIVO & ACCESORIOS VIP</h1>
+          <p class="hero-subtitle">Descubre la colección más exclusiva de parafernalia urbana y cristalería de
+            borosilicato.</p>
+          <div class="hero-actions">
+            <a routerLink="/catalog" class="btn-primary-hero">Explorar Catálogo</a>
+            @if (!servicioPin.estaDesbloqueado()) {
+            <button class="btn-gold-hero" (click)="abrirPinModal()">
+              <ion-icon name="lock-closed"></ion-icon> Desbloquear PIN 🔒
+            </button>
+            }
           </div>
         </div>
+      </div>
       }
 
       <!-- PUNTOS PAGARES / INDICADORES -->
       @if (servicioBanners.obtenerBannersActivos().length > 1) {
-        <div class="slider-dots">
-          @for (banner of servicioBanners.obtenerBannersActivos(); track banner.id; let idx = $index) {
-            <button class="dot" [class.active]="bannerBannerIndex() === idx" (click)="bannerBannerIndex.set(idx)"></button>
-          }
-        </div>
+      <div class="slider-dots">
+        @for (banner of servicioBanners.obtenerBannersActivos(); track banner.id; let idx = $index) {
+        <button class="dot" [class.active]="bannerBannerIndex() === idx" (click)="bannerBannerIndex.set(idx)"></button>
+        }
+      </div>
       }
     </div>
   </section>
@@ -62,101 +63,116 @@
   <section class="pin-status-section">
     <div class="container">
       @if (servicioPin.estaDesbloqueado()) {
-        <div class="status-banner unlocked">
-          <div class="status-icon">
-            <ion-icon name="lock-open"></ion-icon>
-          </div>
-          <div class="status-info">
-            <h3>Catálogo Privado Activo 🔓</h3>
-            <p>Bienvenido <strong>{{ servicioPin.usuarioCatalogoActual()?.nombre }}</strong>. Tienes acceso sin restricciones a piezas de borosilicato, rigs y novedades exclusivas.</p>
-          </div>
-          <button class="btn-relock" (click)="servicioPin.bloquearCatalogo()">
-            <ion-icon name="log-out-outline"></ion-icon> Bloquear
-          </button>
+      <div class="status-banner unlocked">
+        <div class="status-icon">
+          <ion-icon name="lock-open"></ion-icon>
         </div>
+        <div class="status-info">
+          <h3>Catálogo Privado Activo 🔓</h3>
+          <p>Bienvenido <strong>{{ servicioPin.usuarioCatalogoActual()?.nombre }}</strong>. Tienes acceso sin
+            restricciones a piezas de borosilicato, rigs y novedades exclusivas.</p>
+        </div>
+        <button class="btn-relock" (click)="servicioPin.bloquearCatalogo()">
+          <ion-icon name="log-out-outline"></ion-icon> Bloquear
+        </button>
+      </div>
       } @else {
-        <div class="status-banner locked">
-          <div class="status-icon">
-            <ion-icon name="lock-closed"></ion-icon>
-          </div>
-          <div class="status-info">
-            <h3>¿Tienes un PIN de acceso? 🔒</h3>
-            <p>El catálogo público está visible para todos. Si posees un PIN VIP autorizado, desbloquéalo aquí sin cambiar de página.</p>
-          </div>
-          <button class="btn-unlock-action" (click)="abrirPinModal()">
-            Ingresar PIN
-          </button>
+      <div class="status-banner locked">
+        <div class="status-icon">
+          <ion-icon name="lock-closed"></ion-icon>
         </div>
+        <div class="status-info">
+          <h3>¿Tienes un PIN de acceso? 🔒</h3>
+          <p>El catálogo público está visible para todos. Si posees un PIN VIP autorizado, desbloquéalo aquí sin cambiar
+            de página.</p>
+        </div>
+        <button class="btn-unlock-action" (click)="abrirPinModal()">
+          Ingresar PIN
+        </button>
+      </div>
       }
     </div>
   </section>
 
-  <!-- SECCIÓN DE PRODUCTOS Y FILTROS POR PESTAÑAS -->
+  <!-- SECCIÓN DE PRODUCTOS Y FILTROS POR PESTAÑAS (NATIVO IONIC) -->
   <section class="products-section">
-    <div class="container">
+    <ion-grid class="container ion-no-padding">
       <div class="section-header">
         <div class="section-title-group">
           <h2>{{ servicioInicio.configuracionHome().tituloCarrusel }}</h2>
           <p>{{ servicioInicio.configuracionHome().textoSecundario }}</p>
         </div>
 
-        <!-- FILTRO DE PESTAÑAS (TODOS / PÚBLICOS / PRIVADOS) -->
-        <div class="tab-filters">
-          <button class="tab-btn" [class.active]="filtroTab() === 'TODOS'" (click)="filtroTab.set('TODOS')">
-            Todos ({{ productosVisibles().length }})
-          </button>
+        <!-- FILTRO DE PESTAÑAS NATIVO IONIC (ION-SEGMENT) -->
+        <div class="segment-wrapper">
+          <ion-segment [value]="filtroTab()" (ionChange)="cambiarTabSegment($event)" mode="ios"
+            class="rebel-segment-native">
+            <ion-segment-button value="TODOS">
+              <ion-label>Todos ({{ productosVisibles().length }})</ion-label>
+            </ion-segment-button>
 
-          <button class="tab-btn" [class.active]="filtroTab() === 'PUBLICOS'" (click)="filtroTab.set('PUBLICOS')">
-            Publicos 🌐
-          </button>
+            <ion-segment-button value="PUBLICOS">
+              <ion-label>Públicos</ion-label>
+            </ion-segment-button>
 
-          @if (servicioPin.estaDesbloqueado()) {
-            <button class="tab-btn btn-tab-private" [class.active]="filtroTab() === 'PRIVADOS'" (click)="filtroTab.set('PRIVADOS')">
-              Privados 🔒
-            </button>
-          } @else {
-            <button class="tab-btn btn-tab-disabled" (click)="abrirPinModal()" title="Ingresa PIN para habilitar">
-              Privados 🔒 (Bloqueado)
-            </button>
-          }
+            @if (servicioPin.estaDesbloqueado()) {
+            <ion-segment-button value="PRIVADOS" class="segment-btn-private">
+              <ion-label>Privados</ion-label>
+            </ion-segment-button>
+            } @else {
+            <ion-segment-button value="PRIVADOS_LOCKED" class="segment-btn-disabled">
+              <ion-label>Privados</ion-label>
+            </ion-segment-button>
+            }
+          </ion-segment>
         </div>
       </div>
 
-      <!-- GRID DE PRODUCTOS -->
-      <div class="products-grid">
+      <!-- GRID NATIVO DE PRODUCTOS (ION-ROW / ION-COL) -->
+      <ion-row class="products-grid-row">
         @for (prod of productosVisibles(); track prod.id) {
+        <ion-col size="12" size-xs="12" size-sm="6" size-md="4" size-lg="3" class="product-col">
           <app-tarjeta-producto [producto]="prod" (solicitarDesbloqueo)="abrirPinModal()"></app-tarjeta-producto>
+        </ion-col>
         } @empty {
-          <div class="empty-state">
+        <ion-col size="12">
+          <div class="empty-state-native">
             <ion-icon name="search-outline"></ion-icon>
             <p>No se encontraron productos en esta sección.</p>
           </div>
+        </ion-col>
         }
-      </div>
-    </div>
+      </ion-row>
+    </ion-grid>
   </section>
 
-  <!-- SECCIÓN DE CARACTERÍSTICAS Y VALORES DE LA MARCA -->
+  <!-- SECCIÓN DE CARACTERÍSTICAS Y VALORES DE LA MARCA (NATIVO IONIC) -->
   <section class="features-section">
-    <div class="container">
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon"><ion-icon name="ribbon-outline"></ion-icon></div>
-          <h3>Calidad Garantizada</h3>
-          <p>Parafernalia importada y cristalería de borosilicato de alta resistencia térmica.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
-          <h3>Privacidad Absoluta</h3>
-          <p>Catálogo protegido mediante PIN de acceso personal sin registros innecesarios.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><ion-icon name="paper-plane-outline"></ion-icon></div>
-          <h3>Atención Directa</h3>
-          <p>Cotiza y consulta disponibilidad en tiempo real con un solo clic a WhatsApp.</p>
-        </div>
-      </div>
-    </div>
+    <ion-grid class="container">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-sm="4">
+          <div class="feature-card">
+            <div class="feature-icon"><ion-icon name="ribbon-outline"></ion-icon></div>
+            <h3>Calidad Garantizada</h3>
+            <p>Parafernalia importada y cristalería de borosilicato de alta resistencia térmica.</p>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <div class="feature-card">
+            <div class="feature-icon"><ion-icon name="shield-checkmark-outline"></ion-icon></div>
+            <h3>Privacidad Absoluta</h3>
+            <p>Catálogo protegido mediante PIN de acceso personal sin registros innecesarios.</p>
+          </div>
+        </ion-col>
+        <ion-col size="12" size-sm="4">
+          <div class="feature-card">
+            <div class="feature-icon"><ion-icon name="paper-plane-outline"></ion-icon></div>
+            <h3>Atención Directa</h3>
+            <p>Cotiza y consulta disponibilidad en tiempo real con un solo clic a WhatsApp.</p>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </section>
 
   <app-pie-pagina></app-pie-pagina>

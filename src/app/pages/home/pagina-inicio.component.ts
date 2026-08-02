@@ -76,6 +76,17 @@ export class PaginaInicioComponent {
     return this.productosVisibles().filter(p => p.destacado);
   });
 
+  public cambiarTabSegment(evento: any): void {
+    const valor = evento.detail.value;
+    if (valor === 'PRIVADOS_LOCKED') {
+      this.abrirPinModal();
+      return;
+    }
+    if (valor === 'TODOS' || valor === 'PUBLICOS' || valor === 'PRIVADOS') {
+      this.filtroTab.set(valor);
+    }
+  }
+
   abrirPinModal(): void {
     this.servicioPin.abrirModalPin();
   }
