@@ -49,9 +49,11 @@ export class ServicioBanners {
       console.error('❌ Error al crear banner en Firestore:', e);
     }
 
-    const lista = [...this.banners(), banner];
-    this.banners.set(lista);
-    this.guardarBanners(lista);
+    if (!this.banners().some(b => b.id === id)) {
+      const lista = [...this.banners(), banner];
+      this.banners.set(lista);
+      this.guardarBanners(lista);
+    }
     return banner;
   }
 

@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationStart, RouterModule } from '@angular/router';
-import { IonicModule, NavController, MenuController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { NavController, MenuController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   mailOutline,

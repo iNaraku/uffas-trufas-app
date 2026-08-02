@@ -1,7 +1,8 @@
 import { Component, inject, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import { ServicioProductos } from '../../../services/products/servicio-productos.service';
 import { ServicioUsuariosCatalogo } from '../../../services/users/servicio-usuarios-catalogo.service';

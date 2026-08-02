@@ -1,7 +1,8 @@
 import { Component, inject, NgZone, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { ServicioPin } from '../../../services/pin/servicio-pin.service';
 import { ServicioTema } from '../../../services/theme/servicio-tema.service';
 import { ServicioConfiguracion } from '../../../services/settings/servicio-configuracion.service';

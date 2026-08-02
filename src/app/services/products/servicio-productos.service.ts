@@ -86,9 +86,12 @@ export class ServicioProductos {
       console.error('❌ Error al crear producto en Firestore:', e);
     }
 
-    const lista = [...this.productos(), prod];
-    this.productos.set(lista);
-    this.guardarProductos(lista);
+    // Evitar duplicación si onSnapshot de Firestore ya actualizó la señal en tiempo real
+    if (!this.productos().some(p => p.id === id)) {
+      const lista = [...this.productos(), prod];
+      this.productos.set(lista);
+      this.guardarProductos(lista);
+    }
     return prod;
   }
 
@@ -166,9 +169,11 @@ export class ServicioProductos {
       console.error('❌ Error al crear categoría en Firestore:', e);
     }
 
-    const lista = [...this.categorias(), nueva];
-    this.categorias.set(lista);
-    this.guardarCategorias(lista);
+    if (!this.categorias().some(c => c.id === id)) {
+      const lista = [...this.categorias(), nueva];
+      this.categorias.set(lista);
+      this.guardarCategorias(lista);
+    }
     return nueva;
   }
 
