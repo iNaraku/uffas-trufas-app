@@ -73,13 +73,13 @@
     @if (!servicioPin.estaDesbloqueado()) {
     <a (click)="abrirModalPin()" class="subnav-item btn-subnav-pin ion-activatable">
       <ion-icon [src]="icons.lockClosedOutline"></ion-icon>
-      <span>PIN 🔒</span>
+      <span>PIN</span>
       <ion-ripple-effect></ion-ripple-effect>
     </a>
     } @else {
     <a (click)="bloquear()" class="subnav-item btn-subnav-unlocked ion-activatable">
       <ion-icon [src]="icons.lockOpenOutline"></ion-icon>
-      <span>VIP 🔓</span>
+      <span>VIP</span>
       <ion-ripple-effect></ion-ripple-effect>
     </a>
     }

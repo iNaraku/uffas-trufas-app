@@ -2,7 +2,7 @@
 
 <ion-content class="content-rebel">
   <!-- ANUNCIO ALERT ENCABEZADO -->
-  @if (servicioInicio.configuracionHome().mostrarAnuncio && servicioInicio.configuracionHome().anuncioAlert) {
+  @if (servicioPin.estaDesbloqueado() && servicioInicio.configuracionHome().mostrarAnuncio && servicioInicio.configuracionHome().anuncioAlert) {
     <div class="announcement-bar">
       <span>{{ servicioInicio.configuracionHome().anuncioAlert }}</span>
     </div>
