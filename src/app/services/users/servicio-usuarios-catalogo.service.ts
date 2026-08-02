@@ -69,9 +69,11 @@ export class ServicioUsuariosCatalogo {
       console.error('❌ Error al crear usuario en Firestore:', e);
     }
 
-    const listaActualizada = [...this.listaUsuarios(), usuarioCreado];
-    this.listaUsuarios.set(listaActualizada);
-    this.guardarEnStorage(listaActualizada);
+    if (!this.listaUsuarios().some(u => u.id === id)) {
+      const listaActualizada = [...this.listaUsuarios(), usuarioCreado];
+      this.listaUsuarios.set(listaActualizada);
+      this.guardarEnStorage(listaActualizada);
+    }
     return usuarioCreado;
   }
 

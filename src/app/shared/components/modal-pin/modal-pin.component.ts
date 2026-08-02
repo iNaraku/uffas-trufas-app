@@ -1,13 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonSpinner } from '@ionic/angular/standalone';
 import { ServicioPin } from '../../../services/pin/servicio-pin.service';
+import { ModalController } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-modal-pin',
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    IonHeader, 
+    IonToolbar, 
+    IonTitle, 
+    IonButtons, 
+    IonButton, 
+    IonIcon, 
+    IonContent, 
+    IonSpinner
+  ],
   templateUrl: './modal-pin.component.html',
   styleUrls: ['./modal-pin.component.css']
 })

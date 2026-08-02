@@ -1,7 +1,8 @@
 import { Component, inject, NgZone, Input, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { IonicModule, NavController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
+import { NavController } from '@ionic/angular/standalone';
 import { ServicioAutenticacion } from '../../../services/auth/servicio-autenticacion.service';
 import {
   gridOutline,

@@ -1,5 +1,5 @@
 import { Injectable, signal, inject } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular/standalone';
+import { ToastController, ModalController } from '@ionic/angular/standalone';
 import { UsuarioCatalogo } from '../../models/usuario-catalogo.model';
 import { ServicioUsuariosCatalogo } from '../users/servicio-usuarios-catalogo.service';
 import { ModalPinComponent } from '../../shared/components/modal-pin/modal-pin.component';
@@ -9,8 +9,8 @@ import { ModalPinComponent } from '../../shared/components/modal-pin/modal-pin.c
 })
 export class ServicioPin {
   private servicioUsuarios = inject(ServicioUsuariosCatalogo);
-  private modalCtrl = inject(ModalController);
   private toastCtrl = inject(ToastController);
+  private modalCtrl = inject(ModalController);
 
   public estaDesbloqueado = signal<boolean>(false);
   public usuarioCatalogoActual = signal<UsuarioCatalogo | null>(null);
@@ -21,39 +21,39 @@ export class ServicioPin {
   }
 
   public async abrirModalPin(): Promise<boolean> {
-    const isMobile = window.innerWidth <= 768;
-    const modalOptions: any = {
-      component: ModalPinComponent,
-      cssClass: 'modal-pin-native-sheet',
-      backdropDismiss: true
-    };
-
-    if (isMobile) {
-      modalOptions.breakpoints = [0, 0.85, 1];
-      modalOptions.initialBreakpoint = 0.85;
-      modalOptions.handle = true;
+    this.mensajeError.set(null);
+    try {
+      const modal = await this.modalCtrl.create({
+        component: ModalPinComponent,
+        backdropDismiss: true,
+      });
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      return !!data?.exito;
+    } catch (e) {
+      console.error('Error al abrir ModalController:', e);
+      return false;
     }
-
-    const modal = await this.modalCtrl.create(modalOptions);
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    return !!data?.exito;
   }
 
   private async mostrarToast(mensaje: string, color: 'success' | 'danger' | 'warning' = 'success'): Promise<void> {
-    const toast = await this.toastCtrl.create({
-      message: mensaje,
-      duration: 3000,
-      color: color,
-      position: 'bottom',
-      buttons: [
-        {
-          text: 'OK',
-          role: 'cancel'
-        }
-      ]
-    });
-    await toast.present();
+    try {
+      const toast = await this.toastCtrl.create({
+        message: mensaje,
+        duration: 3000,
+        color: color,
+        position: 'bottom',
+        buttons: [
+          {
+            text: 'OK',
+            role: 'cancel'
+          }
+        ]
+      });
+      await toast.present();
+    } catch (e) {
+      console.warn('Toast notification:', e);
+    }
   }
 
   private recuperarSesionPin(): void {
